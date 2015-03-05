@@ -9,13 +9,15 @@
 #include "EasiScheduler.h"
 using namespace std;
 
-const string EasiScheduler::PROMPT_WELCOME = "Welcome to EasiScheduler. %s is ready for use\n";
-const string EasiScheduler::PROMPT_EMPTY = "%s is empty\n";
-const string EasiScheduler::PROMPT_ADDED = "added to %s: \"%s\"\n";
-const string EasiScheduler::PROMPT_DELETED = "deleted from %s: \"%s\"\n";
-const string EasiScheduler::PROMPT_CLEARED = "all content deleted from %s\n";
-const string EasiScheduler::PROMPT_INVALID_COMMAND = "Invalid command format:\nadd {text}\tto add line\ndisplay\tto display all lines\ndelete {line number}\tto delete certainlines\nclear\tto clear all lines\nexit\tto exit program\n";
-const string EasiScheduler::PROMPT_PROGRAM_EXIT = "Enter any key to exit: \n";
+
+#define WelcomeMessage "Welcome to TextBuddy. "<<_filename<<" is ready for use"<<endl;
+#define EmptyMessage _filename+" is empty\n";
+#define AddedMessage "added to "+_filename+": ¡°"+line+"¡±\n";
+#define DeletedMessage "deleted from "+_filename+": ¡°"+_lines.at(lineIndex)+"¡±\n";
+#define ClearedMessage "all content deleted from "+_filename+"\n";
+
+const string MESSAGE_ERROR_COMMAND_FORMAT="Error: Invalid command format! Please enter again :)\n";
+
 
 EasiScheduler::EasiScheduler(char* argv[]){
     setFilename(readFilename(argv));
@@ -37,7 +39,7 @@ void EasiScheduler::setInitialNoOfLines(){
 }
 
 void EasiScheduler::printWelcomeMessage(){
-	printf(PROMPT_WELCOME.c_str(),_filename.c_str());
+	cout<<WelcomeMessage;
 }
 
 string EasiScheduler::readCommand(){
@@ -124,7 +126,7 @@ void EasiScheduler::incrementNoOfLines(){
 }
 
 void EasiScheduler::printMessageAfterAdded(string line){
-printf(PROMPT_ADDED.c_str(),EasiScheduler::_filename.c_str(),line.c_str());
+	cout<<AddedMessage;
 }
 
 
@@ -156,7 +158,7 @@ void EasiScheduler::decrementNoOfLines(int index){
 }
 
 void EasiScheduler::printMessageAfterDeleted(int lineIndex){
-	printf(PROMPT_DELETED.c_str(),EasiScheduler::_filename.c_str(),_lines[lineIndex-1].c_str());
+	cout<<DeletedMessage;
 }
 
 vector<string>::iterator EasiScheduler:: getIteratorOfLineDeleted(int lineIndex){
@@ -187,7 +189,7 @@ void EasiScheduler::popBackLine(){
 }
 
 void EasiScheduler::printMessageAfterClear(){
-	printf(PROMPT_CLEARED.c_str(),EasiScheduler::_filename.c_str());
+	cout<<ClearedMessage;
 }
 
 void EasiScheduler::performProgramExit(){
@@ -195,7 +197,7 @@ void EasiScheduler::performProgramExit(){
 }
 
 void EasiScheduler::printMessageifCommandInvalid(){
-    printf(PROMPT_INVALID_COMMAND.c_str());
+    cout<<MESSAGE_ERROR_COMMAND_FORMAT;
 }
 
 void EasiScheduler::performDisplayAll(){
@@ -208,7 +210,7 @@ void EasiScheduler::performDisplayAll(){
 }
 
 void EasiScheduler::printMessageIfNoLine(){
-  printf(PROMPT_EMPTY.c_str(),_filename.c_str());
+  	cout<<EmptyMessage;
 }
 
 void EasiScheduler::displayAllLines(){
