@@ -147,9 +147,10 @@ namespace UI {
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 			 System::String^ cmd_systemString = inputBox->Text;
-			 std::string cmd = msclr::interop::marshal_as<std::string>(cmd_systemString);
-		     executor->executeCommand(executor->determineCommandType(executor->readCommand(cmd)));
-
+			 std::string input = msclr::interop::marshal_as<std::string>(cmd_systemString);
+			 std::string output=executor->readCommand(input);
+			 String^ MyString = gcnew String(output.c_str());
+			 outputBox->Text=MyString;
 		 }
 };
 }
