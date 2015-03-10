@@ -19,8 +19,11 @@ CommandExecution::~CommandExecution(void) {
 }
 
 string CommandExecution::readCommand() { 
-	string command="";
-	cin>> command;
+	string userInput="";
+	getline(cin, userInput);
+	size_t end=userInput.find_first_of(" ");
+	string command=userInput.substr(0, end);
+	_content=userInput.substr(end, userInput.size()-end);
 	return inter.interpretCommand(command);
 }
 
@@ -77,18 +80,10 @@ void CommandExecution::executeCommand(StardardCommand commandType) {
 }
 
 void CommandExecution::performAdd() {
-	string content=getContentToBeAdded();
-	inter.convert(content); 
+	inter.convert(_content); 
 	storeInTaskInfo();
 	addEventToList();
 	printAddResult();
-}
-
-string CommandExecution::getContentToBeAdded() {
-	string contentToBeAdded="";
-	cin.get();
-	getline(cin, contentToBeAdded);
-	return contentToBeAdded;
 }
 
 void CommandExecution::storeInTaskInfo() {
@@ -109,18 +104,17 @@ void CommandExecution::printAddResult() {
 }
 
 void CommandExecution::performDelete() {
-	int index=0;
-	cin>>index;
+	int index=stoi(_content.c_str());
 	tasks.deleteTask(index);
 	cout<<"deleted"<<endl;
 }
 
 void CommandExecution::performUpdate() {
-	int index=0;
-	cin>>index;
-	cin.get();
-	string content=getContentToBeAdded();
-	inter.convert(content); 
+	istringstream in(_content);
+	int index;
+	in>>index;
+	in>>_content;
+	inter.convert(_content); 
 	storeInTaskInfo();
 	int intMonth=stoi(taskInfo.month.c_str());
 	tasks.updateTask(index, taskInfo.description, taskInfo.day, intMonth, taskInfo.startTime, taskInfo.endTime, 2015); 

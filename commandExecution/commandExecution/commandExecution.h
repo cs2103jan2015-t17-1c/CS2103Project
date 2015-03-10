@@ -12,6 +12,7 @@ class CommandExecution
 private:
 	interpreter inter;
 	Storage tasks;
+	string _content;
 	struct TaskInfo {
 		string description;
 		string month;
