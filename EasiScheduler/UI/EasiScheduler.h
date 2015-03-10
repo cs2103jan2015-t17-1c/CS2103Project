@@ -1,3 +1,8 @@
+#include "interpreter.h"
+#include "Storage.h"
+#include "Task.h"
+#include "commandExecution.h"
+#include "msclr\marshal_cppstd.h"
 #pragma once
 
 namespace UI {
@@ -14,12 +19,14 @@ namespace UI {
 	/// </summary>
 	public ref class EasiScheduler : public System::Windows::Forms::Form
 	{
+	private:
+		CommandExecution *executor;
 	public:
 		EasiScheduler(void)
 		{
 			InitializeComponent();
 			//
-			//TODO: Add the constructor code here
+			executor= new CommandExecution();//TODO: Add the constructor code here
 			//
 		}
 
@@ -82,7 +89,7 @@ namespace UI {
 			this->outputBox->Name = L"outputBox";
 			this->outputBox->ReadOnly = true;
 			this->outputBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->outputBox->Size = System::Drawing::Size(694, 207);
+			this->outputBox->Size = System::Drawing::Size(709, 207);
 			this->outputBox->TabIndex = 1;
 			// 
 			// label2
@@ -103,11 +110,10 @@ namespace UI {
 			this->inputBox->Name = L"inputBox";
 			this->inputBox->Size = System::Drawing::Size(600, 56);
 			this->inputBox->TabIndex = 3;
-			this->inputBox->TextChanged += gcnew System::EventHandler(this, &EasiScheduler::button1_Click);
 			// 
 			// EnterButton
 			// 
-			this->EnterButton->Location = System::Drawing::Point(642, 289);
+			this->EnterButton->Location = System::Drawing::Point(657, 289);
 			this->EnterButton->Name = L"EnterButton";
 			this->EnterButton->Size = System::Drawing::Size(88, 52);
 			this->EnterButton->TabIndex = 4;
@@ -120,7 +126,7 @@ namespace UI {
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::ScrollBar;
-			this->ClientSize = System::Drawing::Size(757, 390);
+			this->ClientSize = System::Drawing::Size(779, 390);
 			this->Controls->Add(this->EnterButton);
 			this->Controls->Add(this->inputBox);
 			this->Controls->Add(this->label2);
@@ -137,9 +143,13 @@ namespace UI {
 #pragma endregion
 
 
+
+
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		int num=System::Convert::ToDouble(inputBox->Text);
-		outputBox->Text=System::Convert::ToString(num);
+			 System::String^ cmd_systemString = inputBox->Text;
+			 std::string cmd = msclr::interop::marshal_as<std::string>(cmd_systemString);
+		     executor->executeCommand(executor->determineCommandType(executor->readCommand(cmd)));
+
 		 }
 };
 }
