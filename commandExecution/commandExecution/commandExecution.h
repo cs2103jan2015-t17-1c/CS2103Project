@@ -16,28 +16,28 @@ private:
 	struct TaskInfo {
 		string description;
 		string month;
+		int intMonth;
 		int day;
 		int startTime;
 		int endTime;
-	} taskInfo;
+	} ;
+	TaskInfo taskInfo;
 public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
 		ADD, DELETE, DISPLAY, UPDATE,CLEAR, EXIT, INVALID
 	};
-	string readCommand();
-	StardardCommand const determineCommandType(string command);
-	void executeCommand(StardardCommand commandType);
-	void performAdd();
-	void performDisplay();
-	void performUpdate();
-	void performDelete();
+	string readCommand(string );
+	StardardCommand const determineCommandType(string);
+	void executeCommand(StardardCommand, string&);
+	void performAdd(string&);
+	void performDisplay(string&);
+	void performUpdate(string&);
+	void performDelete(string&);
 	void performExit();
 	void storeInTaskInfo();
 	void addEventToList();
-	void printAddResult();
-	string getContentToBeAdded();
-	bool isNormalEvent();
+	string addResult();;
 };
 
