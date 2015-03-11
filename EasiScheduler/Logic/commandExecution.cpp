@@ -38,11 +38,11 @@ CommandExecution::~CommandExecution(void) {
 
 
 
-string CommandExecution::readCommand(string str) { 
+string CommandExecution::readCommand() { 
 
-	string userInput=str;
+	string userInput="";
 
-	
+	getline(cin, userInput);
 
 	size_t end=userInput.find_first_of(" ");
 
@@ -118,7 +118,7 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
 
         case DISPLAY:{
 
-            //performDisplay();
+            performDisplay(message);
 
             break;
 
@@ -126,7 +126,7 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
 
         case DELETE:{
 
-            performDelete();
+            performDelete(message);
 
             break;
 
@@ -134,7 +134,7 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
 
         case UPDATE:{
 
-            performUpdate();
+            performUpdate(message);
 
 			break;
 
