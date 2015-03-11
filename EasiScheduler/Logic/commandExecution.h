@@ -54,7 +54,7 @@ public:
 
 	};
 
-	string readCommand();
+	string readCommand(string userInput);
 
 	StardardCommand const determineCommandType(string command);
 

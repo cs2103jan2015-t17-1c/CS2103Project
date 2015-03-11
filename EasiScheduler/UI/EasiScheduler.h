@@ -150,7 +150,12 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			 std::string input = msclr::interop::marshal_as<std::string>(cmd_systemString);
 			 std::string output=executor->readCommand(input);
 			 String^ MyString = gcnew String(output.c_str());
-			 outputBox->Text=MyString;
+			 std::cout<<executor->readCommand(input);
+			  outputBox->Text=MyString;
+			  inputBox->Text="";
+			  outputBox->Text="Command executed successfully";
+			
+			 
 		 }
 };
 }

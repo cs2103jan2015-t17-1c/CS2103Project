@@ -38,11 +38,8 @@ CommandExecution::~CommandExecution(void) {
 
 
 
-string CommandExecution::readCommand() { 
+string CommandExecution::readCommand(string userInput) { 
 
-	string userInput="";
-
-	getline(cin, userInput);
 
 	size_t end=userInput.find_first_of(" ");
 
