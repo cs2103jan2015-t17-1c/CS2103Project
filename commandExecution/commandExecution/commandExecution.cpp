@@ -26,7 +26,6 @@ string CommandExecution::readCommand(string userInput) {
 	command=inter.interpretCommand(command);
 	string message="";
 	executeCommand(determineCommandType(command),message);
-	cout<<"yes"<<command<<endl;
 	return message;
 }
 
@@ -132,12 +131,3 @@ void CommandExecution::performDisplay(string& message) {
 	tasks.displayTasks();
 }
 
-
-int main() {
-	CommandExecution comd;
-	string s;
-	s=comd.readCommand("add July 10 -s 15 -e 17 basketball");
-	cout<<s<<endl;
-	system("pause");
-	return 0;
-}
