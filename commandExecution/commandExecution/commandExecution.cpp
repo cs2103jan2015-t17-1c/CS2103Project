@@ -122,7 +122,7 @@ void CommandExecution::performUpdate(string& message) {
 	storeInTaskInfo();
 	tasks.updateTask(index, taskInfo.description, taskInfo.day,taskInfo.intMonth, taskInfo.startTime, taskInfo.endTime, 2015); 
 	ostringstream out;
-	out<<MESSAGE_NORMAL_TASK_ADDED;
+	out<<MESSAGE_UPDATED;
 	message=out.str();
 }
 
@@ -131,7 +131,7 @@ void CommandExecution::performDisplay(string& message) {
 	tasks.displayTasks();
 }
 
-/*
+/* test driver
 int main() {
 	CommandExecution comd;
 	string s;
