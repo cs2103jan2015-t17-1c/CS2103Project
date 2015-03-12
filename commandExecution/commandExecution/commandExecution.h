@@ -26,7 +26,7 @@ public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELETE, DISPLAY, UPDATE,CLEAR, EXIT, INVALID
+		ADD, DELETE, DISPLAY, UPDATE, CLEAR, EXIT, INVALID
 	};
 	string readCommand(string );
 	StardardCommand const determineCommandType(string);

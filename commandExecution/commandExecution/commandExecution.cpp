@@ -37,8 +37,8 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
     else if (command=="delete"){
         return StardardCommand::DELETE;
     }
-    else if (command=="clear"){
-        return StardardCommand::CLEAR;
+    else if (command=="update"){
+        return StardardCommand::UPDATE;
     }
     else if (command=="display"){
         return StardardCommand::DISPLAY;
@@ -127,7 +127,25 @@ void CommandExecution::performUpdate(string& message) {
 }
 
 void CommandExecution::performDisplay(string& message) {
-	message="displaying: \n";
+	message="All displayed. \n";
 	tasks.displayTasks();
 }
 
+/*
+int main() {
+	CommandExecution comd;
+	string s;
+	s=comd.readCommand("add July 10 -s 1400 -e 1600 play basketball");
+	cout<<s<<endl;
+	s=comd.readCommand("display");
+	cout<<s<<endl;
+	s=comd.readCommand ("update 1 August 15 -s 1200 -e 1400 play volleyball");
+	cout<<s<<endl;
+	s=comd.readCommand("delete 1");
+	cout<<s<<endl;
+	s=comd.readCommand("display");
+	cout<<s<<endl;
+	system("pause");
+	return 0;
+}
+*/
