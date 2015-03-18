@@ -20,13 +20,40 @@ CommandExecution::~CommandExecution(void) {
 }
 
 string CommandExecution::readCommand(string userInput) { 
+	string message="";
+
+	//logging user input
+	ofstream log;
+	log.open("userInputLogger.txt",ofstream::out | ofstream::app);
+	log<<userInput<<endl;
+
 	size_t end=userInput.find_first_of(" ");
 	string command=userInput.substr(0, end);
-	_content=userInput.substr(end+1, userInput.size()-end);
+	if(command != "display" ) {
+		_content=userInput.substr(end+1, userInput.size()-end);
+	} else {
+		try {
+			verify(end, userInput);
+		}
+		catch (int index) {
+			message=invalidCommand(index);
+			return message;
+		}
+	}
 	command=inter.interpretCommand(command);
-	string message="";
 	executeCommand(determineCommandType(command),message);
 	return message;
+}
+
+void CommandExecution::verify(size_t end, string userInput) {
+	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos)
+		throw 1;
+}
+
+string CommandExecution:: invalidCommand(int index) {
+	if(index == 1) {
+		return "input format error";
+	}
 }
 
 CommandExecution::StardardCommand const CommandExecution::determineCommandType(string command){
@@ -109,6 +136,7 @@ string CommandExecution::addResult() {
 
 void CommandExecution::performDelete(string& message) {
 	int index=stoi(_content.c_str());
+	assert(index > 0); 
 	tasks.deleteTask(index);
 	message="deleted\n";
 }
@@ -131,7 +159,7 @@ void CommandExecution::performDisplay(string& message) {
 	tasks.displayTasks();
 }
 
-/* test driver
+
 int main() {
 	CommandExecution comd;
 	string s;
@@ -143,9 +171,8 @@ int main() {
 	cout<<s<<endl;
 	s=comd.readCommand("delete 1");
 	cout<<s<<endl;
-	s=comd.readCommand("display");
+	s=comd.readCommand("display 1");
 	cout<<s<<endl;
 	system("pause");
 	return 0;
 }
-*/

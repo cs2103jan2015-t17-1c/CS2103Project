@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <assert.h>
+#include <fstream>
 #include "interpreter.h"
 #include "Storage.h"
 
@@ -26,7 +28,7 @@ public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELETE, DISPLAY, UPDATE, CLEAR, EXIT, INVALID
+		ADD, DELETE, DISPLAY, UPDATE, EXIT, INVALID
 	};
 	string readCommand(string );
 	StardardCommand const determineCommandType(string);
@@ -38,6 +40,8 @@ public:
 	void performExit();
 	void storeInTaskInfo();
 	void addEventToList();
-	string addResult();;
+	void verify(size_t, string);
+	string addResult();
+	string invalidCommand(int);
 };
 
