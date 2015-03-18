@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <assert.h>
+#include <fstream>
 #include "interpreter.h"
 #include "Storage.h"
 
@@ -15,16 +17,18 @@ private:
 	string _content;
 	struct TaskInfo {
 		string description;
-		int month;
+		string month;
+		int intMonth;
 		int day;
 		int startTime;
 		int endTime;
-	} taskInfo;
+	} ;
+	TaskInfo taskInfo;
 public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELETE, DISPLAY, UPDATE, CLEAR, EXIT, INVALID
+		ADD, DELETE, DISPLAY, UPDATE, EXIT, INVALID
 	};
 	string readCommand(string );
 	StardardCommand const determineCommandType(string);
@@ -36,6 +40,8 @@ public:
 	void performExit();
 	void storeInTaskInfo();
 	void addEventToList();
-	string addResult();;
+	void verify(size_t, string);
+	string addResult();
+	string invalidCommand(int);
 };
 
