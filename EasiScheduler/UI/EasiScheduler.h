@@ -84,12 +84,13 @@ namespace UI {
 			// outputBox
 			// 
 			this->outputBox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->outputBox->ForeColor = System::Drawing::SystemColors::WindowFrame;
 			this->outputBox->Location = System::Drawing::Point(36, 50);
 			this->outputBox->Multiline = true;
 			this->outputBox->Name = L"outputBox";
 			this->outputBox->ReadOnly = true;
 			this->outputBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->outputBox->Size = System::Drawing::Size(709, 207);
+			this->outputBox->Size = System::Drawing::Size(810, 207);
 			this->outputBox->TabIndex = 1;
 			// 
 			// label2
@@ -108,12 +109,12 @@ namespace UI {
 			this->inputBox->Location = System::Drawing::Point(36, 289);
 			this->inputBox->Multiline = true;
 			this->inputBox->Name = L"inputBox";
-			this->inputBox->Size = System::Drawing::Size(600, 56);
+			this->inputBox->Size = System::Drawing::Size(665, 56);
 			this->inputBox->TabIndex = 3;
 			// 
 			// EnterButton
 			// 
-			this->EnterButton->Location = System::Drawing::Point(657, 289);
+			this->EnterButton->Location = System::Drawing::Point(758, 289);
 			this->EnterButton->Name = L"EnterButton";
 			this->EnterButton->Size = System::Drawing::Size(88, 52);
 			this->EnterButton->TabIndex = 4;
@@ -125,8 +126,8 @@ namespace UI {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BackColor = System::Drawing::SystemColors::ScrollBar;
-			this->ClientSize = System::Drawing::Size(779, 390);
+			this->BackColor = System::Drawing::SystemColors::Info;
+			this->ClientSize = System::Drawing::Size(896, 390);
 			this->Controls->Add(this->EnterButton);
 			this->Controls->Add(this->inputBox);
 			this->Controls->Add(this->label2);
@@ -150,11 +151,9 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			 std::string input = msclr::interop::marshal_as<std::string>(cmd_systemString);
 			 std::string output=executor->readCommand(input);
 			 String^ MyString = gcnew String(output.c_str());
-			 std::cout<<executor->readCommand(input);
 			  outputBox->Text=MyString;
 			  inputBox->Text="";
-			  outputBox->Text="Command executed successfully";
-			
+			  
 			 
 		 }
 };
