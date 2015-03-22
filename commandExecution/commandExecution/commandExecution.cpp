@@ -34,9 +34,8 @@ string CommandExecution::readCommand(string userInput) {
 	} else {
 		try {
 			verify(end, userInput);
-		}
-		catch (int index) {
-			message=invalidCommand(index);
+		} catch (exception &e) {
+			message=e.what();
 			return message;
 		}
 	}
@@ -47,14 +46,16 @@ string CommandExecution::readCommand(string userInput) {
 
 void CommandExecution::verify(size_t end, string userInput) {
 	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos)
-		throw 1;
+		throw new exception ("error format");
 }
 
+/*
 string CommandExecution:: invalidCommand(int index) {
 	if(index == 1) {
 		return "input format error";
 	}
 }
+*/
 
 CommandExecution::StardardCommand const CommandExecution::determineCommandType(string command){
       
