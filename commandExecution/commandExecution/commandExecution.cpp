@@ -1,8 +1,8 @@
 #include "commandExecution.h"
 
 
-#define MESSAGE_NORMAL_TASK_ADDED "Successfully added "+taskInfo.description+" from "<<taskInfo.startTime<<" to "<<taskInfo.endTime<<" on "+taskInfo.month+" "<<taskInfo.day<<" to the schedule\n";
-#define MESSAGE_UPDATED "The event is updataed to:\n"+taskInfo.description+" from "<<taskInfo.startTime<<" to "<<taskInfo.endTime<<" on "+taskInfo.month+" "<<taskInfo.day<<endl;
+#define MESSAGE_NORMAL_TASK_ADDED "Successfully added ¡°on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "¡± to the schedule\n";
+#define MESSAGE_UPDATED "The event is updataed to:\n¡°on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "¡±\n";
 
 
 
@@ -49,13 +49,6 @@ void CommandExecution::verify(size_t end, string userInput) {
 		throw new exception ("error format");
 }
 
-/*
-string CommandExecution:: invalidCommand(int index) {
-	if(index == 1) {
-		return "input format error";
-	}
-}
-*/
 
 CommandExecution::StardardCommand const CommandExecution::determineCommandType(string command){
       
@@ -172,7 +165,7 @@ int main() {
 	cout<<s<<endl;
 	s=comd.readCommand("delete 1");
 	cout<<s<<endl;
-	s=comd.readCommand("display 1");
+	s=comd.readCommand("display");
 	cout<<s<<endl;
 	system("pause");
 	return 0;
