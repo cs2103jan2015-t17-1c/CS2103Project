@@ -129,10 +129,14 @@ string CommandExecution::addResult() {
 }
 
 void CommandExecution::performDelete(string& message) {
+	assert(stoi(_content.c_str()));
 	int index=stoi(_content.c_str());
-	assert(index > 0); 
-	tasks.deleteTask(index);
-	message="deleted\n";
+	if(index <1) {
+		message = "Invalid index!\n";
+	} else {
+		tasks.deleteTask(index);
+		message="deleted\n";
+	}
 }
 
 void CommandExecution::performUpdate(string& message) {
