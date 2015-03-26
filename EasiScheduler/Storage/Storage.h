@@ -10,6 +10,7 @@
 #define TaskList_h
 #include <string>
 #include <vector>
+#include <sstream>
 #include "task.h"
 
 using namespace std;
@@ -39,23 +40,29 @@ public:
     
     void updateTask(int index, string eventdescription, int starttime, int endtime, int day, int month, int year){
         
-        _tasklist[index].setEventInformation(eventdescription);
-        _tasklist[index].setStartTime(starttime);
-        _tasklist[index].setEndTime(endtime);
-        _tasklist[index].setDay(day);
-        _tasklist[index].setMonth(month);
-        _tasklist[index].setYear(year);
+        _tasklist[index-1].setEventInformation(eventdescription);
+        _tasklist[index-1].setStartTime(starttime);
+        _tasklist[index-1].setEndTime(endtime);
+        _tasklist[index-1].setDay(day);
+        _tasklist[index-1].setMonth(month);
+        _tasklist[index-1].setYear(year);
     }
     
-    void displayTasks(){
-            for (unsigned i=0; i< _tasklist.size();i++)
-            cout << (i+1) << ". " << "start time " << _tasklist[i].getStartTime() << " end time " << _tasklist[i].getEndTime() << "Event: " << _tasklist[i].getEventInformation() << endl;
-    }
-    
-    
-    void readTask(int index){
+    string displayTasks(){
+        ostringstream out;
+        out << "Displaying:" << endl;
         
-        cout << index << ". " << "start time " << _tasklist[index].getStartTime() << " end time " << _tasklist[index].getEndTime() << "Event: " << _tasklist[index].getEventInformation() << endl;
+        for (unsigned i=0; i< _tasklist.size();i++){
+			out << (i+1) << ". " << " month: " << _tasklist[i].getMonth() << " day: " << _tasklist[i].getDay() << " start time： " << _tasklist[i].getStartTime() << " end time： " << _tasklist[i].getEndTime() << " Event: " << _tasklist[i].getEventInformation() << endl<<"||||||||||||||||||||||||||||||||||";
+        }
+        return out.str();
+    }
+    
+    
+    string readTask(int index){
+        ostringstream out; 
+        out << index << ". " << " start time " << _tasklist[index].getStartTime() << " end time " << _tasklist[index].getEndTime() << " Event: " << _tasklist[index].getEventInformation() << endl;
+        return out.str();
     }
     
     

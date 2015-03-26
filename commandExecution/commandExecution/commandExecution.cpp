@@ -1,8 +1,8 @@
 #include "commandExecution.h"
 
 
-#define MESSAGE_NORMAL_TASK_ADDED "Successfully added "+taskInfo.description+" from "<<taskInfo.startTime<<" to "<<taskInfo.endTime<<" on "+taskInfo.month+" "<<taskInfo.day<<" to the schedule\n";
-#define MESSAGE_UPDATED "The event is updataed to:\n"+taskInfo.description+" from "<<taskInfo.startTime<<" to "<<taskInfo.endTime<<" on "+taskInfo.month+" "<<taskInfo.day<<endl;
+#define MESSAGE_NORMAL_TASK_ADDED "Successfully added ¡°on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "¡± to the schedule\n";
+#define MESSAGE_UPDATED "The event is updataed to:\n¡°on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "¡±\n";
 
 
 
@@ -20,15 +20,35 @@ CommandExecution::~CommandExecution(void) {
 }
 
 string CommandExecution::readCommand(string userInput) { 
+	string message="";
+
+	//logging user input
+	ofstream log;
+	log.open("userInputLogger.txt",ofstream::out | ofstream::app);
+	log<<userInput<<endl;
+
 	size_t end=userInput.find_first_of(" ");
 	string command=userInput.substr(0, end);
-	_content=userInput.substr(end+1, userInput.size()-end);
+	if(command != "display" ) {
+		_content=userInput.substr(end+1, userInput.size()-end);
+	} else {
+		try {
+			verify(end, userInput);
+		} catch (exception &e) {
+			message=e.what();
+			return message;
+		}
+	}
 	command=inter.interpretCommand(command);
-	string message="";
 	executeCommand(determineCommandType(command),message);
-	cout<<"yes"<<command<<endl;
 	return message;
 }
+
+void CommandExecution::verify(size_t end, string userInput) {
+	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos)
+		throw new exception ("error format");
+}
+
 
 CommandExecution::StardardCommand const CommandExecution::determineCommandType(string command){
       
@@ -38,8 +58,8 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
     else if (command=="delete"){
         return StardardCommand::DELETE;
     }
-    else if (command=="clear"){
-        return StardardCommand::CLEAR;
+    else if (command=="update"){
+        return StardardCommand::UPDATE;
     }
     else if (command=="display"){
         return StardardCommand::DISPLAY;
@@ -109,9 +129,14 @@ string CommandExecution::addResult() {
 }
 
 void CommandExecution::performDelete(string& message) {
+	assert(stoi(_content.c_str()));
 	int index=stoi(_content.c_str());
-	tasks.deleteTask(index);
-	message="deleted\n";
+	if(index <1) {
+		message = "Invalid index!\n";
+	} else {
+		tasks.deleteTask(index);
+		message="deleted\n";
+	}
 }
 
 void CommandExecution::performUpdate(string& message) {
@@ -123,12 +148,12 @@ void CommandExecution::performUpdate(string& message) {
 	storeInTaskInfo();
 	tasks.updateTask(index, taskInfo.description, taskInfo.day,taskInfo.intMonth, taskInfo.startTime, taskInfo.endTime, 2015); 
 	ostringstream out;
-	out<<MESSAGE_NORMAL_TASK_ADDED;
+	out<<MESSAGE_UPDATED;
 	message=out.str();
 }
 
 void CommandExecution::performDisplay(string& message) {
-	message="displaying: \n";
+	message="All displayed. \n";
 	tasks.displayTasks();
 }
 
@@ -136,7 +161,15 @@ void CommandExecution::performDisplay(string& message) {
 int main() {
 	CommandExecution comd;
 	string s;
-	s=comd.readCommand("add July 10 -s 15 -e 17 basketball");
+	s=comd.readCommand("add July 10 -s 1400 -e 1600 play basketball");
+	cout<<s<<endl;
+	s=comd.readCommand("display");
+	cout<<s<<endl;
+	s=comd.readCommand ("update 1 August 15 -s 1200 -e 1400 play volleyball");
+	cout<<s<<endl;
+	s=comd.readCommand("delete 1");
+	cout<<s<<endl;
+	s=comd.readCommand("display");
 	cout<<s<<endl;
 	system("pause");
 	return 0;

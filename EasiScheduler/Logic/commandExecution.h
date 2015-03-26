@@ -4,8 +4,6 @@
 #include <sstream>
 #include <assert.h>
 #include <fstream>
-#include <exception>
-#include <ctype.h>
 #include "interpreter.h"
 #include "Storage.h"
 

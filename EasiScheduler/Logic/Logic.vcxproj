@@ -63,18 +63,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="commandExecution.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="commandExecution.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Intepreter\Intepreter.vcxproj">
       <Project>{613f08f0-66d5-497a-aca9-701f149686ad}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.vcxproj">
       <Project>{629b8673-1def-45e8-a383-138162b66c98}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="commandExecution.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="commandExecutionv0.1-XM.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
