@@ -71,7 +71,7 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
         return StardardCommand::INVALID;
 }
 
-void CommandExecution::executeCommand(StardardCommand commandType, string& message) {;
+void CommandExecution::executeCommand(StardardCommand commandType, string& message) {
 	 switch (commandType) {
         case ADD:{
             performAdd(message);
