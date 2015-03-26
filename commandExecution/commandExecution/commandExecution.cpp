@@ -1,8 +1,8 @@
 #include "commandExecution.h"
 
 
-#define MESSAGE_NORMAL_TASK_ADDED "Successfully added ¡°on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "¡± to the schedule\n";
-#define MESSAGE_UPDATED "The event is updataed to:\n¡°on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "¡±\n";
+#define MESSAGE_NORMAL_TASK_ADDED "Successfully added 'on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "' to the schedule\r\n";
+#define MESSAGE_UPDATED "The event is updataed to:\r\n'on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "'\r\n";
 
 
 
@@ -119,7 +119,7 @@ void CommandExecution::storeInTaskInfo() {
 }
 
 void CommandExecution::addEventToList() {
-	tasks.addTask(taskInfo.description, taskInfo.day, taskInfo.intMonth, taskInfo.startTime, taskInfo.endTime, 2015);
+	tasks.addTask(taskInfo.description, taskInfo.startTime, taskInfo.endTime, taskInfo.day, taskInfo.intMonth, 2015);
 }
 
 string CommandExecution::addResult() {
@@ -129,32 +129,31 @@ string CommandExecution::addResult() {
 }
 
 void CommandExecution::performDelete(string& message) {
-	assert(stoi(_content.c_str()));
 	int index=stoi(_content.c_str());
 	if(index <1) {
-		message = "Invalid index!\n";
+		message = "Invalid index!\r\n"; 
 	} else {
 		tasks.deleteTask(index);
-		message="deleted\n";
+		message="deleted\r\n";
 	}
 }
 
 void CommandExecution::performUpdate(string& message) {
-	istringstream in(_content);
-	int index;
-	in>>index;
-	in>>_content;
+	size_t end = _content.find_first_of(" ");
+	string indexString = _content.substr(0, end);
+	int index = stoi(indexString.c_str());
+	_content = _content.substr(end+1, _content.size()-end);
 	inter.convert(_content); 
 	storeInTaskInfo();
-	tasks.updateTask(index, taskInfo.description, taskInfo.day,taskInfo.intMonth, taskInfo.startTime, taskInfo.endTime, 2015); 
+	tasks.updateTask(index, taskInfo.description, taskInfo.startTime, taskInfo.endTime, taskInfo.day, taskInfo.intMonth, 2015);
 	ostringstream out;
 	out<<MESSAGE_UPDATED;
 	message=out.str();
 }
 
 void CommandExecution::performDisplay(string& message) {
-	message="All displayed. \n";
-	tasks.displayTasks();
+	message = "All displayed. \r\n";
+	message += tasks.displayTasks();
 }
 
 
