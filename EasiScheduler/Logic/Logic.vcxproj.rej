@@ -1,0 +1,14 @@
+diff a/EasiScheduler/Logic/Logic.vcxproj b/EasiScheduler/Logic/Logic.vcxproj	(rejected hunks)
+@@ -70,6 +70,12 @@
+       <Project>{629b8673-1def-45e8-a383-138162b66c98}</Project>
+     </ProjectReference>
+   </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="commandExecution.h" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClCompile Include="commandExecutionv0.1-XM.cpp" />
++  </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>

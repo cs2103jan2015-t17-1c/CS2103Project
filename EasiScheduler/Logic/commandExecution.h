@@ -32,7 +32,7 @@ public:
 	enum StardardCommand { 
 		ADD, DELETE, DISPLAY, UPDATE, EXIT, INVALID
 	};
-	string readCommand(string );
+	string readCommand(string);
 	StardardCommand const determineCommandType(string);
 	void executeCommand(StardardCommand, string&);
 	void performAdd(string&);

@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logic", "Logic\Logic.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Storage", "Storage\Storage.vcxproj", "{629B8673-1DEF-45E8-A383-138162B66C98}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI", "UI\UI.vcxproj", "{F8B305DE-1EAB-4A7E-8275-3AB2679D9BEC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{5BAA585C-CCD3-4B0D-AE26-16CB670C1C38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,10 @@ Global
 		{629B8673-1DEF-45E8-A383-138162B66C98}.Debug|Win32.Build.0 = Debug|Win32
 		{629B8673-1DEF-45E8-A383-138162B66C98}.Release|Win32.ActiveCfg = Release|Win32
 		{629B8673-1DEF-45E8-A383-138162B66C98}.Release|Win32.Build.0 = Release|Win32
-		{F8B305DE-1EAB-4A7E-8275-3AB2679D9BEC}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F8B305DE-1EAB-4A7E-8275-3AB2679D9BEC}.Debug|Win32.Build.0 = Debug|Win32
-		{F8B305DE-1EAB-4A7E-8275-3AB2679D9BEC}.Release|Win32.ActiveCfg = Release|Win32
-		{F8B305DE-1EAB-4A7E-8275-3AB2679D9BEC}.Release|Win32.Build.0 = Release|Win32
+		{5BAA585C-CCD3-4B0D-AE26-16CB670C1C38}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5BAA585C-CCD3-4B0D-AE26-16CB670C1C38}.Debug|Win32.Build.0 = Debug|Win32
+		{5BAA585C-CCD3-4B0D-AE26-16CB670C1C38}.Release|Win32.ActiveCfg = Release|Win32
+		{5BAA585C-CCD3-4B0D-AE26-16CB670C1C38}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

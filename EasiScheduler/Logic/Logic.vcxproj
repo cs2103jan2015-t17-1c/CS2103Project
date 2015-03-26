@@ -74,7 +74,7 @@
     <ClInclude Include="commandExecution.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="commandExecutionv0.1-XM.cpp" />
+    <ClCompile Include="commandExecution.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
