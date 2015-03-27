@@ -26,6 +26,8 @@ static const string COMMAND_DISPLAY[3];
 
 static const string COMMAND_UPDATE[3];
 
+static const string COMMAND_SEARCH[3];
+
 static const string STD_MONTH[12];
 
 static const string STD_ADD;
@@ -37,6 +39,8 @@ static const string STD_CLEAR;
 static const string STD_DISPLAY;
 
 static const string STD_UPDATE;
+
+static const string STD_SEARCH;
 
 struct eventinput{
 

@@ -156,7 +156,7 @@ void InitializeComponent(void)
 	this->outputBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 	this->outputBox->Size = System::Drawing::Size(1178, 472);
 	this->outputBox->TabIndex = 1;
-	this->outputBox->Text = L"Welcome to EasiScheduler!";
+	this->outputBox->Text = L"Welcom to EasiScheduler!";
 	// 
 	// inputBox
 	// 
@@ -164,14 +164,14 @@ void InitializeComponent(void)
 	this->inputBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
 	this->inputBox->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12.06283F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 		static_cast<System::Byte>(0)));
-	this->inputBox->ForeColor = System::Drawing::Color::Black;
-	this->inputBox->Location = System::Drawing::Point(12, 526);
+	this->inputBox->ForeColor = System::Drawing::Color::Gray;
+	this->inputBox->Location = System::Drawing::Point(12, 515);
 	this->inputBox->Multiline = true;
 	this->inputBox->Name = L"inputBox";
-	this->inputBox->Size = System::Drawing::Size(1163, 57);
+	this->inputBox->Size = System::Drawing::Size(1163, 92);
 	this->inputBox->TabIndex = 3;
 	this->inputBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &EasiScheduler::inputBox_KeyDown);
-	this->outputBox->Text = L"Enter your command here";
+	this->inputBox->Text = L"Enter your command here";
 	// 
 	// monthCalendar1
 	// 
@@ -190,7 +190,7 @@ void InitializeComponent(void)
 	this->Controls->Add(this->outputBox);
 	this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 	this->MaximumSize = System::Drawing::Size(1670, 708);
-	this->MinimumSize = System::Drawing::Size(1640, 708);
+	this->MinimumSize = System::Drawing::Size(1625, 708);
 	this->Name = L"EasiScheduler";
 	this->Opacity = 0.94;
 	this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Show;
@@ -222,10 +222,7 @@ std::string output=executor->readCommand(input);
 String^ MyString = gcnew String(output.c_str());
 
   outputBox->Text=MyString;
-  inputBox->ForeColor = System::Drawing::Color::Gray;
-  inputBox->Text="Enter your command here";
-   
- 
+  inputBox->Text="";
 
  
 
@@ -233,9 +230,7 @@ String^ MyString = gcnew String(output.c_str());
 
 private: System::Void inputBox_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 			inputBox->ForeColor = System::Drawing::Color::Black;
-			if(inputBox->Text=="[DELETE THIS]Enter your command here")
-			{inputBox->Text=="";
-			}
+			
 			if(e->KeyCode==Keys::Enter){
 				 button1_Click(sender,e);
 			 }

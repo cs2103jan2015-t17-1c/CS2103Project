@@ -25,7 +25,7 @@ string CommandExecution::readCommand(string userInput) {
 	//logging user input
 	ofstream log;
 	log.open("userInputLogger.txt",ofstream::out | ofstream::app);
-	log<<userInput<<endl;
+	log<<userInput<<"\r\n";
 
 	size_t end=userInput.find_first_of(" ");
 	string command=userInput.substr(0, end);
@@ -67,6 +67,11 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
     else if (command=="exit"){
         return StardardCommand::EXIT;
     }
+	else if(command=="search"){
+
+	    return StardardCommand::SEARCH;
+
+	}
     else
         return StardardCommand::INVALID;
 }
@@ -97,6 +102,12 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
             //printMessageifCommandInvalid();
             break;
         } 
+		case SEARCH:{
+
+			performSearch(message);
+
+			break;
+		}
         default:
             break;
     }
@@ -156,4 +167,8 @@ void CommandExecution::performDisplay(string& message) {
 	message += tasks.displayTasks();
 }
 
+void CommandExecution::performSearch(string& message){
 
+	message = tasks.searchTask(_content);
+
+}

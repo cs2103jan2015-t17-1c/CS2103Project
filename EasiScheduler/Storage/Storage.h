@@ -1,4 +1,4 @@
-//
+﻿//
 
 //  TaskList.h
 
@@ -24,7 +24,7 @@
 
 #include <sstream>
 
-#include "task.h"
+#include "Task.h"
 
 
 
@@ -102,7 +102,7 @@ public:
 
         ostringstream out;
 
-        out << "Displaying: \r\n" ;
+        out << "Displaying:" << "\r\n";
 
         
 
@@ -132,9 +132,43 @@ public:
 
     
 
-    
+      string searchTask(string content){
+
+	    vector<Task>::iterator iter;
+
+		string line;
+
+		ostringstream out;
+
+		int i=1;
+
+		for(iter = _tasklist.begin();iter != _tasklist.end();iter++){
+
+			line=(*iter).getEventInformation();
+
+			if(line.find(content) != string::npos){
+
+            out << i << ". " << " month: " << (*iter).getMonth() << " day: " << (*iter).getDay() << " start time£∫ " <<(*iter).getStartTime() << " end time£∫ " << (*iter).getEndTime() << " Event: " << (*iter).getEventInformation() << "\r\n";
+
+            i++;
+
+			}
+
+		}
+
+		if(i==1)
+
+			out<< "no match!";
+
+		 return out.str();
+
+	}
 
 };
+
+
+
+
 
 
 

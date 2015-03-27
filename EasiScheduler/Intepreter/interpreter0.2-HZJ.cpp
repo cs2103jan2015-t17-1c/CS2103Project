@@ -22,6 +22,8 @@ const string interpreter::COMMAND_DISPLAY[3]={"Display","display","DISPLAY"};
 
 const string interpreter::COMMAND_UPDATE[3]={"Update","update","UPDATE"};
 
+const string interpreter::COMMAND_SEARCH[3]={"Search","search", "SEARCH"};
+
 const string interpreter::STD_MONTH[12]={"January","February","March","April",
 
     "May","June","July","August","September","October","November", "December"};
@@ -35,6 +37,8 @@ const string interpreter::STD_CLEAR="clear";
 const string interpreter::STD_DISPLAY="display";
 
 const string interpreter::STD_UPDATE="update";
+
+const string interpreter::STD_SEARCH="search";
 
 
 
@@ -85,6 +89,12 @@ string interpreter::interpretCommand(string cmd){
     else if(checkEachPossibility(COMMAND_UPDATE,cmd))
 
         return STD_UPDATE;
+
+
+
+	else if(checkEachPossibility(COMMAND_SEARCH,cmd))
+
+		return STD_SEARCH;
 
     
 
