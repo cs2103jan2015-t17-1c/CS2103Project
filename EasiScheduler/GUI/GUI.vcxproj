@@ -58,7 +58,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies />
       <EntryPointSymbol>main</EntryPointSymbol>
+      <SubSystem>Windows</SubSystem>
     </Link>
+    <ResourceCompile />
+    <ResourceCompile>
+      <ResourceOutputFileName>$(IntDir)%(EasiSchedulerGUI).res</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -95,6 +100,24 @@
     <ClInclude Include="EasiSchedulerGUI.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GUI.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\bright-cold-stars-of-space-.jpg" />
+    <Image Include="..\..\..\icon1.ico" />
+    <Image Include="bright-cold-stars-of-space-.jpg" />
+    <Image Include="icon1.ico" />
+    <Image Include="icon3.ico" />
+    <Image Include="Image1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EasiSchedulerGUI.resx">
+      <DependentUpon>EasiSchedulerGUI.h</DependentUpon>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ &lt;placeholder&gt; .EasiSchedulerGUI.resources</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

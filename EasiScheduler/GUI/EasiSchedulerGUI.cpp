@@ -30,7 +30,7 @@ Application::SetCompatibleTextRenderingDefault(false);
 
 
 
-GUI::EasiScheduler mainWindow;
+UI::EasiScheduler mainWindow;
 
 Application::Run(%mainWindow);
 

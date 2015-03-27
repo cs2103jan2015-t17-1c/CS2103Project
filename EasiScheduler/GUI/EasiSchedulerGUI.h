@@ -12,7 +12,7 @@
 
 
 
-namespace GUI {
+namespace UI {
 
 
 
@@ -84,19 +84,25 @@ delete components;
 
 }
 
-private: System::Windows::Forms::Label^  label1;
+
 
 private: System::Windows::Forms::TextBox^  outputBox;
 
 
 
-private: System::Windows::Forms::Label^  label2;
+
 
 private: System::Windows::Forms::TextBox^  inputBox;
+private: System::Windows::Forms::MonthCalendar^  monthCalendar1;
+
+
+private: System::Windows::Forms::HelpProvider^  helpProvider1;
+private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
+private: System::ComponentModel::IContainer^  components;
 
 
 
-private: System::Windows::Forms::Button^  EnterButton;
+
 
 
 
@@ -112,7 +118,7 @@ private:
 
 /// </summary>
 
-System::ComponentModel::Container ^components;
+
 
 
 
@@ -129,158 +135,69 @@ System::ComponentModel::Container ^components;
 void InitializeComponent(void)
 
 {
-
-this->label1 = (gcnew System::Windows::Forms::Label());
-
-this->outputBox = (gcnew System::Windows::Forms::TextBox());
-
-this->label2 = (gcnew System::Windows::Forms::Label());
-
-this->inputBox = (gcnew System::Windows::Forms::TextBox());
-
-this->EnterButton = (gcnew System::Windows::Forms::Button());
-
-this->SuspendLayout();
-
-// 
-
-// label1
-
-// 
-
-this->label1->AutoSize = true;
-
-this->label1->Location = System::Drawing::Point(31, 21);
-
-this->label1->Name = L"label1";
-
-this->label1->Size = System::Drawing::Size(115, 26);
-
-this->label1->TabIndex = 0;
-
-this->label1->Text = L"OutputBox";
-
-this->label1->Click += gcnew System::EventHandler(this, &EasiScheduler::button1_Click);
-
-// 
-
-// outputBox
-
-// 
-
-this->outputBox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-
-this->outputBox->ForeColor = System::Drawing::SystemColors::WindowFrame;
-
-this->outputBox->Location = System::Drawing::Point(36, 50);
-
-this->outputBox->Multiline = true;
-
-this->outputBox->Name = L"outputBox";
-
-this->outputBox->ReadOnly = true;
-
-this->outputBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-
-this->outputBox->Size = System::Drawing::Size(762, 472);
-
-this->outputBox->TabIndex = 1;
-
-// 
-
-// label2
-
-// 
-
-this->label2->AutoSize = true;
-
-this->label2->Location = System::Drawing::Point(48, 586);
-
-this->label2->Name = L"label2";
-
-this->label2->Size = System::Drawing::Size(98, 26);
-
-this->label2->TabIndex = 2;
-
-this->label2->Text = L"InputBox";
-
-this->label2->Click += gcnew System::EventHandler(this, &EasiScheduler::button1_Click);
-
-// 
-
-// inputBox
-
-// 
-
-this->inputBox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-
-this->inputBox->Location = System::Drawing::Point(36, 674);
-
-this->inputBox->Multiline = true;
-
-this->inputBox->Name = L"inputBox";
-
-this->inputBox->Size = System::Drawing::Size(665, 56);
-
-this->inputBox->TabIndex = 3;
-
-// 
-
-// EnterButton
-
-// 
-
-this->EnterButton->Location = System::Drawing::Point(710, 674);
-
-this->EnterButton->Name = L"EnterButton";
-
-this->EnterButton->Size = System::Drawing::Size(88, 52);
-
-this->EnterButton->TabIndex = 4;
-
-this->EnterButton->Text = L"Enter";
-
-this->EnterButton->UseVisualStyleBackColor = true;
-
-this->EnterButton->Click += gcnew System::EventHandler(this, &EasiScheduler::button1_Click);
-
-// 
-
-// EasiScheduler
-
-// 
-
-this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
-
-this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-
-this->BackColor = System::Drawing::SystemColors::Info;
-
-this->ClientSize = System::Drawing::Size(835, 880);
-
-this->Controls->Add(this->EnterButton);
-
-this->Controls->Add(this->inputBox);
-
-this->Controls->Add(this->label2);
-
-this->Controls->Add(this->outputBox);
-
-this->Controls->Add(this->label1);
-
-this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-
-this->MaximizeBox = false;
-
-this->Name = L"EasiScheduler";
-
-this->Text = L"EasiScheduler";
-
-this->ResumeLayout(false);
-
-this->PerformLayout();
-
-
+	this->outputBox = (gcnew System::Windows::Forms::TextBox());
+	this->inputBox = (gcnew System::Windows::Forms::TextBox());
+	this->monthCalendar1 = (gcnew System::Windows::Forms::MonthCalendar());
+	this->helpProvider1 = (gcnew System::Windows::Forms::HelpProvider());
+	this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
+	this->SuspendLayout();
+	// 
+	// outputBox
+	// 
+	this->outputBox->BackColor = System::Drawing::Color::CadetBlue;
+	this->outputBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+	this->outputBox->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12.06283F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+		static_cast<System::Byte>(0)));
+	this->outputBox->ForeColor = System::Drawing::Color::LemonChiffon;
+	this->outputBox->Location = System::Drawing::Point(12, 26);
+	this->outputBox->Multiline = true;
+	this->outputBox->Name = L"outputBox";
+	this->outputBox->ReadOnly = true;
+	this->outputBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+	this->outputBox->Size = System::Drawing::Size(1178, 472);
+	this->outputBox->TabIndex = 1;
+	this->outputBox->Text = L"Welcome to EasiScheduler!";
+	// 
+	// inputBox
+	// 
+	this->inputBox->BackColor = System::Drawing::Color::Thistle;
+	this->inputBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+	this->inputBox->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12.06283F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+		static_cast<System::Byte>(0)));
+	this->inputBox->ForeColor = System::Drawing::Color::Black;
+	this->inputBox->Location = System::Drawing::Point(12, 526);
+	this->inputBox->Multiline = true;
+	this->inputBox->Name = L"inputBox";
+	this->inputBox->Size = System::Drawing::Size(1163, 57);
+	this->inputBox->TabIndex = 3;
+	this->inputBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &EasiScheduler::inputBox_KeyDown);
+	this->outputBox->Text = L"Enter your command here";
+	// 
+	// monthCalendar1
+	// 
+	this->monthCalendar1->Location = System::Drawing::Point(1203, 26);
+	this->monthCalendar1->Name = L"monthCalendar1";
+	this->monthCalendar1->TabIndex = 4;
+	// 
+	// EasiScheduler
+	// 
+	this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
+	this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+	this->BackColor = System::Drawing::Color::Linen;
+	this->ClientSize = System::Drawing::Size(1621, 639);
+	this->Controls->Add(this->monthCalendar1);
+	this->Controls->Add(this->inputBox);
+	this->Controls->Add(this->outputBox);
+	this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+	this->MaximumSize = System::Drawing::Size(1670, 708);
+	this->MinimumSize = System::Drawing::Size(1640, 708);
+	this->Name = L"EasiScheduler";
+	this->Opacity = 0.94;
+	this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Show;
+	this->Text = L"EasiScheduler";
+	this->Load += gcnew System::EventHandler(this, &EasiScheduler::EasiScheduler_Load);
+	this->ResumeLayout(false);
+	this->PerformLayout();
 
 }
 
@@ -305,15 +222,27 @@ std::string output=executor->readCommand(input);
 String^ MyString = gcnew String(output.c_str());
 
   outputBox->Text=MyString;
-
-  inputBox->Text="";
-
+  inputBox->ForeColor = System::Drawing::Color::Gray;
+  inputBox->Text="Enter your command here";
+   
  
 
  
 
 }
 
+private: System::Void inputBox_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+			inputBox->ForeColor = System::Drawing::Color::Black;
+			if(inputBox->Text=="[DELETE THIS]Enter your command here")
+			{inputBox->Text=="";
+			}
+			if(e->KeyCode==Keys::Enter){
+				 button1_Click(sender,e);
+			 }
+		 }
+
+private: System::Void EasiScheduler_Load(System::Object^  sender, System::EventArgs^  e) {
+		 }
 };
 
 }

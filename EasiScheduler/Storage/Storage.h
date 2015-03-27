@@ -102,13 +102,13 @@ public:
 
         ostringstream out;
 
-        out << "Displaying:\r\n" << endl;
+        out << "Displaying: \r\n" ;
 
         
 
         for (unsigned i=0; i< _tasklist.size();i++){
 
-            out << (i+1) << ". " << " month: " << _tasklist[i].getMonth() << " day: " << _tasklist[i].getDay() << " start time" << _tasklist[i].getStartTime() << " end time" << _tasklist[i].getEndTime() << " Event: " << _tasklist[i].getEventInformation() << endl;
+            out << (i+1) << ". " << " month: " << _tasklist[i].getMonth() << " day: " << _tasklist[i].getDay() << " start time" << _tasklist[i].getStartTime() << " end time" << _tasklist[i].getEndTime() << " Event: " << _tasklist[i].getEventInformation() << "\r\n";
 
         }
 
@@ -124,7 +124,7 @@ public:
 
         ostringstream out;
 
-        out << index << ". " << " start time " << _tasklist[index].getStartTime() << " end time " << _tasklist[index].getEndTime() << " Event: " << _tasklist[index].getEventInformation() << endl;
+        out << index << ". " << " start time " << _tasklist[index].getStartTime() << " end time " << _tasklist[index].getEndTime() << " Event: " << _tasklist[index].getEventInformation() << "\r\n";
 
         return out.str();
 
