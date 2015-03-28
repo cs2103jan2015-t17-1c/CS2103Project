@@ -148,7 +148,7 @@ public:
 
 			if(line.find(content) != string::npos){
 
-            out << i << ". " << " month: " << (*iter).getMonth() << " day: " << (*iter).getDay() << " start time£∫ " <<(*iter).getStartTime() << " end time£∫ " << (*iter).getEndTime() << " Event: " << (*iter).getEventInformation() << "\r\n";
+            out << i << ". " << " month: " << (*iter).getMonth() << " day: " << (*iter).getDay() << " start time " <<(*iter).getStartTime() << " end time£∫ " << (*iter).getEndTime() << " Event: " << (*iter).getEventInformation() << "\r\n";
 
             i++;
 
