@@ -1,0 +1,77 @@
+userinput logger:
+add July 10 -s 1400 -e 1600 play basketball
+display
+update 1 August 15 -s 1200 -e 1400 play volleyball
+delete 1
+display 1
+delete 0
+add July 10 -s 1400 -e 1600 play basketball
+delete 0
+delete 1
+Add July 5 GoHOME!
+display
+add July 7 ewiofn
+display
+add July 3 def
+add July 4 a
+display
+search a
+f
+add July 7 word
+display
+search word
+add July 3 have
+search have
+add July 7 wef
+add July 4 sef
+exit
+
+add July 4 aed
+add July 2 e
+add June 34
+add July 4 erf
+add July 5 df
+add July 4 afd
+add June 4 wer
+display
+location D:\\
+add March 4 eee
+display
+location D:\\
+add July 2 22
+location
+search
+location
+location
+location
+location
+location D;\\
+location D:\\
+add July 4 df
+location D:\\360Downloads
+location D:\\360downloads
+location D:\\
+add July 7 se
+add July 1 df
+location D:\\
+add july 5 haha
+undo
+add july 6
+display
+undo
+add july 5 haha
+undo
+add july 5 haha
+undo
+add july 5 haha
+undo
+add july 5 haha
+add July 6 nonono
+undo
+display
+undo
+display
+add July 8 nonono
+display
+undo
+display
