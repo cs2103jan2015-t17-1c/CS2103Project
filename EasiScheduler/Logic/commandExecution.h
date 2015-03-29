@@ -30,9 +30,9 @@ public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELETE, DISPLAY, UPDATE, EXIT, INVALID
+		ADD, DELETE, DISPLAY, UPDATE, SEARCH, EXIT, INVALID
 	};
-	string readCommand(string );
+	string readCommand(string);
 	StardardCommand const determineCommandType(string);
 	void executeCommand(StardardCommand, string&);
 	void performAdd(string&);
@@ -43,6 +43,7 @@ public:
 	void storeInTaskInfo();
 	void addEventToList();
 	void verify(size_t, string);
+	void performSearch(string&);
 	string addResult();
 	string invalidCommand(int);
 };

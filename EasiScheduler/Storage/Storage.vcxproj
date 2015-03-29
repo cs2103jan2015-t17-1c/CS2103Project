@@ -15,7 +15,7 @@
     <ClInclude Include="Task.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="time.cpp" />
+    <ClCompile Include="Storage.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{629B8673-1DEF-45E8-A383-138162B66C98}</ProjectGuid>
