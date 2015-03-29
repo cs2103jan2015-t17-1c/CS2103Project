@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "commandExecution", "commandExecution\commandExecution.vcxproj", "{303234BD-404B-4BC6-8393-ACD3F6E1664A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logic Unit test", "UnitTest1\UnitTest1.vcxproj", "{AE0328AC-BF8B-4561-B96F-EB711EFC8A7E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogicUnitTest", "..\logic-Jason\commandExecution\UnitTest1\UnitTest1.vcxproj", "{AE0328AC-BF8B-4561-B96F-EB711EFC8A7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

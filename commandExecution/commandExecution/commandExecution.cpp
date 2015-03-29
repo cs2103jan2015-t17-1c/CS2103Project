@@ -1,5 +1,5 @@
 #include "commandExecution.h"
-
+using namespace std;
 
 #define MESSAGE_NORMAL_TASK_ADDED "Successfully added 'on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "' to the schedule\r\n";
 #define MESSAGE_UPDATED "The event is updataed to:\r\n'on " + taskInfo.month + " " << taskInfo.day << " from " << taskInfo.startTime << " to " << taskInfo.endTime << " " + taskInfo.description + "'\r\n";
@@ -46,7 +46,7 @@ string CommandExecution::readCommand(string userInput) {
 
 void CommandExecution::verify(size_t end, string userInput) {
 	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos)
-		throw new exception ("error format");
+		throw new exception("error format");
 }
 
 
@@ -56,7 +56,7 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
 		return StardardCommand::ADD;
     }
     else if (command=="delete"){
-        return StardardCommand::DELETE;
+        return StardardCommand::DELET;
     }
     else if (command=="update"){
         return StardardCommand::UPDATE;
@@ -67,26 +67,35 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
     else if (command=="exit"){
         return StardardCommand::EXIT;
     }
+	else if(command=="search"){
+	    return StardardCommand::SEARCH;
+	}
+	else if(command=="location"){
+		return StardardCommand::LOCATION;
+	}
     else
         return StardardCommand::INVALID;
 }
 
-void CommandExecution::executeCommand(StardardCommand commandType, string& message) {;
+void CommandExecution::executeCommand(StardardCommand commandType, string& message) {
 	 switch (commandType) {
         case ADD:{
             performAdd(message);
+			saveInFile();
             break;
         }
         case DISPLAY:{
             performDisplay(message);
             break;
         }
-        case DELETE:{
+        case DELET:{
             performDelete(message);
+			saveInFile();
             break;
         }
         case UPDATE:{
             performUpdate(message);
+			saveInFile();
 			break;
         }
         case EXIT:{
@@ -97,12 +106,20 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
             //printMessageifCommandInvalid();
             break;
         } 
+		case SEARCH:{
+			performSearch(message);
+			break;
+		}
+		case LOCATION:{
+			performLocation(message);
+			break;
+		}
         default:
             break;
     }
 }
 
-void CommandExecution::performAdd(string& message) {
+void CommandExecution::performAdd(string& message){
 	inter.convert(_content); 
 	storeInTaskInfo();
 	addEventToList();
@@ -156,20 +173,14 @@ void CommandExecution::performDisplay(string& message) {
 	message += tasks.displayTasks();
 }
 
+void CommandExecution::performSearch(string& message){
+	message = tasks.searchTask(_content);
+}
 
-int main() {
-	CommandExecution comd;
-	string s;
-	s=comd.readCommand("add July 10 -s 1400 -e 1600 play basketball");
-	cout<<s<<endl;
-	s=comd.readCommand("display");
-	cout<<s<<endl;
-	s=comd.readCommand ("update 1 August 15 -s 1200 -e 1400 play volleyball");
-	cout<<s<<endl;
-	s=comd.readCommand("delete 1");
-	cout<<s<<endl;
-	s=comd.readCommand("display");
-	cout<<s<<endl;
-	system("pause");
-	return 0;
+void CommandExecution::saveInFile(){
+    tasks.writeIntoFile();
+}
+
+void CommandExecution::performLocation(string& message){
+	message=tasks.changeFileLocation(_content);
 }
