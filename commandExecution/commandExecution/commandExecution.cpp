@@ -29,9 +29,9 @@ string CommandExecution::readCommand(string userInput) {
 
 	size_t end=userInput.find_first_of(" ");
 	string command=userInput.substr(0, end);
-	if(command != "display" ) {
-		_content=userInput.substr(end+1, userInput.size()-end);
-	} else {
+	command=inter.interpretCommand(command);
+
+	if (command == "display"){
 		try {
 			verify(end, userInput);
 		} catch (exception &e) {
@@ -39,7 +39,20 @@ string CommandExecution::readCommand(string userInput) {
 			return message;
 		}
 	}
-	command=inter.interpretCommand(command);
+	else if (command == "undo"){
+		try {
+			verify(end, userInput);
+		} catch (exception &e) {
+			message=e.what();
+			return message;
+		}
+	}
+	else {
+		_content=userInput.substr(end+1, userInput.size()-end);
+	} 
+	
+
+
 	executeCommand(determineCommandType(command),message);
 	return message;
 }
@@ -73,6 +86,12 @@ CommandExecution::StardardCommand const CommandExecution::determineCommandType(s
 	else if(command=="location"){
 		return StardardCommand::LOCATION;
 	}
+	else if(command=="undo"){
+		return StardardCommand::UNDO;
+	}
+	else if(command=="mark"){
+		return StardardCommand::MARK;
+	}
     else
         return StardardCommand::INVALID;
 }
@@ -98,8 +117,17 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
 			saveInFile();
 			break;
         }
+		case UNDO:{
+			performUndo(message);
+			saveInFile();
+			break;
+		}
         case EXIT:{
-            //performExit();
+            performExit();
+            break;
+        }
+        case MARK:{
+            performMark(message);
             break;
         }
         case INVALID:{
@@ -122,6 +150,8 @@ void CommandExecution::executeCommand(StardardCommand commandType, string& messa
 void CommandExecution::performAdd(string& message){
 	inter.convert(_content); 
 	storeInTaskInfo();
+	//backup TaskLists
+	saveTaskLists();
 	addEventToList();
 	message=addResult();
 }
@@ -150,6 +180,8 @@ void CommandExecution::performDelete(string& message) {
 	if(index <1) {
 		message = "Invalid index!\r\n"; 
 	} else {
+		//backup TaskLists
+		saveTaskLists();
 		tasks.deleteTask(index);
 		message="deleted\r\n";
 	}
@@ -162,6 +194,8 @@ void CommandExecution::performUpdate(string& message) {
 	_content = _content.substr(end+1, _content.size()-end);
 	inter.convert(_content); 
 	storeInTaskInfo();
+	//backup TaskLists
+	saveTaskLists();
 	tasks.updateTask(index, taskInfo.description, taskInfo.startTime, taskInfo.endTime, taskInfo.day, taskInfo.intMonth, 2015);
 	ostringstream out;
 	out<<MESSAGE_UPDATED;
@@ -183,4 +217,24 @@ void CommandExecution::saveInFile(){
 
 void CommandExecution::performLocation(string& message){
 	message=tasks.changeFileLocation(_content);
+}
+
+void CommandExecution::performUndo(string& message){
+	tasks.undoCommand();
+	message=message+"Undo is successful \n";  
+}
+
+void CommandExecution::saveTaskLists(){
+	tasks.copyTaskLists();
+}
+
+void CommandExecution::performExit(){
+	tasks.operateExit();
+}
+
+void CommandExecution::performMark(string& message){
+	int index=stoi(_content.c_str());
+    tasks.operateMark(index);
+	message = "Event marked done. \r\n";
+
 }

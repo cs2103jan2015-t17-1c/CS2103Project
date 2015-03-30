@@ -6,6 +6,7 @@
 #include <fstream>
 #include <exception>
 #include <ctype.h>
+#include <algorithm>
 #include "interpreter.h"
 #include "Storage.h"
 
@@ -30,7 +31,7 @@ public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELET, DISPLAY, UPDATE, SEARCH, EXIT, INVALID, LOCATION
+		ADD, DELET, DISPLAY, UPDATE, SEARCH, EXIT, INVALID, LOCATION,UNDO,MARK
 	};
 	string readCommand(string);
 	StardardCommand const determineCommandType(string);
@@ -39,14 +40,19 @@ public:
 	void performDisplay(string&);
 	void performUpdate(string&);
 	void performDelete(string&);
+	void performUndo(string&);
 	void performExit();
 	void storeInTaskInfo();
 	void addEventToList();
+	void undoCommand();
 	void verify(size_t, string);
 	void performSearch(string&);
 	string addResult();
 	string invalidCommand(int);
 	void saveInFile();
+	void saveTaskLists();
 	void performLocation(string&);
+	void performMark(string&);
+
 };
 
