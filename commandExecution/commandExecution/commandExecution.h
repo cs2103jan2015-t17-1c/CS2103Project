@@ -2,11 +2,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <assert.h>
-#include <fstream>
-#include <exception>
-#include <ctype.h>
-#include <algorithm>
 #include "interpreter.h"
 #include "Storage.h"
 
@@ -21,38 +16,28 @@ private:
 	struct TaskInfo {
 		string description;
 		string month;
-		int intMonth;
 		int day;
 		int startTime;
 		int endTime;
-	} ;
-	TaskInfo taskInfo;
+	} taskInfo;
 public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELET, DISPLAY, UPDATE, SEARCH, EXIT, INVALID, LOCATION,UNDO,MARK
+		ADD, DELETE, DISPLAY, UPDATE,CLEAR, EXIT, INVALID
 	};
-	string readCommand(string);
-	StardardCommand const determineCommandType(string);
-	void executeCommand(StardardCommand, string&);
-	void performAdd(string&);
-	void performDisplay(string&);
-	void performUpdate(string&);
-	void performDelete(string&);
-	void performUndo(string&);
+	string readCommand();
+	StardardCommand const determineCommandType(string command);
+	void executeCommand(StardardCommand commandType);
+	void performAdd();
+	void performDisplay();
+	void performUpdate();
+	void performDelete();
 	void performExit();
 	void storeInTaskInfo();
 	void addEventToList();
-	void undoCommand();
-	void verify(size_t, string);
-	void performSearch(string&);
-	string addResult();
-	string invalidCommand(int);
-	void saveInFile();
-	void saveTaskLists();
-	void performLocation(string&);
-	void performMark(string&);
-
+	void printAddResult();
+	string getContentToBeAdded();
+	bool isNormalEvent();
 };
 
