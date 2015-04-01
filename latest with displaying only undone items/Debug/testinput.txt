@@ -1,3 +1,0 @@
-add July 10 -s 1400 -e 1600 play basketball
-display
-display 1

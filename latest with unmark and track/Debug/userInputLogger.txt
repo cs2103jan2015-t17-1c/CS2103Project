@@ -1,0 +1,301 @@
+userinput logger:
+add July 10 -s 1400 -e 1600 play basketball
+display
+update 1 August 15 -s 1200 -e 1400 play volleyball
+delete 1
+display 1
+delete 0
+add July 10 -s 1400 -e 1600 play basketball
+delete 0
+delete 1
+Add July 5 GoHOME!
+display
+add July 7 ewiofn
+display
+add July 3 def
+add July 4 a
+display
+search a
+f
+add July 7 word
+display
+search word
+add July 3 have
+search have
+add July 7 wef
+add July 4 sef
+exit
+
+add July 4 aed
+add July 2 e
+add June 34
+add July 4 erf
+add July 5 df
+add July 4 afd
+add June 4 wer
+display
+location D:\\
+add March 4 eee
+display
+location D:\\
+add July 2 22
+location
+search
+location
+location
+location
+location
+location D;\\
+location D:\\
+add July 4 df
+location D:\\360Downloads
+location D:\\360downloads
+location D:\\
+add July 7 se
+add July 1 df
+location D:\\
+add july 5 haha
+undo
+add july 6
+display
+undo
+add july 5 haha
+undo
+add july 5 haha
+undo
+add july 5 haha
+undo
+add july 5 haha
+add July 6 nonono
+undo
+display
+undo
+display
+add July 8 nonono
+display
+undo
+display
+add July 5 re
+display
+add March 4 dre
+display
+exit
+add July 23 er
+add March 4 erf
+display
+exit
+add June 4 34r
+display
+exit
+display
+delete 2
+display
+exit
+add July 3 324
+add March 4 22
+display
+mark 1
+display
+exit
+display
+add July 5 no no no 
+search 2
+display
+search 24
+search 2
+display
+search 22
+search 2
+search no
+display
+display
+add July 7 yes 
+display
+update
+add
+add August 8 hahaha
+display
+search
+search 2
+display
+search 2
+search no
+add July 1 eat food
+add July 2 drink water
+display
+add
+add July 3 negative number
+display
+display
+
+ July shit
+
+display
+
+display
+display
+mark 3 
+display
+mark 3
+display
+add July 5 haha
+display
+search t
+delete 3
+display
+display
+display
+add July 13 go home
+undo
+undo
+add August 6 no no no 
+undo
+undo
+display
+undo
+search 2
+undo
+Add July 10 hahaha
+display
+redo
+redo
+undo
+redo
+redo
+undo
+undo
+redo
+undo
+redo
+redo
+display
+display
+add July 5 haha
+display
+undo
+display
+redo
+display
+add July 5 haha
+Add July 6 no no no
+display
+undo
+display
+redo
+display
+add July 10 nonono
+display
+undo
+redo
+display
+redo
+redo
+undo
+add July 5 haha
+display
+redo
+redo
+undo
+undo
+display
+redo
+display
+undo
+add July 5 haha
+Add July 6 nono
+Add July 9 shit
+display
+undo
+redo
+undo
+undo
+display
+redo
+undo
+add July 8 haha
+display
+add July 9 nono
+undo
+Add July 10 nono
+display
+undo
+add July 11 non
+display
+undo
+undo
+display
+add July 8 haha
+Add July 12 Nono
+display
+delete -858993459
+display
+delete -858993454
+add July 5 hahaha
+display
+add July 8
+display
+Add July 9 NO 
+delete 2
+undo
+display
+Add July 8 debug
+display
+undo
+redo
+display
+add July 20 ok
+display
+undo
+undo
+redo
+display
+undo
+display
+redo
+display
+redo
+display
+mark 3
+display
+add July 3 er
+display
+mark 1
+display
+unmark 1
+display
+add July 3 ewr
+add March 3 gr
+add April 2 grw
+display
+mark 2
+display
+add July 3 rer
+add March 2 fdr
+add March 4 aerf
+display
+mark 1
+display
+track
+add July 5 ef
+add March 4 df
+display
+mark 1
+display
+track
+display
+mark 1
+track
+display
+unmark 1
+display
+track
+delete 1
+delete 2
+display
+track
+add March 3 ef
+display
+delete 1
+display
+delete 1
+exit
