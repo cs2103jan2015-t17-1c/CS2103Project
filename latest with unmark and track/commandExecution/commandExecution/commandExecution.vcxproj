@@ -10,6 +10,15 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+<<<<<<< HEAD:EasiScheduler/Intepreter/Intepreter.vcxproj
+  <ItemGroup>
+    <ClInclude Include="interpreter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="interpreter.cpp" />
+  </ItemGroup>
+=======
+>>>>>>> 1a9627c352d469f80d0c7bc5047c1c52093dd144:latest with unmark and track/commandExecution/commandExecution/commandExecution.vcxproj
   <PropertyGroup Label="Globals">
     <ProjectGuid>{303234BD-404B-4BC6-8393-ACD3F6E1664A}</ProjectGuid>
     <RootNamespace>commandExecution</RootNamespace>

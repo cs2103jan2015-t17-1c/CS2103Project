@@ -14,23 +14,26 @@ using namespace std;
 class CommandExecution
 {
 private:
-	interpreter inter;
-	Storage tasks;
+	interpreter _inter;
+	Storage _tasks;
 	string _content;
 	struct TaskInfo {
 		string description;
-		string month;
-		int intMonth;
-		int day;
 		int startTime;
+		int startDay;
+		int startMonth;
+		int startYear;
 		int endTime;
+		int endDay;
+		int endMonth;
+		int endYear;
 	} ;
-	TaskInfo taskInfo;
+	TaskInfo _taskInfo;
 public:
 	CommandExecution(void);
 	~CommandExecution(void);
 	enum StardardCommand { 
-		ADD, DELETE, DISPLAY, UPDATE, SEARCH, EXIT, INVALID
+		ADD, DELET, DISPLAY, UPDATE, SEARCH, EXIT, INVALID, LOCATION, UNDO, REDO, MARK,UNMARK,TRACK
 	};
 	string readCommand(string);
 	StardardCommand const determineCommandType(string);
@@ -39,12 +42,20 @@ public:
 	void performDisplay(string&);
 	void performUpdate(string&);
 	void performDelete(string&);
+	void performUndo(string&);
+	void performRedo(string&);
 	void performExit();
 	void storeInTaskInfo();
 	void addEventToList();
-	void verify(size_t, string);
+	bool isInvalid(size_t, string);
 	void performSearch(string&);
 	string addResult();
 	string invalidCommand(int);
+	void saveInFile();
+	void saveTaskLists();
+	void performLocation(string&);
+	void performMark(string&);
+	void performUnmark(string&);
+	void performTrack(string&);
 };
 

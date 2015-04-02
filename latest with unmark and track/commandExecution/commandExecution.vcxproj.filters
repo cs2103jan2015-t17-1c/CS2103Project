@@ -29,6 +29,28 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:EasiScheduler/GUI/GUI.vcxproj.filters
+    <ResourceCompile Include="GUI.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\bright-cold-stars-of-space-.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bright-cold-stars-of-space-.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+=======
     <ClCompile Include="commandExecution.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -41,6 +63,7 @@
     <ClCompile Include="Storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+>>>>>>> 1a9627c352d469f80d0c7bc5047c1c52093dd144:latest with unmark and track/commandExecution/commandExecution.vcxproj.filters
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">

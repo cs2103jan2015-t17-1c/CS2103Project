@@ -1,196 +1,172 @@
 //
-
 //  Header.h
-
 //  Task
-
 //
-
 //  Created by Xu Meng on 10/3/15.
-
 //  Copyright (c) 2015 Xu Meng. All rights reserved.
-
 //
-
-
 
 #ifndef Task_h
-
 #define Task_h
-
 #include <string>
-
-
 
 using namespace std;
 
-
-
 class Task{
-
 private:
-
-    int _starttime;
-
-    int _endtime;
-
+    int startTime;
+    int endTime;
     string _eventdescription;
-
-    int _day;
-
-    int _month;
-
-    int _year;
+    int startDay;
+    int startMonth;
+    int startYear;
+	int endDay;
+	int endMonth;
+	int endYear;
+	int _unit;
+	int _mark;
 
 public:
-
  
-
     Task(){
-
-        _starttime=-1;
-
-        _endtime=-1;
-
+        startTime=-1;
+        endTime=-1;
         _eventdescription="EMPTY";
+        startDay=-1;
+        startMonth=-1;
+        startYear=-1;
+		endDay=-1;
+		endMonth=-1;
+		endYear=-1;
+		_unit=-1;
+		_mark=0;
 
-        _day=-1;
-
-        _month=-1;
-
-        _year=-1;
 
     }
-
     
-
-    Task(string eventdescription,  int starttime, int endtime, int day, int month, int year){
-
-        _starttime=starttime;
-
-        _endtime=endtime;
-
+	//when mark is given
+    Task(string eventdescription,  int starttime, int startday, int startmonth, int startyear, int endtime, int endday, int endmonth, int endyear,int unit, int mark){
+        startTime=starttime;
+        endTime=endtime;
         _eventdescription=eventdescription;
+        startDay=startday;
+        startMonth=startmonth;
+        startYear=startyear;
+		endDay=endday;
+		endMonth=endmonth;
+		endYear=endyear;
+		_unit=unit;
+		_mark=mark;
 
-        _day=day;
-
-        _month=month;
-
-        _year=year;
+    }
+		//when mark is default and is not given
+	    Task(string eventdescription,  int starttime, int startday, int startmonth, int startyear, int endtime, int endday, int endmonth, int endyear,int unit){
+        startTime=starttime;
+        endTime=endtime;
+        _eventdescription=eventdescription;
+        startDay=startday;
+        startMonth=startmonth;
+        startYear=startyear;
+		endDay=endday;
+		endMonth=endmonth;
+		endYear=endyear;
+		_unit=unit;
+		_mark=0;
 
     }
 
     
+
 
     string getEventInformation(){
-
         return _eventdescription;
-
     }
-
     
-
     int getEndTime(){
-
-        return _endtime;
-
+        return endTime;
+    }
+    
+	int getEndDay(){
+        return endDay;
+    }
+    
+    int getEndMonth(){
+        return endMonth;
     }
 
-    
+    int getEndYear(){
+        return endYear;
+    }
 
     int getStartTime(){
-
-        return _starttime;
-
+        return startTime;
     }
-
     
-
-    int getDay(){
-
-        return _day;
-
+    int getStartDay(){
+        return startDay;
     }
-
     
-
-    int getMonth(){
-
-        return _month;
-
+    int getStartMonth(){
+        return startMonth;
     }
-
-    int getYear(){
-
-        return _year;
-
+    int getStartYear(){
+        return startYear;
     }
+	int getUnit(){
+		return _unit;
+	}
+    int getMark(){
+	    return _mark;
+	}
 
-    
+
 
     void setEventInformation(string eventdescription){
-
         _eventdescription = eventdescription;
-
     }
-
     
-
     void setEndTime(int endtime){
-
-        _endtime=endtime;
-
+        endTime=endtime;
+    }
+     void setEndDay(int endday){
+        endDay=endday;
+    }
+    
+    void setEndMonth(int endmonth){
+        endMonth=endmonth;
     }
 
-    
-
+    void setEndYear(int endyear){
+        endYear=endyear;
+    }
     void setStartTime(int starttime){
-
-        _starttime=starttime;
-
+        startTime=starttime;
+    }
+    
+    void setStartDay(int startday){
+        startDay=startday;
+    }
+    
+    void setStartMonth(int startmonth){
+        startMonth=startmonth;
     }
 
-    
-
-    void setDay(int day){
-
-        _day=day;
-
+    void setStartYear(int startyear){
+        startYear=startyear;
     }
 
-    
-
-    void setMonth(int month){
-
-        _month=month;
-
-    }
-
-    void setYear(int year){
-
-        _year=year;
-
-    }
+	void setMark(int mark){
+	     _mark=mark;
+	}
+    void setUnmark(int unmark){
+	     _mark=unmark;
+	}
 
     
-
-    
-
-    
-
-    
-
 };
 
 
 
 
 
-
-
-
-
-
-
 #endif
-

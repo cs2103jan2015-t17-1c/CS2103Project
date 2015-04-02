@@ -29,10 +29,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:EasiScheduler/Intepreter/Intepreter.vcxproj.filters
+    <ClCompile Include="interpreter.cpp">
+=======
     <ClCompile Include="commandExecution.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\interpreter.cpp">
+>>>>>>> 1a9627c352d469f80d0c7bc5047c1c52093dd144:latest with unmark and track/commandExecution/commandExecution/commandExecution.vcxproj.filters
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
