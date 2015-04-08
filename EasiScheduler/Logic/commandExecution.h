@@ -1,4 +1,11 @@
 #pragma once
+//
+//  Header.h
+//  Task
+//
+//  Created by Yang Hong Jie on 10/3/15.
+//  Copyright (c) 2015 Yang Hong Jie. All rights reserved.
+//
 
 #include <iostream>
 #include <string>
@@ -36,7 +43,7 @@ public:
 	CommandExecution();
 	~CommandExecution();
 
-	enum StardardCommand { 
+	enum StandardCommand { 
 		ADD, DELET, DISPLAY, UPDATE, SEARCH, EXIT, INVALID, LOCATION, UNDO, REDO, MARK,UNMARK,TRACK
 	};
 
@@ -44,44 +51,47 @@ public:
 
 	void retrieveContent(string, size_t);
 	string readCommand(string);
-	StardardCommand const determineCommandType(string);
-    void executeCommand(StardardCommand, string &);
+	StandardCommand const determineCommandType(string);
+    void executeCommand(StandardCommand, string &);
 
-	void performAdd(string &);
+	void performAdd(string &, string);
 	void performDisplay(string &);
-	void performUpdate(string &);
-	void performDelete(string &);
+	void performUpdate(string &, string);
+	void performDelete(string &, string);
 	void performUndo(string &);
 	void performRedo(string &);
+	void performInvalidMessage(string &);
 	void performExit();
+	void performLocation(string &, string);
+	void performMark(string &, string);
+	void performUnmark(string &, string);
+	void performTrack(string &);
+	void performSearch(string &, string);
+
 
 	void storeInTaskInfo();
 	void addEventToList();
-	void performSearch(string &);
+	
 
 	
     string invalidCommand(int);
-    bool isNormalTask ();
-    bool CommandExecution::isDeadlineTask ();
+    bool isNormalTask (int, int);
+    bool isDeadlineTask (int, int);
 
 	
     void saveInFile();
 	void saveTaskLists(); 
-    bool CommandExecution::isUndoTrue();
+    bool isUndoAlready();
 
 	
-    void performLocation(string &);
-	void performMark(string &);
-	void performUnmark(string &);
-	void performTrack(string &);
+    
 	string getCommand(string, size_t &);
 	
 	//This function is for UI to display recent tasks
 	string readRecentTask(int index);
 
 	string getContent();
-	string getAddResult();
-
+	string getAddResult(int, int, string);
 
 
 	bool isExit(string);
@@ -90,9 +100,17 @@ public:
 	bool isEmptyContent(string);
 
 
+	//new functions added for unit testing
 
-	
-
+	int getStartYear();
+	int getEndYear();
+	string getDescription();
+	bool isValidIndexForDeletion(int);
+	bool isInvalidIndex(int);
+	int getSize();
+	void seperateInputForUpdate(string, int &, string &);
+	void updateToTasks(int);
 };
+
 
 
