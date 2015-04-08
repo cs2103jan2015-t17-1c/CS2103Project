@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -29,33 +30,69 @@ private:
 		int endYear;
 	} ;
 	TaskInfo _taskInfo;
+
 public:
-	CommandExecution(void);
-	~CommandExecution(void);
+	
+	CommandExecution();
+	~CommandExecution();
+
 	enum StardardCommand { 
 		ADD, DELET, DISPLAY, UPDATE, SEARCH, EXIT, INVALID, LOCATION, UNDO, REDO, MARK,UNMARK,TRACK
 	};
+
+
+
+	void retrieveContent(string, size_t);
 	string readCommand(string);
 	StardardCommand const determineCommandType(string);
-	void executeCommand(StardardCommand, string&);
-	void performAdd(string&);
-	void performDisplay(string&);
-	void performUpdate(string&);
-	void performDelete(string&);
-	void performUndo(string&);
-	void performRedo(string&);
+    void executeCommand(StardardCommand, string &);
+
+	void performAdd(string &);
+	void performDisplay(string &);
+	void performUpdate(string &);
+	void performDelete(string &);
+	void performUndo(string &);
+	void performRedo(string &);
 	void performExit();
+
 	void storeInTaskInfo();
 	void addEventToList();
-	bool isInvalid(size_t, string);
-	void performSearch(string&);
-	string addResult();
-	string invalidCommand(int);
-	void saveInFile();
-	void saveTaskLists();
-	void performLocation(string&);
-	void performMark(string&);
-	void performUnmark(string&);
-	void performTrack(string&);
+	void performSearch(string &);
+
+	
+    string invalidCommand(int);
+    bool isNormalTask ();
+    bool CommandExecution::isDeadlineTask ();
+
+	
+    void saveInFile();
+	void saveTaskLists(); 
+    bool CommandExecution::isUndoTrue();
+
+	
+    void performLocation(string &);
+	void performMark(string &);
+	void performUnmark(string &);
+	void performTrack(string &);
+	string getCommand(string, size_t &);
+	
+	//This function is for UI to display recent tasks
+	string readRecentTask(int index);
+
+	string getContent();
+	string getAddResult();
+
+
+
+	bool isExit(string);
+	bool isInvalidFormat(size_t, string);
+	bool isSingleWordCommand(string);
+	bool isEmptyContent(string);
+
+
+
+	
+
 };
+
 
