@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EasiScheduler", "commandExecution\commandExecution.vcxproj", "{303234BD-404B-4BC6-8393-ACD3F6E1664A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI", "UI\UI.vcxproj", "{F65D2E18-84BE-4E77-8169-5B7CF029942D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{303234BD-404B-4BC6-8393-ACD3F6E1664A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{303234BD-404B-4BC6-8393-ACD3F6E1664A}.Debug|Win32.Build.0 = Debug|Win32
+		{303234BD-404B-4BC6-8393-ACD3F6E1664A}.Release|Win32.ActiveCfg = Release|Win32
+		{303234BD-404B-4BC6-8393-ACD3F6E1664A}.Release|Win32.Build.0 = Release|Win32
+		{F65D2E18-84BE-4E77-8169-5B7CF029942D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F65D2E18-84BE-4E77-8169-5B7CF029942D}.Debug|Win32.Build.0 = Debug|Win32
+		{F65D2E18-84BE-4E77-8169-5B7CF029942D}.Release|Win32.ActiveCfg = Release|Win32
+		{F65D2E18-84BE-4E77-8169-5B7CF029942D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
