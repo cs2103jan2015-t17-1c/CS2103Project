@@ -1,0 +1,936 @@
+//@author: a0093868j
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.cpp
+	 */
+
+#include "CommandChecker.h"
+#include <ctype.h>
+#include <algorithm>
+#include <string>
+#include <exception>
+
+const int MAX_INPUT_LENGTH = 1000;
+const char* MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER = "Exceed Maximun Length of Input!";
+
+CommandChecker::CommandChecker(void) {
+}
+
+
+CommandChecker::~CommandChecker(void) {
+}
+
+//Purpose: To cut the first word of the string as the command
+string CommandChecker::getCommand(string userInput, size_t & end) {
+	end = userInput.find_first_of(" ");
+	string command = userInput.substr(0, end);
+	command = interpretCommand(command);
+	return command;
+}
+
+//Purpose: To transform all the string to lower case
+//Prerequiest: The characters are all alphabetic 
+string CommandChecker::interpretCommand(string command) {
+
+    std::transform(command.begin(), command.end(), command.begin(), ::tolower);
+	return command;
+}
+
+//Purpose: To get the remaining content except the first word
+string CommandChecker::getContent(string userInput, size_t end) {
+	return userInput.substr(end + 1, userInput.size() - end);
+}
+
+bool CommandChecker::isExitCommand(string command) {
+	return command == "exit";
+}
+
+bool CommandChecker::isAddCommand(string command) {
+	return command == "add";
+}
+
+bool CommandChecker::isDeleteCommand(string command) {
+	return command == "delete";
+}
+
+bool CommandChecker::isDisplayCommand(string command) {
+	return command == "display";
+}
+
+bool CommandChecker::isUpdateCommand(string command) {
+	return command == "update";
+}
+
+bool CommandChecker::isMarkCommand(string command) {
+	return command == "mark";
+}
+
+bool CommandChecker::isUnmarkCommand(string command) {
+	return command == "unmark";
+}
+
+bool CommandChecker::isUndoCommand(string command) {
+	return command == "undo";
+}
+
+bool CommandChecker::isRedoCommand(string command) {
+	return command == "redo";
+}
+
+bool CommandChecker::isSearchCommand(string command) {
+	return command == "search";
+}
+
+bool CommandChecker::isTrackCommand(string command) {
+	return command == "track";
+}
+
+bool CommandChecker::isLocationCommand(string command) {
+	return command == "location";
+}
+
+bool CommandChecker::isSingleWordCommand(string command) {
+	return command == "display" || command == "undo" || command == "redo"|| command == "track";
+}
+
+//Purpose: To check whether the string only contains one or more words.
+//If containing one word, return true;
+//If containing more than one word, return false;
+bool CommandChecker::isInvalidCommandFormat(string userInput, size_t end) {
+	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool CommandChecker::isEmptyContent(string content) {
+	size_t end = content.find_first_not_of(" ");
+	if(end == string::npos) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+//Purpose: To cut the string into two part, one is the first integer,
+//the other one is the remaining string.
+void CommandChecker::seperateContent(string userInput, int& index, string& updatedContent) {
+	istringstream in(userInput);
+	size_t start;
+	string dummy;
+	in >> index;
+	in >> dummy;
+	start = userInput.find(dummy);
+	if(dummy == "") {
+		updatedContent = " ";
+	} else {
+		updatedContent = userInput.substr(start, userInput.size() - start);
+	}
+}
+
+
+void CommandChecker::verifyLengthOfUserInput(string userInput) {
+	if(userInput.size() > MAX_INPUT_LENGTH) {
+		throw new exception(MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER);
+	}
+}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.h
+	 */
+
+#pragma once
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <assert.h>
+#include <fstream>
+#include <exception>
+#include <ctype.h>
+
+using namespace std;
+
+
+
+
+class CommandChecker{
+
+public:
+	CommandChecker(void);
+	~CommandChecker(void);
+
+	string getCommand(string, size_t &);
+	string interpretCommand(string);
+	string getContent(string, size_t);
+	
+	bool isExitCommand(string);
+	bool isAddCommand(string);
+	bool isDeleteCommand(string);
+	bool isDisplayCommand(string);
+	bool isUpdateCommand(string);
+	bool isMarkCommand(string);
+	bool isUnmarkCommand(string);
+	bool isUndoCommand(string);
+	bool isRedoCommand(string);
+	bool isSearchCommand(string);
+	bool isTrackCommand(string);
+	bool isLocationCommand(string);
+	bool isSingleWordCommand(string);
+	bool isInvalidCommandFormat(string, size_t);
+	bool isEmptyContent(string);
+
+	void seperateContent(string, int &, string &);
+	void verifyLengthOfUserInput(string);
+};
+
+
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.cpp
+	 */
+
+#include "CurrentTime.h"
+
+
+CurrentTime::CurrentTime(){
+	struct tm *timeinfo;
+	time_t now_time = time(0);
+	timeinfo = localtime(&now_time);
+	
+	setYear(timeinfo);
+	setMonth(timeinfo);
+	setDate(timeinfo);
+
+}
+
+
+void CurrentTime::setYear(struct tm *timeinfo){
+	_year = 1900 + timeinfo->tm_year;
+
+}
+
+void CurrentTime::setMonth(struct tm *timeinfo){
+	_month = 1 + timeinfo->tm_mon;
+}
+
+void CurrentTime::setDate(struct tm *timeinfo){
+	_day = timeinfo->tm_mday;
+}
+
+int CurrentTime::getYear(){
+	return _year;
+}
+
+int CurrentTime::getMonth(){
+	return _month;
+}
+
+int CurrentTime::getDay(){
+	return _day;
+}
+
+
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.h
+	 */
+
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+class CurrentTime{
+
+private:
+	int _year;
+	int _month;
+	int _day;
+
+public:
+	CurrentTime();
+	//setter methods
+	void setYear(struct tm *timeinfo);
+	void setMonth(struct tm *timeinfo);
+	void setDate(struct tm *timeinfo);
+
+	//getter methods
+	int getYear();
+	int getMonth();
+	int getDay();
+
+};
+
+
+
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\MainTesting.cpp
+	 */
+
+#include <iostream>
+#include <string>
+#include "CommandExecution.h"
+#include "SmartAdder.h"
+#include "EasiStorage.h"
+#include "Task.h"
+#include "CurrentTime.h"
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    string input;
+    getline(cin,input);
+    CommandExecution v01;
+    
+	string stopCommand;
+
+
+    cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+
+
+
+
+    
+    return 0;
+}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\MainTesting.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
+	 */
+
+//Purpose: To fill the time component with current time if no user input is found
+//If no time is found, it is set to be 0000am
+void SmartAdder::appendMissingInfo() {
+	appendMissingStartInfo();
+	checkFeasibleDate(getStartDay(), getStartMonth(), getStartYear());
+	appendMissingEndInfo();
+	checkFeasibleDate(getEndDay(), getEndMonth(), getEndYear());
+}
+
+//Purpose: To detect which time component the user did not give
+bool SmartAdder::isAnythingMissing(int time, int day, int month, int year){
+	if (time == _indicatorEmptyInput && day == _indicatorEmptyInput && month == _indicatorEmptyInput && year == _indicatorEmptyInput ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isTheUnitMissing(int valueOfTimeUnit){
+	if (valueOfTimeUnit == _indicatorEmptyInput) {
+		return true;
+	} else {
+		assert(valueOfTimeUnit != -1);
+		return false;
+	}
+}
+
+//Purpose: To check whether the day of month is legal or not
+//For example, the largest day of Febuary in 2015 should not be larger than 28
+void SmartAdder::checkFeasibleDate(int day, int month, int year){
+	 if(isFebThirtieth(day, month)) {
+		setIsValidInput(false);
+	 }
+	 if(isFebThirtyFirst(day, month)) {
+		setIsValidInput(false);
+	 }
+	 if(isAprThirtyFirst(day, month)) {
+		 setIsValidInput(false);
+	 }
+	 if(isJunThirtyFirst(day, month)) {
+		 setIsValidInput(false);
+	 }
+	 if(isSepThirtyFirst(day, month)){
+		 setIsValidInput(false);
+	 }
+	 if(isNovThirtyFirst(day, month)){
+		 setIsValidInput(false);
+	 }
+	 if(isFebTwentyNinth(day, month, year)) {
+		 setIsValidInput(false);
+	 }
+}
+
+bool SmartAdder::isFebThirtieth(int day, int month){
+	if(month == 2 && day == 30) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isFebThirtyFirst(int day, int month){
+	if(month == 2 && day == 31) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isAprThirtyFirst(int day, int month){
+	if(month == 4 && day == 31) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isJunThirtyFirst(int day, int month){
+	if(month = 6 && day == 31){
+		return true;
+	} else {
+		return false;
+	}
+}
+	
+bool SmartAdder::isSepThirtyFirst(int day, int month){
+	if(month == 9 && day == 31){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isNovThirtyFirst(int day,int month){
+	if(month == 11 && day == 31){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isFebTwentyNinth(int day, int month, int year){
+	if (month == 2 && day == 29 && ((year % 100 == 0 && year % 400 != 0) || (year% 100 != 0 && year % 4 != 0))){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+void SmartAdder::appendMissingStartInfo(){
+
+	 CurrentTime timeInfo;
+	 if(isAnythingMissing(getStartTime(), getStartDay(), getStartMonth(), getStartYear())){	
+	 } else {
+		if (isTheUnitMissing(getStartTime())){
+			setStartTime(1200);
+		}
+		if (isTheUnitMissing(getStartDay())){
+			setStartDay(timeInfo.getDay());
+		}
+		if (isTheUnitMissing(getStartMonth())){
+			setStartMonth(timeInfo.getMonth());
+		}
+		if (isTheUnitMissing(getStartYear())){
+			setStartYear(timeInfo.getYear());
+		}
+	}
+}
+
+
+void SmartAdder::appendMissingEndInfo(){
+	
+	CurrentTime timeInfo;
+	
+	if (isAnythingMissing(getEndTime(), getEndDay(), getEndMonth(), getEndYear())){	
+	} else {
+		if (isTheUnitMissing(getEndTime())){
+			setEndTime(1200);
+		}		
+		if (isTheUnitMissing(getEndDay())){
+			setEndDay(timeInfo.getDay());
+		}
+		if (isTheUnitMissing(getEndMonth())){
+			setEndMonth(timeInfo.getMonth());
+		}
+		if (isTheUnitMissing(getEndYear())){
+			setEndYear(timeInfo.getYear());
+		}
+	}	 
+}
+
+bool SmartAdder::isEndTimeLaterThanStartTime(){
+	if ( _wholeEvent.endYear > _wholeEvent.startYear ){
+		return true;
+	}
+
+	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth > _wholeEvent.startMonth ){
+		return true;
+	}
+
+	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth == _wholeEvent.startMonth && _wholeEvent.endDay > _wholeEvent.startDay ){
+		return true;
+	}
+
+	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth == _wholeEvent.startMonth && _wholeEvent.endDay == _wholeEvent.startDay && _wholeEvent.endTime >= _wholeEvent.startTime ){
+		return true;
+	}
+
+	return false;
+}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+	TEST_CLASS(UnitTestPerformAdd) {
+	public:
+		TEST_METHOD(TestInvalidAdd) {
+			CommandExecution test;
+			string expected = "Invalid ADD Input\r\n";
+			string actual = test.readCommand("add test case -st 2015 April 15 1100am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st April 15 1100am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 15 1100am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 1100am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 2015 1100");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 1100");
+			Assert::AreEqual(expected, actual);
+
+			//more aggressive cases
+			test.performAdd(actual, "test case -st -st -st");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st1100am -et1100pm");
+			Assert::AreEqual(expected, actual);
+
+			//invalid date cases
+			test.performAdd(actual, "test case -et January -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et January 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et January 32");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et February -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et February 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et February 29");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et February 30");
+
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et March -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et March 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et March 32");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et April -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et April 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et April 31");
+			Assert::AreEqual(expected, actual);
+		
+			test.performAdd(actual, "test case -et May -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et May 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et May 32");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et June -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et June 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et June 31");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et July -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et July 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et July 32");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et August -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et August 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et August 32");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et September -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et September 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et September 31");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et October -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et October 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et October 32");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et November -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et November 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et November 31");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et December -1");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et December 0");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et December 32");
+			Assert::AreEqual(expected, actual);
+
+			//invalid time
+			test.performAdd(actual, "test case -et 0000am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et 0059am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et 1260am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et 0161am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et 0570pm");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -et 1060pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -st 999am -et 1200am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 1999am -et 1200am");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 0959am -et 19991234");
+			Assert::AreEqual(expected, actual);
+			test.performAdd(actual, "test case -st 1234567 -et 1200am");
+			Assert::AreEqual(expected, actual);
+		}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+			//after update the overdue task to future task
+			test.performUpdate(dummy, "2 test case 2 -et 2015 December 8");
+			expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2015/12/08/0000     Event: test case 2\r\n";
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+
+
+		}
+
+		TEST_METHOD(TestDisplayRightTimingForAMPM) {
+			remove("EasiScheduler.txt");
+			CommandExecution test;
+			string expected;
+			string dummy;
+			string actual;
+			//system should differentiate 1230am is 0030 and 1230pm is 1230
+			test.performAdd(dummy, "test case 1 -st 2015 Feb 28 1230am -et 2015 feb 28 1230pm");
+			expected = "Displaying:\r\nUnit No.0001 2015/02/28/0030 - 2015/02/28/1230[OD] Event: test case 1\r\n";
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+		}
+		
+	};
+
+
+	TEST_CLASS(UnitTestPerformSearch)
+	{
+	public:
+		
+		TEST_METHOD(TestSearchNoMatch) {
+			CommandExecution test;
+			string expected = "No Match Found in EasiScheduler!\r\n";
+			string actual;
+			test.performSearch(actual, "no match");
+			Assert::AreEqual(expected, actual);
+
+			string dummy;
+			test.performAdd(dummy, "test 1");
+			test.performAdd(dummy, "test case 2");
+			test.performAdd(dummy, "testing 3");
+			test.performSearch(actual, "4");
+			Assert::AreEqual(expected, actual);
+
+			test.performDelete(dummy, "2");
+			test.performSearch(actual, "case");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSearchResult) {
+			CommandExecution test;
+			string dummy;
+			string expected;
+			string actual;
+
+			test.performAdd(dummy, "1 test");
+			test.performAdd(dummy, "2 test -st 2015 Aug 12 1200am -et 2016 Sep 12 1200pm");
+			test.performAdd(dummy, "3 test -et 2015 March 12 0100pm");
+			test.performAdd(dummy, "4 test -et 2015 April 30 0100am");
+
+			test.performSearch(actual, "1");
+			expected = "Unit No.0001 ****/**/**/**** - ****/**/**/****     Event: [Undone]1 test\r\n";
+			Assert::AreEqual(expected, actual);
+
+			test.performSearch(actual, "2");
+			expected = "Unit No.0002 2015/08/12/0000 - 2016/09/12/1200     Event: [Undone]2 test\r\n";
+			Assert::AreEqual(expected, actual);
+
+			test.performSearch(actual, "3");
+			expected = "Unit No.0003 ****/**/**/**** - 2015/03/12/1300[OD] Event: [Undone]3 test\r\n";
+			Assert::AreEqual(expected, actual);
+
+			test.performSearch(actual, "4");
+			expected = "Unit No.0004 ****/**/**/**** - 2015/04/30/0100     Event: [Undone]4 test\r\n";
+			Assert::AreEqual(expected, actual);
+
+
+			//after perform mark to show [Done]
+			test.performMark(dummy, "1");
+			test.performSearch(actual, "1");
+			expected = "Unit No.0001 ****/**/**/**** - ****/**/**/****     Event: [Done]1 test\r\n";
+			Assert::AreEqual(expected, actual);
+
+			test.performUnmark(dummy, "1");
+			test.performSearch(actual, "1");
+			expected = "Unit No.0001 ****/**/**/**** - ****/**/**/****     Event: [Undone]1 test\r\n";
+			Assert::AreEqual(expected, actual);
+		}
+
+	};
+
+	TEST_CLASS(UnitTestPerformUndoRedo)
+	{
+	public:
+		TEST_METHOD(TestUndoAndRedoFunctionality) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Schedule is empty\r\n";
+			test.performAdd(dummy, "test case");
+			test.performDisplay(actual);
+			//since add a task, schedule is not empty
+			Assert::AreNotEqual(expected, actual);
+			//undo
+			test.performUndo(dummy);
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+			//redo
+			test.performRedo(dummy);
+			test.performDisplay(actual);
+			Assert::AreNotEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestUndoMessage) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Undo is successful\r\n";
+			test.performAdd(dummy, "test case");
+			test.performUndo(actual);
+			Assert::AreEqual(expected, actual);
+		}
+		
+		TEST_METHOD(TestInvalidUndoMessage) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Cannot undo twice\r\n";
+			test.performAdd(dummy, "test case");
+			test.performUndo(dummy);
+			test.performUndo(actual);
+			Assert::AreEqual(expected, actual);
+		}
+
+
+		TEST_METHOD(TestRedoMessage) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Redo is successful\r\n";
+			test.performAdd(dummy, "test case");
+			test.performUndo(dummy);
+			test.performRedo(actual);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestInvalidRedoMessage) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Cannot redo because no UNDO command has been done\r\n";
+			test.performAdd(dummy, "test case");
+			test.performRedo(actual);
+			Assert::AreEqual(expected, actual);
+
+			//redo is performed twice is invalid
+			test.performUndo(dummy);
+			test.performRedo(dummy);
+			test.performRedo(actual);
+			Assert::AreEqual(expected, actual);
+		}
+	};
+
+	TEST_CLASS(UnitTestPerformMarkUnmark)
+	{
+	public:
+		TEST_METHOD(TestInvalidMark) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Invalid index\r\n";
+
+			test.performAdd(dummy, "test case");
+			//This is a boundary case for the 'value < 1' partition 
+			test.performMark(actual, "0");
+			Assert::AreEqual(expected, actual);
+			
+			//This is a boundary case for the 'value > size' partition 
+			test.performMark(actual, "2");
+			Assert::AreEqual(expected, actual);
+
+			//other cases
+			test.performMark(actual, "a");
+			Assert::AreEqual(expected, actual);
+			test.performMark(actual, "a1");
+			Assert::AreEqual(expected, actual);
+			test.performMark(actual, "@@");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestInvalidUnmark) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Invalid index\r\n";
+
+			test.performAdd(dummy, "test case");
+			//This is a boundary case for the 'value < 1' partition 
+			test.performMark(dummy, "1");
+
+			test.performUnmark(actual, "0");
+			Assert::AreEqual(expected, actual);
+			
+			//This is a boundary case for the 'value > size' partition 
+			test.performUnmark(actual, "2");
+			Assert::AreEqual(expected, actual);
+
+
+			//other cases
+			test.performUnmark(actual, "a");
+			Assert::AreEqual(expected, actual);
+			test.performUnmark(actual, "a1");
+			Assert::AreEqual(expected, actual);
+			test.performUnmark(actual, "@@");
+			Assert::AreEqual(expected, actual);
+			
+		}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+	TEST_CLASS(UnitTestPerformLocation)
+	{
+	public:
+		
+		TEST_METHOD(TestLocationResult) {
+			CommandExecution test;
+			string expected = "Changed File Location to C:\\Users\\user\\Documents\\Visual Studio 2012\\MySchedule.txt\r\n";
+			string actual;
+			test.performLocation(actual, "C:\\Users\\user\\Documents\\Visual Studio 2012\\MySchedule.txt");
+			Assert::AreEqual(expected, actual);
+		}
+	};
+}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+

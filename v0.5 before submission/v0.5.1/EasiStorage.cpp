@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 wang. All rights reserved.
 //
 
-//@Hu Zhujun A0119426E
+//@author A0119426E
 #include <iostream>
 #include <iomanip>
 #include <assert.h>
@@ -561,7 +561,7 @@ bool EasiStorage::isSortNeeded(int firstEndTime, int secondEndTime) {
 	}
 }
 
-//@Wang Jiexuan A09119454A
+//@author A09119454A
 //Purpose: to sort all the tasks according to ending time
 void EasiStorage::sortTasks() {
     Task tempTask;

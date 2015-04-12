@@ -1,5 +1,5 @@
 #pragma once
-//@Hu Zhujun A0119426E
+//@author A0119426E
 #include <string>
 #include <vector>
 #include <sstream>

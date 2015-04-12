@@ -1,0 +1,965 @@
+//@author: a09119454a
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.cpp
+	 */
+
+//Purpose: to sort all the tasks according to ending time
+void EasiStorage::sortTasks() {
+    Task tempTask;
+	if (getListSize() >= 1 ) {
+		for (unsigned int j = 0; isWithinRange(j, getListSize() - 1); j++) {
+			for (unsigned int i = 0; isWithinRange(i,getListSize() - 1 - j); i++) {
+				if(isSortNeeded(_taskLists[i].getEndTime(), _taskLists[i + 1].getEndTime())) {
+					tempTask = _taskLists[i];
+					_taskLists[i] = _taskLists[i + 1];
+					_taskLists[i + 1] = tempTask;
+				}
+			}
+		}
+		for (unsigned int j = 0; isWithinRange(j,getListSize() - 1); j++) {
+			for (unsigned int i = 0; isWithinRange(i, getListSize() - 1 - j); i++) {
+				if(isSortNeeded(_taskLists[i].getEndDay(), _taskLists[i + 1].getEndDay())) {
+					tempTask = _taskLists[i];
+					_taskLists[i] = _taskLists[i + 1];
+					_taskLists[i + 1] = tempTask;
+				}
+			}
+		}
+		for (unsigned int j = 0; isWithinRange(j, getListSize() - 1); j++) {
+			for (unsigned int i = 0; isWithinRange(i, getListSize() - 1 - j); i++) {
+				if(isSortNeeded(_taskLists[i].getEndMonth(), _taskLists[i + 1].getEndMonth())) {
+					tempTask = _taskLists[i];
+					_taskLists[i] = _taskLists[i + 1];
+					_taskLists[i + 1] = tempTask;
+				}
+			}
+		}
+
+		for (unsigned int j = 0; isWithinRange(j, getListSize() - 1); j++) {
+			for (unsigned int i = 0 ; isWithinRange(i, getListSize() - 1 - j); i++) {
+				if(isSortNeeded(_taskLists[i].getEndYear(), _taskLists[i + 1].getEndYear())) {
+					tempTask = _taskLists[i];
+					_taskLists[i] = _taskLists[i + 1];
+					_taskLists[i + 1] = tempTask;
+				}
+			}
+		}
+	}
+}
+
+//Purpose: to set the task as overdue if the ending time is past already
+void EasiStorage::setDueStatusIfDayPast() {
+	CurrentTime timeInfo;
+	for(unsigned int i = 0; isWithinRange(i, getListSize()); i++){
+	    if(isDatePast(_taskLists[i].getEndDay(), _taskLists[i].getEndMonth(), _taskLists[i].getEndYear(),timeInfo.getDay(),timeInfo.getMonth(),timeInfo.getYear())){
+			_taskLists[i].setOverdue(1);
+		} else {
+			_taskLists[i].setOverdue(0);
+		}
+	}
+}
+
+bool EasiStorage::isDatePast(int day, int month, int year, int dayCurrent, int monthCurrent, int yearCurrent){
+	 if(yearCurrent > year || (yearCurrent == year && monthCurrent > month) || (yearCurrent == year && monthCurrent == month && dayCurrent > day)) {
+		 return true; 
+	 } else {
+		 return false;
+	 }
+}
+
+void EasiStorage::verifyTotalUnit() {
+	if(_totalUnits > MAXIMUM_TOTAL_UNITS) {
+		throw new exception(MESSAGE_EXCEPTION_EXCEED_TOTAL_UNIT);
+	}
+}
+
+int EasiStorage::getTotalUnit() {
+	return _totalUnits;
+}
+
+bool EasiStorage::isValidIndex(int index){
+	for(unsigned int i = 0; i < _taskLists.size(); i++){
+		if(index == _taskLists[i].getUnit()) {
+			return true;
+		}
+	}
+	return false;
+}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.cpp
+	 */
+
+const string DEFAULT_LOGGING_FILE = "userInputLogger.txt";
+
+Logger::Logger(void){
+}
+
+Logger::~Logger(void){
+}
+
+void Logger::logUserInput(string userInput) {
+	logOpenFile();
+	logWriteTime();
+	logInput(userInput);
+	logClose();
+}
+
+void Logger::logClose() {
+	_log.close();
+}
+
+void Logger::logOpenFile() {
+	_log.open(DEFAULT_LOGGING_FILE, ofstream::out | ofstream::app);
+}
+
+void Logger::logWriteTime() {
+	_log << _loggerTime.getYear() << _loggerTime.getMonth() << _loggerTime.getDay() << endl;
+}
+
+void Logger::logInput(string userInput) {
+	_log << userInput << endl;
+	_log << endl;
+}
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.h
+	 */
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "CurrentTime.h"
+
+using namespace std;
+
+class Logger {
+private:
+	ofstream _log;
+	CurrentTime _loggerTime;
+public:
+	Logger();
+	~Logger();
+	void logUserInput(string);
+	void logOpenFile();
+	void logWriteTime();
+	void logInput(string);
+	void logClose();
+};
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
+	 */
+
+#include <string>
+#include <iostream>
+#include <algorithm>
+#include <sstream>
+#include <assert.h>
+#include "SmartAdder.h"
+
+using namespace std;
+
+#define INDICATOR_EMPTY_INPUT -1;
+#define EMPTY_EVENT "empty event";
+const int FIRST_CHARACTER_POSITION = 0;
+const int MAXIMUM_YEAR = 2500;
+const int MINIMUM_YEAR = 1500;
+const int MAXIMUM_DAY = 31;
+const int MINIMUM_DAY = 1;
+
+const string INDICATOR_START_INPUT = "-st";
+const string INDICATOR_END_INPUT = "-et";
+const string INDICAOTR_AM = "am";
+const string INDICAOTR_PM = "pm";
+
+const string SmartAdder::_STD_MONTH[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
+    "may","may","may","june","jun","june","july","jul","jul","august","aug","augu","september","sep","sept","october","oct","octo","november","nov","nove", "december","dec","dece"};
+
+
+SmartAdder::SmartAdder(){
+	_indicatorEmptyInput = INDICATOR_EMPTY_INPUT;
+    setDefaultStartTime();
+	setDefaultStartDay();
+    setDefaultStartMonth();
+	setDefaultStartYear();
+	setDefaultEndTime();
+	setDefaultEndDay();
+    setDefaultEndMonth();
+	setDefaultEndYear();
+    setDefaultDescription();
+	setDefaultisValidInput();
+}
+
+void SmartAdder::setDefaultStartTime(){
+	_wholeEvent.startTime = INDICATOR_EMPTY_INPUT;
+}
+
+void SmartAdder::setDefaultisValidInput(){
+    _wholeEvent.isValidInput = true;
+}
+void SmartAdder::setDefaultStartDay(){
+	_wholeEvent.startDay = INDICATOR_EMPTY_INPUT;
+}
+void SmartAdder::setDefaultStartMonth(){
+	_wholeEvent.startMonth = INDICATOR_EMPTY_INPUT;
+}
+void SmartAdder::setDefaultStartYear(){
+	_wholeEvent.startYear = INDICATOR_EMPTY_INPUT;
+}
+void SmartAdder::setDefaultEndTime(){
+	_wholeEvent.endTime = INDICATOR_EMPTY_INPUT;
+}
+void SmartAdder::setDefaultEndDay(){
+	_wholeEvent.endDay = INDICATOR_EMPTY_INPUT;
+}
+void SmartAdder::setDefaultEndMonth(){
+	_wholeEvent.endMonth = INDICATOR_EMPTY_INPUT;
+}
+void SmartAdder::setDefaultEndYear(){
+	_wholeEvent.endYear = INDICATOR_EMPTY_INPUT;
+}
+
+void SmartAdder::setDefaultDescription(){
+	 _wholeEvent.description = EMPTY_EVENT;
+}
+
+
+string SmartAdder::getDescription(){
+
+    return _wholeEvent.description;
+
+}
+
+
+
+int SmartAdder::getStartTime(){
+
+    return _wholeEvent.startTime;
+
+}
+
+
+
+int SmartAdder::getStartDay(){
+
+    return _wholeEvent.startDay;
+
+}
+
+
+
+int SmartAdder::getStartMonth(){
+
+    return _wholeEvent.startMonth;
+
+}
+
+
+
+int SmartAdder::getStartYear(){
+
+    return _wholeEvent.startYear;
+
+}
+
+
+
+int SmartAdder::getEndTime(){
+
+    return _wholeEvent.endTime;
+
+}
+
+
+
+int SmartAdder::getEndDay(){
+
+    return _wholeEvent.endDay;
+
+}
+
+
+
+int SmartAdder::getEndMonth(){
+
+    return _wholeEvent.endMonth;
+
+}
+
+
+
+bool SmartAdder::getIsValidInput(){
+
+   return _wholeEvent.isValidInput;
+
+}
+
+int SmartAdder::getEndYear(){
+
+    return _wholeEvent.endYear;
+
+}
+
+void SmartAdder::reset(){
+	setDefaultStartTime();
+	setDefaultStartDay();
+    setDefaultStartMonth();
+	setDefaultStartYear();
+	setDefaultEndTime();
+	setDefaultEndDay();
+    setDefaultEndMonth();
+	setDefaultEndYear();
+    setDefaultDescription();
+	setDefaultisValidInput();
+}
+
+
+//Purpose: to get the description of the event from user input
+void SmartAdder::setDescription(string line){
+	unsigned int starting = 0;
+	starting = line.find_first_of("-");
+	if(starting != FIRST_CHARACTER_POSITION){
+	    _wholeEvent.description = line.substr(FIRST_CHARACTER_POSITION, starting - 1);
+	}
+	if(starting == string::npos){
+	    _wholeEvent.description = line;
+	}
+}
+
+//Purpose: To split the string into different component and save it into the corresponding variables
+void SmartAdder::convert(string line){  	
+	setDescription(line);
+	setStart(line);
+	setEnd(line);
+	appendMissingInfo();	
+}
+
+void SmartAdder::setStartYear(int year){
+	_wholeEvent.startYear = year;
+}
+
+void SmartAdder::setStartMonth(int month){
+	_wholeEvent.startMonth = month;
+}
+
+void SmartAdder::setStartTime(int time){
+	if ( (time>= 1200 && time < 1300) || (time >= 2400 && time < 2500)){
+		_wholeEvent.startTime = time - 1200;
+	} else {
+		_wholeEvent.startTime = time;
+	}
+}
+void SmartAdder::setStartDay(int day){
+	_wholeEvent.startDay = day;
+}	   
+
+
+void SmartAdder::setIsValidInput(bool isValid){
+	_wholeEvent.isValidInput = isValid;
+
+}
+
+//Purpose: To detect and save any of the ending time component
+//standard format: -et 2015 June 2 1100am
+void SmartAdder::setEnd(string line){
+	string tempTime = "";
+	int tempInt = 0;
+	bool isValidMonth = true;
+	bool isNotTime = true;
+	istringstream in(line); 
+
+	
+	if(line.find(INDICATOR_END_INPUT) != string::npos) {
+		while(tempTime.find(INDICATOR_END_INPUT) == string::npos){
+		in >> tempTime;
+
+		}
+		if(in.eof()){
+			setIsValidInput(false);
+		}
+
+		while(in >> tempTime && getIsValidInput()){	   
+			setIsValidInput(false);
+			if (_wholeEvent.endTime == _indicatorEmptyInput && isFoundAM(tempTime)){
+				if (tempTime.find(INDICAOTR_AM) < 5){
+					tempTime = tempTime.substr(0, 4);	
+					tempInt = atoi(tempTime.c_str());
+					if (tempInt >= 100 && tempInt < 1300){ 
+					   if(tempInt % 100 < 60){
+							setEndTime(tempInt);
+							setIsValidInput(true);
+						}
+					} else {
+						isNotTime = false;
+					}
+					 	
+				}
+			}
+
+			if (_wholeEvent.endTime == _indicatorEmptyInput && isFoundPM(tempTime)){
+				if (tempTime.find(INDICAOTR_PM) < 5){	
+					tempTime = tempTime.substr(0, 4);	
+					tempInt = atoi(tempTime.c_str());
+					if (tempInt >= 100 && tempInt < 1300){ 
+					   if(tempInt % 100 < 60){
+							setEndTime(tempInt + 1200);
+							setIsValidInput(true);
+						}
+					} else {
+						isNotTime = false;
+					}
+				}
+			}
+
+			if(isdigit(tempTime[0]) && isNotTime){	
+				tempInt = atoi(tempTime.c_str());
+
+				if (_wholeEvent.endDay == _indicatorEmptyInput && isDay(tempInt)){
+					setEndDay(tempInt);
+					setIsValidInput(true);
+				}
+
+				if (_wholeEvent.endYear == _indicatorEmptyInput && isYear(tempInt)){
+					setEndYear(tempInt);
+					setIsValidInput(true);
+				}
+			} else { 
+				transform(tempTime.begin(), tempTime.end(), tempTime.begin(), ::tolower);
+				for(int i = 0; isExceedMaximumMonth(i, isValidMonth); i++) {			
+					if(isInputEqualsStandardMonth(tempTime, i) && _wholeEvent.endMonth == _indicatorEmptyInput){			
+						setEndMonth(i / 3 + 1);	
+						setIsValidInput(true);
+					}
+				}
+			}
+		}  
+	}
+}
+
+void SmartAdder::setEndYear(int year){
+	_wholeEvent.endYear = year;
+}
+
+void SmartAdder::setEndMonth(int month){
+	_wholeEvent.endMonth = month;
+}
+
+void SmartAdder::setEndTime(int time){
+	if ( (time >= 1200 && time < 1300) || (time >= 2400 && time < 2500)){
+		_wholeEvent.endTime = time - 1200;
+	} else {
+		_wholeEvent.endTime = time;
+	}
+}
+void SmartAdder::setEndDay(int day){
+	_wholeEvent.endDay = day;
+}
+
+//Purpose: To get the starting time component
+//Standard Format: -st 2015 June 2 1100am
+void SmartAdder::setStart(string line){
+	
+	istringstream in(line);
+	string tempTime = "";
+	int tempInt = 0;
+	bool isValidMonth = true;
+	bool isNotTime = true;
+
+	if (line.find(INDICATOR_START_INPUT) != string::npos && line.find(INDICATOR_END_INPUT) == string::npos){
+		setIsValidInput(false);
+	}
+
+
+    if(line.find(INDICATOR_START_INPUT) != string::npos){ 
+		while(tempTime.find(INDICATOR_START_INPUT) == string::npos){
+		    in >> tempTime;
+		}
+		
+		in >> tempTime;
+	  
+	    while(tempTime != INDICATOR_END_INPUT && getIsValidInput()){
+		      setIsValidInput(false);
+
+			  if (_wholeEvent.startTime == _indicatorEmptyInput && isFoundAM(tempTime)){
+				  if (tempTime.find(INDICAOTR_AM) < 5){					 
+					 tempTime = tempTime.substr(0, 4);	
+					 tempInt = atoi(tempTime.c_str());
+					 if (tempInt >= 100 && tempInt < 1300){ 
+						 if(tempInt % 100 < 60){
+							setStartTime(tempInt);
+							setIsValidInput(true);
+						 }
+					 } else {
+						 isNotTime = false;
+					 }
+				  }
+			  }
+
+			  if (_wholeEvent.startTime == _indicatorEmptyInput && isFoundPM(tempTime)){
+				  if (tempTime.find(INDICAOTR_PM) < 5){
+				     tempTime=tempTime.substr(0, 4);	
+					 tempInt = atoi(tempTime.c_str());
+					 if (tempInt >= 100 && tempInt < 1300){ 
+						 if(tempInt % 100 < 60){
+							setStartTime(tempInt + 1200);
+							setIsValidInput(true);
+						 }
+					 } else {
+						 isNotTime = false;
+					 }
+				  }
+			  } 
+
+			  if(isdigit(tempTime[0]) && isNotTime){	
+                  tempInt = atoi(tempTime.c_str());
+				  if (_wholeEvent.startDay == _indicatorEmptyInput && isDay(tempInt)){
+					 setStartDay(tempInt);
+					 setIsValidInput(true);
+				  }
+				  if (_wholeEvent.startYear == _indicatorEmptyInput && isYear(tempInt)){
+					 setStartYear(tempInt);
+					 setIsValidInput(true);
+				  }
+			  } else { 
+					transform(tempTime.begin(), tempTime.end(), tempTime.begin(), ::tolower);
+				    for(int i = 0; isExceedMaximumMonth(i, isValidMonth); i++){			
+						if(isInputEqualsStandardMonth(tempTime, i) && _wholeEvent.startMonth == _indicatorEmptyInput){			
+								 setStartMonth(i / 3 + 1);	
+								 setIsValidInput(true);
+						}
+					}
+			  }
+			  in >> tempTime;
+	   }
+	}
+}
+
+bool SmartAdder::isFoundAM(string tempTime){
+	if(tempTime.find(INDICAOTR_AM) != string::npos)  {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+bool SmartAdder::isFoundPM(string tempTime){
+	if(tempTime.find(INDICAOTR_PM) != string::npos){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+bool SmartAdder::isYear(int tempInt){
+	if( tempInt > MINIMUM_YEAR && tempInt < MAXIMUM_YEAR) {
+		return true;
+	}else {
+		return false;
+	}
+}
+
+bool SmartAdder::isDay(int tempInt) {
+	if(MINIMUM_DAY <= tempInt && tempInt <= MAXIMUM_DAY){
+		return true;
+	} else {
+		return false;
+	}
+
+}
+bool SmartAdder::isExceedMaximumMonth(int month, bool isValidMonth) {
+	if(month < 36 && isValidMonth){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isInputEqualsStandardMonth(string tempTime, int i){
+	if (tempTime == _STD_MONTH[i]) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.h
+	 */
+
+class SmartAdder{
+
+private:
+
+	static const string _STD_MONTH[36];
+	int _indicatorEmptyInput;
+	struct Eventinput {
+		string description;
+		int startTime;
+		int startDay;
+		int startMonth;
+		int startYear;
+		int endTime;
+		int endDay;
+		int endMonth;
+		int endYear;
+		bool isValidInput;
+	} _wholeEvent;
+
+public:
+	SmartAdder();
+	void setDefaultStartTime();
+	void setDefaultStartDay();
+	void setDefaultStartMonth();
+	void setDefaultStartYear();
+	void setDefaultEndTime();
+	void setDefaultEndDay();
+	void setDefaultEndMonth();
+	void setDefaultEndYear();
+	void setDefaultDescription();
+	void setDefaultisValidInput();
+	void convert(string);
+	void setDescription(string line);
+	void setStart(string line);
+	void setStartYear(int startYear);
+	void setStartMonth(int startMonth);
+	void setStartDay(int startDay);
+	void setStartTime(int startTime);
+	void setEnd(string line);
+	void setEndYear(int endYear);
+	void setEndMonth(int endMonth);
+	void setEndDay(int endDay);
+	void setEndTime(int endTime);
+	void setIsValidInput(bool isValid);
+	void appendMissingInfo();
+	void appendMissingStartInfo();
+	void appendMissingEndInfo();
+	void reset();
+	void checkFeasibleDate(int day, int month, int year);
+
+	//Test Invalid Input for Wrong Date e.g. 30/2, 31/4 and so on 
+	bool isFebThirtieth(int day, int month);
+	bool isFebThirtyFirst(int day, int month);
+	bool isAprThirtyFirst(int day, int month);
+	bool isJunThirtyFirst(int day, int month);
+	bool isSepThirtyFirst(int day, int month);
+	bool isNovThirtyFirst(int day, int month);
+	bool isFebTwentyNinth(int day, int month, int year);
+	bool checkEachPossibility(const string[], string);
+	bool getIsValidInput();
+	bool isEndTimeLaterThanStartTime();
+
+	int getStartTime();
+	int getEndTime();
+	int getStartDay();
+	int getStartMonth();
+	int getStartYear();
+	int getEndDay();
+	int getEndMonth();
+	int getEndYear();
+	
+
+	bool isFoundAM(string tempTime);
+	bool isFoundPM(string tempTime);
+	bool isYear(int tempInt);
+	bool isDay(int tempInt);
+	bool isExceedMaximumMonth(int tempInt, bool isValidMonth);
+	bool isInputEqualsStandardMonth(string tempTime, int i);
+	bool isAnythingMissing(int time, int day, int month, int year);
+	bool isTheUnitMissing(int timeUnit);
+	
+	string getDescription();
+};
+
+
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.h
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+	TEST_CLASS(UnitTestPerformDelete) {
+	public:
+		
+		TEST_METHOD(TestDeleteInvalidIndex) {
+			remove("Easicalendar.txt"); 
+			CommandExecution test;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			
+			//This is a boundary case for the 'value < 1' partition 
+			string expected = "Invalid index\r\n";
+			string actual;
+			test.performDelete(actual, "0");
+			Assert::AreEqual(expected, actual);
+
+			//This is a boundary case for the 'value > size' partition 
+			test.performDelete(actual, "3");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "4");
+			Assert::AreEqual(expected, actual);
+			
+			//after one successful deletion
+			test.performDelete(actual, "1");
+			Assert::AreNotEqual(expected, actual);
+			test.performDelete(actual, "1");
+			Assert::AreEqual(expected, actual);
+
+			//other cases
+			test.performDelete(actual, "a");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "a1");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "@@");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "1a");
+			Assert::AreEqual(expected, actual);
+	
+		}
+
+		TEST_METHOD(TestSuccessfulDeletion) {
+			CommandExecution test;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+
+			string expected = "Successfully deleted\r\n";
+			string actual;
+			test.performDelete(actual, "1");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "2");
+			Assert::AreEqual(expected, actual);
+		} 
+	};
+
+	TEST_CLASS(UnitTestPerformUpdate)
+	{
+	public:
+		
+		TEST_METHOD(TestInvalidUpdateIndex) {
+			remove("EasiScheduler.txt");
+			CommandExecution test;
+			string expected = "Invalid index\r\n";
+			string actual;
+			
+			//This is a boundary case for the 'value < 1' partition 
+			test.performUpdate(actual, "0 testing");
+			Assert::AreEqual(expected, actual);
+
+			//This is a boundary case for the 'value > size' partition 
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performUpdate(actual, "    2     testing");
+			Assert::AreEqual(expected, actual);
+
+			//other cases for input is invalid
+			test.performUpdate(actual, "a testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "a1 testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "@@ testing");
+			Assert::AreEqual(expected, actual);
+
+			//cases when unit no is deleted
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performAdd(dummy, "test case 3");
+			test.performDelete(dummy, "1");
+			test.performDelete(dummy, "3");
+			test.performUpdate(actual, "1 testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "3 testing");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestInvalidUpdateInput) {
+			CommandExecution test;
+			string expected = "Invalid UPDATE Input\r\n";
+			string actual;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performAdd(dummy, "test case 3");
+
+			test.performUpdate(actual, "1 test case -st -st -st");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 test case -st 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "3 test case -st 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "1 test case -et 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 test case -st1100am -et1100pm");
+			Assert::AreEqual(expected, actual);
+
+			//invalid date cases
+			test.performUpdate(actual, "1 test case -et February 30");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 test case -et April 0");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "3 test case -et April 31");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "1 test case -et March 32");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestEmptyUpdateInput) {
+			CommandExecution test;
+			string expected = "Don't be lazy, please type something\r\n";
+			string dummy;
+			string actual;
+			test.performAdd(dummy, "test case");
+			test.performUpdate(actual, "1      ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "1");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSeperateInputForUpdate) {
+			CommandExecution test;
+			int expectedIndex = 2;
+			string expected = "test case -st 2015 -et 2016";
+			int actualIndex;
+			string actual;
+			test.seperateInputForUpdate("2 test case -st 2015 -et 2016", actualIndex, actual);
+			Assert::AreEqual(expectedIndex, actualIndex);
+			Assert::AreEqual(expected, actual);
+
+			expectedIndex = 5;
+			expected = "test case -st 2015 -et 2016";
+			test.seperateInputForUpdate("    5       test case -st 2015 -et 2016", actualIndex, actual);
+			Assert::AreEqual(expectedIndex, actualIndex);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSuccessfulUpdate) {
+		    
+			CommandExecution test;
+			string expected = "The event is updated\r\n";
+			string actual;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+
+			test.performUpdate(actual, "1 testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 testing");
+			Assert::AreEqual(expected, actual);
+		}
+		
+	};
+	
+
+	TEST_CLASS(UnitTestPerformDisplay)
+	{
+	public:
+		TEST_METHOD(TestEmptyDisplayEmptySchedule) {
+			CommandExecution test;
+			string expected = "Schedule is empty\r\n";
+			string actual;
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+			//after add and delete
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performDelete(dummy, "1");
+			test.performDelete(dummy, "2");
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+			//after mark 
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performMark(dummy, "3");
+			test.performMark(dummy, "4");
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSortDisplay){
+			remove("EasiScheduler.txt");
+			string dummy;
+			CommandExecution test;
+			EasiStorage task;
+			string expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/1300[OD] Event: test case 2\r\nUnit No.0001 2015/01/03/0200 - 2015/01/10/1000[OD] Event: test case 1\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
+			string actual; 
+
+			test.performAdd(dummy, "test case 1 -st 2015 Jan 3 0200am -et 2015 Jan 10 1000am");
+			test.performAdd(dummy, "test case 2 -et 2014 December 8 0100pm");
+			test.performAdd(dummy, "test case 3");
+            test.executeCommand(test.DISPLAY, actual,""); 
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestDisplayResult) {
+			remove("EasiScheduler.txt");
+			CommandExecution test;
+			CurrentTime currentT;
+			ostringstream out;
+			int StartYear = currentT.getYear();
+			int StartMonth = currentT.getMonth();
+			int StartDay = currentT.getDay();
+			int EndYear = currentT.getYear();
+			int EndMonth = currentT.getMonth();
+			int EndDay = currentT.getDay();
+
+			out << "Displaying:\r\nUnit No.0001 " << StartYear << "/0" << StartMonth << '/' << StartDay << "/0100 - " << EndYear << "/0" << EndMonth << '/' << EndDay << "/0200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
+			string actual;
+			string expected = out.str();
+			string dummy;
+			//display should automatically fill up current year, month and day
+			test.performAdd(dummy, "test case 1 -st 0100am -et 0200am");
+			//display should automatically fiull up time as "0000"(default value) and showed this is overdue (year == 2014) 
+			test.performAdd(dummy, "test case 2 -et 2014 December 8");
+			//display will not fill up date and time for floating task
+			test.performAdd(dummy, "test case 3");
+
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+			
+			//after delete or mark
+			test.performMark(dummy, "1");
+			test.performDelete(dummy, "3");
+			expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\n";
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+

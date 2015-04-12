@@ -11,7 +11,7 @@
 #include <string>
 
 using namespace std;
-//@Yang Hongjie A0108457B
+//@author A0108457B
 class Task{
 private:
 

@@ -1,5 +1,5 @@
 #pragma once
-//@Wang Jiexuan A09119454A
+//@author A09119454A
 #include <iostream>
 #include <fstream>
 #include <string>

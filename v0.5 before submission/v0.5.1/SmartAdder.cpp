@@ -1,4 +1,4 @@
-//@Wang Jiexuan A09119454A
+//@author A09119454A
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -433,7 +433,7 @@ bool SmartAdder::isInputEqualsStandardMonth(string tempTime, int i){
 	}
 }
 
-//@Xu Meng A0093868J
+//@author A0093868J
 //Purpose: To fill the time component with current time if no user input is found
 //If no time is found, it is set to be 0000am
 void SmartAdder::appendMissingInfo() {

@@ -1,4 +1,4 @@
-//@Yang Hongjie A0108457B
+//@author A0108457B
 #include "CommandExecution.h"
 #include "CurrentTime.h"
 #include <assert.h> 

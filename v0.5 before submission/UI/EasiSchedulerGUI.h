@@ -1,4 +1,4 @@
-//@Wang Jiexuan A09119454A
+//@author A09119454A
 #include "msclr\marshal_cppstd.h"
 
 #include "CommandExecution.h"
@@ -118,7 +118,7 @@ namespace EasiSchedulerGUI {
 			this->outputWindow->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->outputWindow->Size = System::Drawing::Size(786, 288);
 			this->outputWindow->TabIndex = 3;
-			//@Wang Jiexuan A09119454A
+			//@author A09119454A
 			this->outputWindow->Text = L"Welcom to EasiScheduler!\r\n Press any key to continue...";
 			this->outputWindow->TextChanged += gcnew System::EventHandler(this, &EasiScheduler::outputWindow_TextChanged);
 			// 
@@ -192,7 +192,7 @@ namespace EasiSchedulerGUI {
 			this->textBox2->ReadOnly = true;
 			this->textBox2->Size = System::Drawing::Size(642, 26);
 			this->textBox2->TabIndex = 8;
-			//@Wang Jiexuan A09119454A
+			//@author A09119454A
 			this->textBox2->Text = L"Enter command here:";
 			// 
 			//@author generated
@@ -224,7 +224,7 @@ namespace EasiSchedulerGUI {
 		}
 
 		#pragma endregion
-		//@Hu Zhujun A0119426E
+		//@author A0108457B
 		private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 					 System::String^ cmd_systemString = inputBox->Text;
 					 std::string input = msclr::interop::marshal_as<std::string>(cmd_systemString);
@@ -266,7 +266,7 @@ namespace EasiSchedulerGUI {
 					}
 
 		}
-//@Yang Hongjie A0108457B
+
 		private: System::Void inputBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 					 outputWindow->ForeColor = System::Drawing::Color::MidnightBlue;
 

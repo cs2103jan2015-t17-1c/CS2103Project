@@ -8,7 +8,7 @@
 
 using namespace std;
 
-//@Wang Jiexuan A09119454A
+//@author A09119454A
 class SmartAdder{
 
 private:
