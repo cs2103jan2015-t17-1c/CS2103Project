@@ -1,3 +1,4 @@
+//@Wang Jiexuan A09119454A
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -399,6 +400,7 @@ bool SmartAdder::isFoundPM(string tempTime){
 	}
 }
 
+
 bool SmartAdder::isYear(int tempInt){
 	if( tempInt > MINIMUM_YEAR && tempInt < MAXIMUM_YEAR) {
 		return true;
@@ -431,6 +433,7 @@ bool SmartAdder::isInputEqualsStandardMonth(string tempTime, int i){
 	}
 }
 
+//@Xu Meng A0093868J
 //Purpose: To fill the time component with current time if no user input is found
 //If no time is found, it is set to be 0000am
 void SmartAdder::appendMissingInfo() {

@@ -8,6 +8,7 @@
 //
 
 
+//@Yang Hongjie A0108457B
 #include "CommandChecker.h"
 #include "SmartAdder.h"
 #include "EasiStorage.h"
@@ -57,6 +58,8 @@ public:
 	void loggingInput(string);
 	void verifyUserInput(string);
 	void verifyTotalUnit();
+
+	//@Wang Jiexuan A09119454A
     void executeCommand(StandardCommand, string &, string);
 	void performAdd(string &, string);
 	void performDisplay(string &);

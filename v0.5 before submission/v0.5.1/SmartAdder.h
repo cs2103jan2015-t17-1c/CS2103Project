@@ -8,7 +8,7 @@
 
 using namespace std;
 
-
+//@Wang Jiexuan A09119454A
 class SmartAdder{
 
 private:
@@ -80,6 +80,7 @@ public:
 	int getEndMonth();
 	int getEndYear();
 	
+
 	bool isFoundAM(string tempTime);
 	bool isFoundPM(string tempTime);
 	bool isYear(int tempInt);

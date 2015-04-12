@@ -1,3 +1,4 @@
+//@Yang Hongjie A0108457B
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "CommandExecution.cpp"
@@ -112,7 +113,7 @@ namespace UnitTestLogic {
 			Assert::AreEqual(expected, actual);
 			
 		}
-
+//@Hu Zhujun A0119426E
 		TEST_METHOD(TestEmptyContentMessage) {
 			CommandExecution test;
 			string expected = "Don't be lazy, please type something\r\n";
@@ -363,7 +364,7 @@ namespace UnitTestLogic {
 		}
 
 	};
-
+//@Wang Jiexuan A09119454A
 	TEST_CLASS(UnitTestPerformDelete) {
 	public:
 		
@@ -613,6 +614,7 @@ namespace UnitTestLogic {
 			test.performDisplay(actual);
 			Assert::AreEqual(expected, actual);
 
+			//@Xu Meng A0093868J
 			//after update the overdue task to future task
 			test.performUpdate(dummy, "2 test case 2 -et 2015 December 8");
 			expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2015/12/08/0000     Event: test case 2\r\n";
@@ -830,7 +832,7 @@ namespace UnitTestLogic {
 			Assert::AreEqual(expected, actual);
 			
 		}
-
+		//@Yang Hongjie A0108457B
 		TEST_METHOD(TestValidMarkAndUnmark) {
 			CommandExecution test;
 			string dummy;

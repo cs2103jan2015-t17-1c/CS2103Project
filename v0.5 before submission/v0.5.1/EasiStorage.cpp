@@ -5,6 +5,8 @@
 //  Created by wangjiexuan on 31/3/15.
 //  Copyright (c) 2015 wang. All rights reserved.
 //
+
+//@Hu Zhujun A0119426E
 #include <iostream>
 #include <iomanip>
 #include <assert.h>
@@ -237,6 +239,7 @@ string EasiStorage::getDisplayTasks(){
 	return out.str();
 
 }
+
 
 bool EasiStorage::isMarkEqualsOne(int indexOfTask){
 	if(_taskLists[indexOfTask].getMark() == 1){
@@ -558,6 +561,7 @@ bool EasiStorage::isSortNeeded(int firstEndTime, int secondEndTime) {
 	}
 }
 
+//@Wang Jiexuan A09119454A
 //Purpose: to sort all the tasks according to ending time
 void EasiStorage::sortTasks() {
     Task tempTask;
