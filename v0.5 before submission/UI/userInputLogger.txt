@@ -1,0 +1,48 @@
+Welcome to user Logger:
+
+
+2015412
+display
+
+2015412
+add test 1
+
+2015412
+display
+
+2015412
+add test 2 -st 100pm -et 700am
+
+2015412
+display
+
+2015412
+add test4
+
+2015412
+display
+
+2015412
+add test -st 230pm 23 -et 330pm 21
+
+2015412
+display
+
+2015412
+add test 5 -st 230pm 21 -et 130pm 17
+
+2015412
+display
+
+2015412
+add test 5 -st 130pm -et 1230pm
+
+2015412
+display
+
+2015412
+display
+
+2015412
+exit
+
