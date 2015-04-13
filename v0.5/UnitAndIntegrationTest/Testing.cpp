@@ -12,7 +12,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTestLogic {	
 
-	TEST_CLASS(UnitTestReadCommand){
+	TEST_CLASS(UnitTestReadCommand) {
 	public:
 		TEST_METHOD(TestGetCommand) {
 			remove("EasiScheduler.txt");
@@ -126,7 +126,7 @@ namespace UnitTestLogic {
 		
 	};
 	
-//@author A0093868J
+	//@author A0093868J
 	TEST_CLASS(UnitTestPerformAdd) {
 	public:
 		TEST_METHOD(TestInvalidAdd) {
@@ -364,7 +364,7 @@ namespace UnitTestLogic {
 		}
 
 	};
-//@author A09119454A
+	//@author A09119454A
 	TEST_CLASS(UnitTestPerformDelete) {
 	public:
 		
@@ -639,7 +639,7 @@ namespace UnitTestLogic {
 	};
 
 
-	TEST_CLASS(UnitTestPerformSearch)	{
+	TEST_CLASS(UnitTestPerformSearch) {
 	public:
 		
 		TEST_METHOD(TestSearchNoMatch) {
@@ -827,6 +827,7 @@ namespace UnitTestLogic {
 			Assert::AreEqual(expected, actual);
 			
 		}
+
 		//@author A0108457B
 		TEST_METHOD(TestValidMarkAndUnmark) {
 			CommandExecution test;
@@ -905,8 +906,7 @@ namespace UnitTestLogic {
 	};
 
 	//@author A0093868J
-	TEST_CLASS(UnitTestPerformLocation)
-	{
+	TEST_CLASS(UnitTestPerformLocation){
 	public:
 		
 		TEST_METHOD(TestLocationResult) {
