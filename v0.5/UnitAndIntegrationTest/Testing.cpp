@@ -909,11 +909,19 @@ namespace UnitTestLogic {
 	TEST_CLASS(UnitTestPerformLocation){
 	public:
 		
-		TEST_METHOD(TestLocationResult) {
+		TEST_METHOD(TestInvalidLocationResult) {
 			CommandExecution test;
-			string expected = "Changed File Location to C:\\Users\\user\\Documents\\Visual Studio 2012\\MySchedule.txt\r\n";
+			string expected = "The directory cannot be found! \r\n";
 			string actual;
 			test.performLocation(actual, "C:\\Users\\user\\Documents\\Visual Studio 2012\\MySchedule.txt");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestValidLocationResult) {
+			CommandExecution test;
+			string expected = "Changed File Location to C:\\Windows\r\n";
+			string actual;
+			test.performLocation(actual, "C:\\Windows");
 			Assert::AreEqual(expected, actual);
 		}
 	};

@@ -38,6 +38,7 @@ using namespace std;
 #define MESSAGE_SEARCH_FLOATING_UNDONE_TASK(unit, info)  "Unit No." << setfill('0') << setw(4) << unit << " ****/**/**/**** - ****/**/**/****     Event: [Undone]" << info << "\r\n";
 #define MESSAGE_SEARCH_FLOATING_DONE_TASK(unit, info) "Unit No." << setfill('0') << setw(4) << unit << " ****/**/**/**** - ****/**/**/****     Event: [Done]" << info << "\r\n";
 #define INDICATOR_EMPTY_INPUT -1;
+#define MESSAGE_FALSE_LOCATION "The directory cannot be found! \r\n";
 
 const char* DEFAULT_LOCATION_FILE = "location.txt";
 const char* MESSAGE_EXCEPTION_EXCEED_TOTAL_UNIT = "Congrats, Exceed Maximum Number of Task! Please delete your 'EasiScheduler.txt'";
@@ -469,25 +470,30 @@ void EasiStorage::writeOneTaskToFile(vector<Task>::iterator &iter){
 
 string EasiStorage::getChangeFileLocation(string newLocation){
     
-	string line = EMPTY_MESSAGE;
-    remove(DEFAULT_LOCATION_FILE);
-    _writeFile.open(DEFAULT_LOCATION_FILE);
-    _writeFile << newLocation;
-    _writeFile.close();
+	if(!isDirectoryExist(newLocation)){
+		return MESSAGE_FALSE_LOCATION;
+	} else {
+
+		string line = EMPTY_MESSAGE;
+		remove(DEFAULT_LOCATION_FILE);
+		_writeFile.open(DEFAULT_LOCATION_FILE);
+		_writeFile << newLocation;
+		_writeFile.close();
     
 	
-    remove(_fileName.c_str());
-    SetCurrentDirectoryA(newLocation.c_str());
-    _writeFile.open(_fileName.c_str());
+		remove(_fileName.c_str());
+		SetCurrentDirectoryA(newLocation.c_str());
+		_writeFile.open(_fileName.c_str());
 	
-	vector<Task>::iterator iter;
-    for(iter = _taskLists.begin(); iter != _taskLists.end(); iter++){
-        writeOneTaskToFile(iter);
-    }
+		vector<Task>::iterator iter;
+		for(iter = _taskLists.begin(); iter != _taskLists.end(); iter++){
+			writeOneTaskToFile(iter);
+		}
     
-	_writeFile.close();
+		_writeFile.close();
     
-	return MESSAGE_NEW_FILE_LOCATION(newLocation);
+		return MESSAGE_NEW_FILE_LOCATION(newLocation);
+	}
 }
 
 void EasiStorage::copyTaskLists(){
@@ -642,5 +648,19 @@ bool EasiStorage::isValidIndex(int index){
 			return true;
 		}
 	}
+	return false;
+}
+
+bool EasiStorage::isDirectoryExist(const std::string& directoryName_in){
+	DWORD ftyp = GetFileAttributesA(directoryName_in.c_str());
+	//check whether anything wrong with your path
+	if (ftyp == INVALID_FILE_ATTRIBUTES){
+		return false;
+	}
+
+	if (ftyp == FILE_ATTRIBUTE_DIRECTORY){
+		return true;
+	}
+
 	return false;
 }

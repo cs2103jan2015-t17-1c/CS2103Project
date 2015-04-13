@@ -42,6 +42,7 @@ public:
 	bool isSortNeeded(int endTime1, int endTime2);
 	bool isFoundInList(int searchPosition);
 	bool isUndoStatus();
+	bool isDirectoryExist(const std::string& directoryName_in);
 		
 	void setUndoStatus(bool status);
 	void trackFloatingTask(ostringstream &outMessage, int unitIndex);
@@ -67,6 +68,7 @@ public:
 	void verifyTotalUnit();
 	void Tasks();
 	
+
 	Task getTask(int index);
 
 	string getTrackTasks();

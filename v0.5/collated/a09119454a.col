@@ -424,6 +424,21 @@ bool EasiStorage::isValidIndex(int index){
 	}
 	return false;
 }
+
+bool EasiStorage::isDirectoryExist(const std::string& directoryName_in){
+	DWORD ftyp = GetFileAttributesA(directoryName_in.c_str());
+	//check whether anything wrong with your path
+	if (ftyp == INVALID_FILE_ATTRIBUTES){
+		return false;
+	}
+
+	if (ftyp == FILE_ATTRIBUTE_DIRECTORY){
+		return true;
+	}
+
+	return false;
+}
+
 	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.cpp
 
 
