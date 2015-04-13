@@ -12,8 +12,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTestLogic {	
 
-	TEST_CLASS(UnitTestReadCommand)
-	{
+	TEST_CLASS(UnitTestReadCommand){
 	public:
 		TEST_METHOD(TestGetCommand) {
 			remove("EasiScheduler.txt");
@@ -421,8 +420,7 @@ namespace UnitTestLogic {
 		} 
 	};
 
-	TEST_CLASS(UnitTestPerformUpdate)
-	{
+	TEST_CLASS(UnitTestPerformUpdate) {
 	public:
 		
 		TEST_METHOD(TestInvalidUpdateIndex) {
@@ -539,8 +537,7 @@ namespace UnitTestLogic {
 	};
 	
 
-	TEST_CLASS(UnitTestPerformDisplay)
-	{
+	TEST_CLASS(UnitTestPerformDisplay) {
 	public:
 		TEST_METHOD(TestEmptyDisplayEmptySchedule) {
 			CommandExecution test;
@@ -642,8 +639,7 @@ namespace UnitTestLogic {
 	};
 
 
-	TEST_CLASS(UnitTestPerformSearch)
-	{
+	TEST_CLASS(UnitTestPerformSearch)	{
 	public:
 		
 		TEST_METHOD(TestSearchNoMatch) {
@@ -707,8 +703,7 @@ namespace UnitTestLogic {
 
 	};
 
-	TEST_CLASS(UnitTestPerformUndoRedo)
-	{
+	TEST_CLASS(UnitTestPerformUndoRedo) {
 	public:
 		TEST_METHOD(TestUndoAndRedoFunctionality) {
 			CommandExecution test;
@@ -779,8 +774,7 @@ namespace UnitTestLogic {
 		}
 	};
 
-	TEST_CLASS(UnitTestPerformMarkUnmark)
-	{
+	TEST_CLASS(UnitTestPerformMarkUnmark) {
 	public:
 		TEST_METHOD(TestInvalidMark) {
 			CommandExecution test;
@@ -876,8 +870,7 @@ namespace UnitTestLogic {
 	};
 
 
-	TEST_CLASS(UnitTestPerformTrack)
-	{
+	TEST_CLASS(UnitTestPerformTrack) {
 	public:
 		
 		TEST_METHOD(TestTrackingFunctionality) {
