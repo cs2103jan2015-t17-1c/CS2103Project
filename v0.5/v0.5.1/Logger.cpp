@@ -25,7 +25,7 @@ void Logger::logOpenFile() {
 }
 
 void Logger::logWriteTime() {
-	_log << _loggerTime.getYear() << _loggerTime.getMonth() << _loggerTime.getDay() << endl;
+	_log << _loggerTime.getCurrentYear() << _loggerTime.getCurrentMonth() << _loggerTime.getCurrentDay() << endl;
 }
 
 void Logger::logInput(string userInput) {

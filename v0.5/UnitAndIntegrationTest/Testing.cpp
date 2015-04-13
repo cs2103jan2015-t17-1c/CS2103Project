@@ -584,12 +584,12 @@ namespace UnitTestLogic {
 			CommandExecution test;
 			CurrentTime currentT;
 			ostringstream out;
-			int StartYear = currentT.getYear();
-			int StartMonth = currentT.getMonth();
-			int StartDay = currentT.getDay();
-			int EndYear = currentT.getYear();
-			int EndMonth = currentT.getMonth();
-			int EndDay = currentT.getDay();
+			int StartYear = currentT.getCurrentYear();
+			int StartMonth = currentT.getCurrentMonth();
+			int StartDay = currentT.getCurrentDay();
+			int EndYear = currentT.getCurrentYear();
+			int EndMonth = currentT.getCurrentMonth();
+			int EndDay = currentT.getCurrentDay();
 
 			out << "Displaying:\r\nUnit No.0001 " << StartYear << "/0" << StartMonth << '/' << StartDay << "/0100 - " << EndYear << "/0" << EndMonth << '/' << EndDay << "/0200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
 			string actual;

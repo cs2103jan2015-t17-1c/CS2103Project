@@ -4,25 +4,25 @@
 #include <ctime>
 
 using namespace std;
-
+// This function is used to get current time information
 class CurrentTime{
 
 private:
-	int _year;
-	int _month;
-	int _day;
+	int _currentYear;
+	int _currentMonth;
+	int _currentDay;
 
 public:
 	CurrentTime();
 	//setter methods
-	void setYear(struct tm *timeinfo);
-	void setMonth(struct tm *timeinfo);
-	void setDate(struct tm *timeinfo);
+	void setCurrentYear(struct tm *timeinfo);
+	void setCurrentMonth(struct tm *timeinfo);
+	void setCurrentDate(struct tm *timeinfo);
 
 	//getter methods
-	int getYear();
-	int getMonth();
-	int getDay();
+	int getCurrentYear();
+	int getCurrentMonth();
+	int getCurrentDay();
 
 };
 

@@ -13,7 +13,7 @@ class SmartAdder{
 
 private:
 
-	static const string _STD_MONTH[36];
+	static const string _STD_Month[36];
 	int _indicatorEmptyInput;
 	struct Eventinput {
 		string description;

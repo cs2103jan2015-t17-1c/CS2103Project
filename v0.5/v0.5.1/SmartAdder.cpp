@@ -13,8 +13,8 @@ using namespace std;
 const int FIRST_CHARACTER_POSITION = 0;
 const int MAXIMUM_YEAR = 2500;
 const int MINIMUM_YEAR = 1500;
-const int MAXIMUM_DAY = 31;
-const int MINIMUM_DAY = 1;
+const int MAXIMUM_Day = 31;
+const int MINIMUM_Day = 1;
 
 const string INDICATOR_START_INPUT = "-st";
 const string INDICATOR_END_INPUT = "-et";
@@ -32,7 +32,7 @@ const int DAY31 = 31;
 
 
 
-const string SmartAdder::_STD_MONTH[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
+const string SmartAdder::_STD_Month[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
     "may","may","may","june","jun","june","july","jul","jul","august","aug","augu","september","sep","sept","october","oct","octo","november","nov","nove", "december","dec","dece"};
 
 
@@ -421,7 +421,7 @@ bool SmartAdder::isYear(int tempInt){
 }
 
 bool SmartAdder::isDay(int tempInt) {
-	if(MINIMUM_DAY <= tempInt && tempInt <= MAXIMUM_DAY){
+	if(MINIMUM_Day <= tempInt && tempInt <= MAXIMUM_Day){
 		return true;
 	} else {
 		return false;
@@ -437,7 +437,7 @@ bool SmartAdder::isExceedMaximumMonth(int month, bool isValidMonth) {
 }
 
 bool SmartAdder::isInputEqualsStandardMonth(string tempTime, int i){
-	if (tempTime == _STD_MONTH[i]) {
+	if (tempTime == _STD_Month[i]) {
 		return true;
 	} else {
 		return false;
@@ -467,7 +467,7 @@ bool SmartAdder::isTheUnitMissing(int valueOfTimeUnit){
 	if (valueOfTimeUnit == _indicatorEmptyInput) {
 		return true;
 	} else {
-		assert(valueOfTimeUnit != -1);
+		assert(valueOfTimeUnit != _indicatorEmptyInput);
 		return false;
 	}
 }
@@ -568,13 +568,13 @@ void SmartAdder::appendMissingStartInfo(){
 			setStartTime(DEFAULT_TIME);
 		}
 		if (isTheUnitMissing(getStartDay())){
-			setStartDay(timeInfo.getDay());
+			setStartDay(timeInfo.getCurrentDay());
 		}
 		if (isTheUnitMissing(getStartMonth())){
-			setStartMonth(timeInfo.getMonth());
+			setStartMonth(timeInfo.getCurrentMonth());
 		}
 		if (isTheUnitMissing(getStartYear())){
-			setStartYear(timeInfo.getYear());
+			setStartYear(timeInfo.getCurrentYear());
 		}
 	}
 }
@@ -590,13 +590,13 @@ void SmartAdder::appendMissingEndInfo(){
 			setEndTime(DEFAULT_TIME);
 		}		
 		if (isTheUnitMissing(getEndDay())){
-			setEndDay(timeInfo.getDay());
+			setEndDay(timeInfo.getCurrentDay());
 		}
 		if (isTheUnitMissing(getEndMonth())){
-			setEndMonth(timeInfo.getMonth());
+			setEndMonth(timeInfo.getCurrentMonth());
 		}
 		if (isTheUnitMissing(getEndYear())){
-			setEndYear(timeInfo.getYear());
+			setEndYear(timeInfo.getCurrentYear());
 		}
 	}	 
 }

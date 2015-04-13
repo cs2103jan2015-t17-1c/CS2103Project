@@ -46,3 +46,75 @@ display
 2015412
 exit
 
+1900113
+display
+
+1900113
+add test 5 -et june
+
+1900113
+display
+
+2015113
+add test 6 -et june
+
+2015113
+display
+
+2015113
+add test time check -et march
+
+2015113
+display
+
+2015113
+display
+
+2015113
+display
+
+2015113
+add test10 -et march
+
+2015113
+display
+
+2015413
+display
+
+2015413
+delete 1
+
+2015413
+delete 2
+
+2015413
+delete 3
+
+2015413
+delete 4
+
+2015413
+delete 2
+
+2015413
+display
+
+2015413
+delete 5
+
+2015413
+delete 6
+
+2015413
+add test time -apria
+
+2015413
+display
+
+2015413
+add test time -et march
+
+2015413
+display
+

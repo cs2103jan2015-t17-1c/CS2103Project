@@ -610,7 +610,7 @@ void EasiStorage::sortTasks() {
 void EasiStorage::setDueStatusIfDayPast() {
 	CurrentTime timeInfo;
 	for(unsigned int i = 0; isWithinRange(i, getListSize()); i++){
-	    if(isDatePast(_taskLists[i].getEndDay(), _taskLists[i].getEndMonth(), _taskLists[i].getEndYear(),timeInfo.getDay(),timeInfo.getMonth(),timeInfo.getYear())){
+	    if(isDatePast(_taskLists[i].getEndDay(), _taskLists[i].getEndMonth(), _taskLists[i].getEndYear(),timeInfo.getCurrentDay(),timeInfo.getCurrentMonth(),timeInfo.getCurrentYear())){
 			_taskLists[i].setOverdue(1);
 		} else {
 			_taskLists[i].setOverdue(0);
