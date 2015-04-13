@@ -400,7 +400,7 @@
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CommandChecker.cpp
 	 */
 
 #include "CommandChecker.h"
@@ -547,14 +547,14 @@ void CommandChecker::verifyLengthOfUserInput(string userInput) {
 		throw new exception(MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER);
 	}
 }
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CommandChecker.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CommandChecker.h
 	 */
 
 #pragma once
@@ -603,106 +603,107 @@ public:
 };
 
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CommandChecker.h
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CurrentTime.cpp
 	 */
 
 #include "CurrentTime.h"
 
-
+#define SYSTEM_DEFAULT_TIME 1900;
+#define SYSTEM_DEFAULT_MONTH 1;
 CurrentTime::CurrentTime(){
 	struct tm *timeinfo;
 	time_t now_time = time(0);
 	timeinfo = localtime(&now_time);
 	
 	//set current year, month and date from the computer when CurrentTime is constructed
-	setYear(timeinfo);
-	setMonth(timeinfo);
-	setDate(timeinfo);
+	setCurrentYear(timeinfo);
+	setCurrentMonth(timeinfo);
+	setCurrentDate(timeinfo);
 
 }
 
 
-void CurrentTime::setYear(struct tm *timeinfo){
-	_year = 1900 + timeinfo->tm_year;
+void CurrentTime::setCurrentYear(struct tm *timeinfo){
+	_currentYear =  timeinfo->tm_year + SYSTEM_DEFAULT_TIME;
 
 }
 
-void CurrentTime::setMonth(struct tm *timeinfo){
-	_month = 1 + timeinfo->tm_mon;
+void CurrentTime::setCurrentMonth(struct tm *timeinfo){
+	_currentMonth = timeinfo->tm_mon + SYSTEM_DEFAULT_MONTH;
 }
 
-void CurrentTime::setDate(struct tm *timeinfo){
-	_day = timeinfo->tm_mday;
+void CurrentTime::setCurrentDate(struct tm *timeinfo){
+	_currentDay = timeinfo->tm_mday;
 }
 
 
 //get CURRENT year, month and date from the computer
-int CurrentTime::getYear(){
-	return _year;
+int CurrentTime::getCurrentYear(){
+	return _currentYear;
 }
 
-int CurrentTime::getMonth(){
-	return _month;
+int CurrentTime::getCurrentMonth(){
+	return _currentMonth;
 }
 
-int CurrentTime::getDay(){
-	return _day;
+int CurrentTime::getCurrentDay(){
+	return _currentDay;
 }
 
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CurrentTime.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CurrentTime.h
 	 */
 
 #include <iostream>
 #include <ctime>
 
 using namespace std;
-
+// This function is used to get current time information
 class CurrentTime{
 
 private:
-	int _year;
-	int _month;
-	int _day;
+	int _currentYear;
+	int _currentMonth;
+	int _currentDay;
 
 public:
 	CurrentTime();
 	//setter methods
-	void setYear(struct tm *timeinfo);
-	void setMonth(struct tm *timeinfo);
-	void setDate(struct tm *timeinfo);
+	void setCurrentYear(struct tm *timeinfo);
+	void setCurrentMonth(struct tm *timeinfo);
+	void setCurrentDate(struct tm *timeinfo);
 
 	//getter methods
-	int getYear();
-	int getMonth();
-	int getDay();
+	int getCurrentYear();
+	int getCurrentMonth();
+	int getCurrentDay();
 
 };
 
 
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\CurrentTime.h
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\SmartAdder.cpp
 	 */
 
 //Purpose: To fill the time component with current time if no user input is found
@@ -727,7 +728,7 @@ bool SmartAdder::isTheUnitMissing(int valueOfTimeUnit){
 	if (valueOfTimeUnit == _indicatorEmptyInput) {
 		return true;
 	} else {
-		assert(valueOfTimeUnit != -1);
+		assert(valueOfTimeUnit != _indicatorEmptyInput);
 		return false;
 	}
 }
@@ -828,13 +829,13 @@ void SmartAdder::appendMissingStartInfo(){
 			setStartTime(DEFAULT_TIME);
 		}
 		if (isTheUnitMissing(getStartDay())){
-			setStartDay(timeInfo.getDay());
+			setStartDay(timeInfo.getCurrentDay());
 		}
 		if (isTheUnitMissing(getStartMonth())){
-			setStartMonth(timeInfo.getMonth());
+			setStartMonth(timeInfo.getCurrentMonth());
 		}
 		if (isTheUnitMissing(getStartYear())){
-			setStartYear(timeInfo.getYear());
+			setStartYear(timeInfo.getCurrentYear());
 		}
 	}
 }
@@ -850,13 +851,13 @@ void SmartAdder::appendMissingEndInfo(){
 			setEndTime(DEFAULT_TIME);
 		}		
 		if (isTheUnitMissing(getEndDay())){
-			setEndDay(timeInfo.getDay());
+			setEndDay(timeInfo.getCurrentDay());
 		}
 		if (isTheUnitMissing(getEndMonth())){
-			setEndMonth(timeInfo.getMonth());
+			setEndMonth(timeInfo.getCurrentMonth());
 		}
 		if (isTheUnitMissing(getEndYear())){
-			setEndYear(timeInfo.getYear());
+			setEndYear(timeInfo.getCurrentYear());
 		}
 	}	 
 }
@@ -890,7 +891,7 @@ bool SmartAdder::isNormalLeapYear(int year){
 bool SmartAdder::isSpecialLeapYear(int year){
 	return (year % 100 == 0 && year % 400 ==0);
 }
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\SmartAdder.cpp
 
 
 

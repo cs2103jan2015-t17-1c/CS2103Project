@@ -109,7 +109,7 @@
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.cpp
 	 */
 
 #include <iostream>
@@ -666,14 +666,14 @@ bool EasiStorage::isSortNeeded(int firstEndTime, int secondEndTime) {
 	}
 }
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.h
 	 */
 
 #include <string>
@@ -760,7 +760,7 @@ public:
 
 
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.h
 
 
 

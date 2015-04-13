@@ -304,12 +304,12 @@ namespace EasiSchedulerGUI {
 			CommandExecution test;
 			CurrentTime currentT;
 			ostringstream out;
-			int StartYear = currentT.getYear();
-			int StartMonth = currentT.getMonth();
-			int StartDay = currentT.getDay();
-			int EndYear = currentT.getYear();
-			int EndMonth = currentT.getMonth();
-			int EndDay = currentT.getDay();
+			int StartYear = currentT.getCurrentYear();
+			int StartMonth = currentT.getCurrentMonth();
+			int StartDay = currentT.getCurrentDay();
+			int EndYear = currentT.getCurrentYear();
+			int EndMonth = currentT.getCurrentMonth();
+			int EndDay = currentT.getCurrentDay();
 
 			out << "Displaying:\r\nUnit No.0001 " << StartYear << "/0" << StartMonth << '/' << StartDay << "/0100 - " << EndYear << "/0" << EndMonth << '/' << EndDay << "/0200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
 			string actual;
@@ -339,7 +339,7 @@ namespace EasiSchedulerGUI {
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.cpp
 	 */
 
 //Purpose: to sort all the tasks according to ending time
@@ -390,7 +390,7 @@ void EasiStorage::sortTasks() {
 void EasiStorage::setDueStatusIfDayPast() {
 	CurrentTime timeInfo;
 	for(unsigned int i = 0; isWithinRange(i, getListSize()); i++){
-	    if(isDatePast(_taskLists[i].getEndDay(), _taskLists[i].getEndMonth(), _taskLists[i].getEndYear(),timeInfo.getDay(),timeInfo.getMonth(),timeInfo.getYear())){
+	    if(isDatePast(_taskLists[i].getEndDay(), _taskLists[i].getEndMonth(), _taskLists[i].getEndYear(),timeInfo.getCurrentDay(),timeInfo.getCurrentMonth(),timeInfo.getCurrentYear())){
 			_taskLists[i].setOverdue(1);
 		} else {
 			_taskLists[i].setOverdue(0);
@@ -424,14 +424,14 @@ bool EasiStorage::isValidIndex(int index){
 	}
 	return false;
 }
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\EasiStorage.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\Logger.cpp
 	 */
 
 #include "Logger.h"
@@ -460,21 +460,21 @@ void Logger::logOpenFile() {
 }
 
 void Logger::logWriteTime() {
-	_log << _loggerTime.getYear() << _loggerTime.getMonth() << _loggerTime.getDay() << endl;
+	_log << _loggerTime.getCurrentYear() << _loggerTime.getCurrentMonth() << _loggerTime.getCurrentDay() << endl;
 }
 
 void Logger::logInput(string userInput) {
 	_log << userInput << endl;
 	_log << endl;
 }
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\Logger.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\Logger.h
 	 */
 
 #include <iostream>
@@ -497,14 +497,14 @@ public:
 	void logInput(string);
 	void logClose();
 };
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\Logger.h
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\SmartAdder.cpp
 	 */
 
 #include <string>
@@ -521,8 +521,8 @@ using namespace std;
 const int FIRST_CHARACTER_POSITION = 0;
 const int MAXIMUM_YEAR = 2500;
 const int MINIMUM_YEAR = 1500;
-const int MAXIMUM_DAY = 31;
-const int MINIMUM_DAY = 1;
+const int MAXIMUM_Day = 31;
+const int MINIMUM_Day = 1;
 
 const string INDICATOR_START_INPUT = "-st";
 const string INDICATOR_END_INPUT = "-et";
@@ -540,7 +540,7 @@ const int DAY31 = 31;
 
 
 
-const string SmartAdder::_STD_MONTH[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
+const string SmartAdder::_STD_Month[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
     "may","may","may","june","jun","june","july","jul","jul","august","aug","augu","september","sep","sept","october","oct","octo","november","nov","nove", "december","dec","dece"};
 
 
@@ -929,7 +929,7 @@ bool SmartAdder::isYear(int tempInt){
 }
 
 bool SmartAdder::isDay(int tempInt) {
-	if(MINIMUM_DAY <= tempInt && tempInt <= MAXIMUM_DAY){
+	if(MINIMUM_Day <= tempInt && tempInt <= MAXIMUM_Day){
 		return true;
 	} else {
 		return false;
@@ -945,28 +945,28 @@ bool SmartAdder::isExceedMaximumMonth(int month, bool isValidMonth) {
 }
 
 bool SmartAdder::isInputEqualsStandardMonth(string tempTime, int i){
-	if (tempTime == _STD_MONTH[i]) {
+	if (tempTime == _STD_Month[i]) {
 		return true;
 	} else {
 		return false;
 	}
 }
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\SmartAdder.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\SmartAdder.h
 	 */
 
 class SmartAdder{
 
 private:
 
-	static const string _STD_MONTH[36];
+	static const string _STD_Month[36];
 	int _indicatorEmptyInput;
 	struct Eventinput {
 		string description;
@@ -1049,7 +1049,7 @@ public:
 };
 
 
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\SmartAdder.h
 
 
 

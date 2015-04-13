@@ -3,7 +3,7 @@
 
 
 	/**
-	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\MainTesting.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\MainTesting.cpp
 	 */
 
 //Used code is to build exe file without UI for internal testing
@@ -62,7 +62,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\MainTesting.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\v0.5.1\MainTesting.cpp
 
 
 
