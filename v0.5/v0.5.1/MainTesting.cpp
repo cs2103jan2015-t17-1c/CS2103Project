@@ -1,4 +1,5 @@
-//@author A0093868J
+//@author A0093868J-unused
+//Used code is to build exe file without UI for internal testing
 #include <iostream>
 #include <string>
 #include "CommandExecution.h"
@@ -15,7 +16,7 @@ int main(int argc, const char * argv[]) {
     
 	string stopCommand;
 
-
+	//To allow many rounds of testings
     cout<<v01.readCommand(input);
     getline(cin,input);
 	cout<<v01.readCommand(input);

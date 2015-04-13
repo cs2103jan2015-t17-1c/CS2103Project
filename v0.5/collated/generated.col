@@ -1,0 +1,205 @@
+//@author: generated
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+	public:
+		EasiScheduler(void){
+
+			InitializeComponent();
+			//
+			executor= new CommandExecution();//TODO: Add the constructor code here
+			//
+		}
+		protected:
+
+		/// <summary>
+
+		/// Clean up any resources being used.
+
+		/// </summary>
+
+		~EasiScheduler() {
+			if (components) {
+				delete components;
+			}
+		}
+
+		private: System::Windows::Forms::TextBox^  outputWindow;
+		private: System::Windows::Forms::TextBox^  inputBox;
+		private: System::Windows::Forms::MonthCalendar^  monthCalendar1;
+		private: System::Windows::Forms::TextBox^  notificationPanel;
+		private: System::Windows::Forms::Label^  label1;
+		private: System::Windows::Forms::TextBox^  textBox2;
+		private: System::ComponentModel::IContainer^  components;
+
+		protected: 
+
+		private:
+
+		/// <summary>
+
+		/// Required designer variable.
+
+		/// </summary>
+
+
+		#pragma region Windows Form Designer generated code
+
+		/// <summary>
+
+		/// Required method for Designer support - do not modify
+
+		/// the contents of this method with the code editor.
+
+		/// </summary>
+
+			void InitializeComponent(void) {
+			this->outputWindow = (gcnew System::Windows::Forms::TextBox());
+			this->inputBox = (gcnew System::Windows::Forms::TextBox());
+			this->monthCalendar1 = (gcnew System::Windows::Forms::MonthCalendar());
+			this->notificationPanel = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->SuspendLayout();
+			// 
+			// outputWindow
+			// 
+			this->outputWindow->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(229)), static_cast<System::Int32>(static_cast<System::Byte>(187)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(129)));
+			this->outputWindow->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->outputWindow->Font = (gcnew System::Drawing::Font(L"Times New Roman", 13.94764F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->outputWindow->ForeColor = System::Drawing::Color::MidnightBlue;
+			this->outputWindow->Location = System::Drawing::Point(13, 12);
+			this->outputWindow->Margin = System::Windows::Forms::Padding(2, 1, 2, 1);
+			this->outputWindow->Multiline = true;
+			this->outputWindow->Name = L"outputWindow";
+			this->outputWindow->ReadOnly = true;
+			this->outputWindow->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+			this->outputWindow->Size = System::Drawing::Size(786, 288);
+			this->outputWindow->TabIndex = 3;
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+			this->inputBox->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(34)), static_cast<System::Int32>(static_cast<System::Byte>(8)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(7)));
+			this->inputBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->inputBox->Font = (gcnew System::Drawing::Font(L"Cambria", 18.09424F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->inputBox->ForeColor = System::Drawing::Color::Transparent;
+			this->inputBox->Location = System::Drawing::Point(12, 328);
+			this->inputBox->Margin = System::Windows::Forms::Padding(2, 1, 2, 1);
+			this->inputBox->Name = L"inputBox";
+			this->inputBox->Size = System::Drawing::Size(786, 29);
+			this->inputBox->TabIndex = 1;
+			this->inputBox->TextChanged += gcnew System::EventHandler(this, &EasiScheduler::inputBox_TextChanged);
+			this->inputBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &EasiScheduler::inputBox_KeyDown);
+			// 
+			// monthCalendar1
+			// 
+			this->monthCalendar1->BackColor = System::Drawing::Color::CadetBlue;
+			this->monthCalendar1->Font = (gcnew System::Drawing::Font(L"Segoe Marker", 4.900524F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->monthCalendar1->ForeColor = System::Drawing::SystemColors::MenuHighlight;
+			this->monthCalendar1->Location = System::Drawing::Point(52, 365);
+			this->monthCalendar1->Margin = System::Windows::Forms::Padding(4);
+			this->monthCalendar1->Name = L"monthCalendar1";
+			this->monthCalendar1->TabIndex = 4;
+			this->monthCalendar1->TitleForeColor = System::Drawing::Color::Chocolate;
+			// 
+			// notificationPanel
+			// 
+			this->notificationPanel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(118)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(77)), static_cast<System::Int32>(static_cast<System::Byte>(57)));
+			this->notificationPanel->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->notificationPanel->Font = (gcnew System::Drawing::Font(L"Calibri", 15.83246F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->notificationPanel->ForeColor = System::Drawing::Color::Moccasin;
+			this->notificationPanel->Location = System::Drawing::Point(359, 381);
+			this->notificationPanel->Margin = System::Windows::Forms::Padding(2, 1, 2, 1);
+			this->notificationPanel->Multiline = true;
+			this->notificationPanel->Name = L"notificationPanel";
+			this->notificationPanel->Size = System::Drawing::Size(375, 128);
+			this->notificationPanel->TabIndex = 6;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Calibri", 15.83246F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(420, 355);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(107, 27);
+			this->label1->TabIndex = 7;
+			this->label1->Text = L"What\'s Up";
+			// 
+			// textBox2
+			// 
+			this->textBox2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(118)), static_cast<System::Int32>(static_cast<System::Byte>(77)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(57)));
+			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Calibri", 15.83246F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->textBox2->ForeColor = System::Drawing::Color::GhostWhite;
+			this->textBox2->Location = System::Drawing::Point(13, 302);
+			this->textBox2->Margin = System::Windows::Forms::Padding(2, 1, 2, 1);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->ReadOnly = true;
+			this->textBox2->Size = System::Drawing::Size(642, 26);
+			this->textBox2->TabIndex = 8;
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+
+			// EasiScheduler
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(118)), static_cast<System::Int32>(static_cast<System::Byte>(77)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(57)));
+			this->ClientSize = System::Drawing::Size(809, 531);
+			this->Controls->Add(this->textBox2);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->notificationPanel);
+			this->Controls->Add(this->monthCalendar1);
+			this->Controls->Add(this->inputBox);
+			this->Controls->Add(this->outputWindow);
+			this->ForeColor = System::Drawing::Color::White;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->Margin = System::Windows::Forms::Padding(2, 1, 2, 1);
+			this->MaximizeBox = false;
+			this->Name = L"EasiScheduler";
+			this->Opacity = 0.94;
+			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Show;
+			this->Text = L" ";
+			this->ResumeLayout(false);
+			this->PerformLayout();
+
+		}
+
+		#pragma endregion
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+

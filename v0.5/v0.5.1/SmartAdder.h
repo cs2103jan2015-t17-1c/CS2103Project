@@ -66,7 +66,7 @@ public:
 	bool isJunThirtyFirst(int day, int month);
 	bool isSepThirtyFirst(int day, int month);
 	bool isNovThirtyFirst(int day, int month);
-	bool isFebTwentyNinth(int day, int month, int year);
+	bool isInvalidFebTwentyNinth(int day, int month, int year);
 	bool checkEachPossibility(const string[], string);
 	bool getIsValidInput();
 	bool isEndTimeLaterThanStartTime();
@@ -89,6 +89,8 @@ public:
 	bool isInputEqualsStandardMonth(string tempTime, int i);
 	bool isAnythingMissing(int time, int day, int month, int year);
 	bool isTheUnitMissing(int timeUnit);
+	bool isNormalLeapYear(int year);
+	bool isSpecialLeapYear(int year);
 	
 	string getDescription();
 };

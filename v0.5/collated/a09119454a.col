@@ -3,7 +3,343 @@
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+#include "msclr\marshal_cppstd.h"
+
+#include "CommandExecution.h"
+
+
+
+#include <string>
+
+#include <algorithm>
+
+
+#pragma once
+
+
+namespace EasiSchedulerGUI {
+
+	using namespace System;
+	using namespace System::ComponentModel;
+	using namespace System::Collections;
+	using namespace System::Windows::Forms;
+	using namespace System::Data;
+	using namespace System::Drawing;
+
+	#define MESSAGE_THANKS_FOR_USING_EASISCHEDULER "Thank you for using EasiScheduler!\r\n\r\n Enter \"help\" to view valid command. Enter \"add\" to add tasks ";
+	#define REMINDER_MESSAGE_TO_ELIMINATE_EXTRA_SPACE "Thank you for using EasiScheduler!\r\n" + "Please make sure that command starts from the beginning of the line.\r\n" + "\"help\" to view valid command. Enter \"add\" to add tasks ";
+	#define MESSAGE_FOR_HELP_GUIDE "A list of available command " + "\r\n\r\n  \"add\" for adding a task" + "\r\n  \"delete\" for delete a task" + "\r\n  \"search\" for searching a task" + "\r\n  \"update\" for updating a task" + "\r\n  \"mark\" for marking a task as done" + "\r\n  \"unmark\" for unmarking a done" + "\r\n  \"undo\" for undoing the last action" + "\r\n  \"redo\" for redoing the last action" + "\r\n  \"track\" for tracking past tasks" + "\r\n  \"location\" for changing location of task file""\r\n\r\n For complete User Guide, please refer to user manual" + "\r\n\r\n Enjoy using EasiScheduler!";			
+	#define MESSAGE_FOR_ADD_GUIDE "Please follow the format to add new task" + "\r\n\r\n\t add [EVENT] -st [START_TIME] -et [END_TIME]" + "\r\n\r\nExample:" + "\r\n\t add task -st 2015 July 7 1000am -et July 7 1200PM" + "\r\n\r\n For missing information, EasiScheduler will append it as time now";
+	#define MESSAGE_FOR_UPDATE_GUIDE "Please follow the format to add new task" + "\r\n\r\n\t update [INDEX] [EVENT] -st [START_TIME] -et [END_TIME]"+"\r\n\r\nExample:"+"\r\n\t update 1 task -st 2015 July 7 1000am -et July 7 1200PM" + "\r\n\r\nTo check index of the task, type \"search\"to search for the task you want to update" + "\r\n For missing information, EasiScheduler will append it as time now";
+	#define MESSAGE_FOR_REDO_UNDO_TRACK_DISPLAY_GUIDE "To Redo, Undo, Track or Display" + "\r\n\r\n\t Press Enter to continue;";
+	#define MESSAGE_FOR_MARK_UNMARK_DELETE_GUIDE "To Mark, Unmark or delete a certain task, type" + "\r\n\r\n\t mark/unmark/delete [INDEX]"+"\r\n\r\nTo check the index of the task, type \"display\" if the task is not due, \"track\" otherwise";
+	#define MESSAGE_FOR_SEARCH_GUIDE "To search for a certain task" + "\r\n\r\n\t search [KEY_WORD]";
+	#define MESSAGE_FOR_LOCATION_GUIDE "To change the location to save location" + "\r\n\r\n\t location [directory]"+"\r\nExample: \r\n             location C:\\Users\\UserName\\Desktop ";
+
+	/// <summary>
+
+	/// Summary for EasiScheduler
+
+	/// </summary>
+
+	public ref class EasiScheduler : public System::Windows::Forms::Form {
+	private:
+			CommandExecution *executor;
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+			this->outputWindow->Text = L"Welcom to EasiScheduler!\r\n Press any key to continue...";
+			this->outputWindow->TextChanged += gcnew System::EventHandler(this, &EasiScheduler::outputWindow_TextChanged);
+			// 
+			// inputBox
+			// 
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+			this->textBox2->Text = L"Enter command here:";
+			// 
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+	TEST_CLASS(UnitTestPerformDelete) {
+	public:
+		
+		TEST_METHOD(TestDeleteInvalidIndex) {
+			remove("Easicalendar.txt"); 
+			CommandExecution test;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			
+			//This is a boundary case for the 'value < 1' partition 
+			string expected = "Invalid index\r\n";
+			string actual;
+			test.performDelete(actual, "0");
+			Assert::AreEqual(expected, actual);
+
+			//This is a boundary case for the 'value > size' partition 
+			test.performDelete(actual, "3");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "4");
+			Assert::AreEqual(expected, actual);
+			
+			//after one successful deletion
+			test.performDelete(actual, "1");
+			Assert::AreNotEqual(expected, actual);
+			test.performDelete(actual, "1");
+			Assert::AreEqual(expected, actual);
+
+			//other cases
+			test.performDelete(actual, "a");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "a1");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "@@");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "1a");
+			Assert::AreEqual(expected, actual);
+	
+		}
+
+		TEST_METHOD(TestSuccessfulDeletion) {
+			CommandExecution test;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+
+			string expected = "Successfully deleted\r\n";
+			string actual;
+			test.performDelete(actual, "1");
+			Assert::AreEqual(expected, actual);
+			test.performDelete(actual, "2");
+			Assert::AreEqual(expected, actual);
+		} 
+	};
+
+	TEST_CLASS(UnitTestPerformUpdate) {
+	public:
+		
+		TEST_METHOD(TestInvalidUpdateIndex) {
+			remove("EasiScheduler.txt");
+			CommandExecution test;
+			string expected = "Invalid index\r\n";
+			string actual;
+			
+			//This is a boundary case for the 'value < 1' partition 
+			test.performUpdate(actual, "0 testing");
+			Assert::AreEqual(expected, actual);
+
+			//This is a boundary case for the 'value > size' partition 
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performUpdate(actual, "    2     testing");
+			Assert::AreEqual(expected, actual);
+
+			//other cases for input is invalid
+			test.performUpdate(actual, "a testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "a1 testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "@@ testing");
+			Assert::AreEqual(expected, actual);
+
+			//cases when unit no is deleted
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performAdd(dummy, "test case 3");
+			test.performDelete(dummy, "1");
+			test.performDelete(dummy, "3");
+			test.performUpdate(actual, "1 testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "3 testing");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestInvalidUpdateInput) {
+			CommandExecution test;
+			string expected = "Invalid UPDATE Input\r\n";
+			string actual;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performAdd(dummy, "test case 3");
+
+			test.performUpdate(actual, "1 test case -st -st -st");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 test case -st 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "3 test case -st 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "1 test case -et 1100am -et 1100pm -st 1100am ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 test case -st1100am -et1100pm");
+			Assert::AreEqual(expected, actual);
+
+			//invalid date cases
+			test.performUpdate(actual, "1 test case -et February 30");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 test case -et April 0");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "3 test case -et April 31");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "1 test case -et March 32");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestEmptyUpdateInput) {
+			CommandExecution test;
+			string expected = "Don't be lazy, please type something\r\n";
+			string dummy;
+			string actual;
+			test.performAdd(dummy, "test case");
+			test.performUpdate(actual, "1      ");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "1");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSeperateInputForUpdate) {
+			CommandExecution test;
+			int expectedIndex = 2;
+			string expected = "test case -st 2015 -et 2016";
+			int actualIndex;
+			string actual;
+			test.seperateInputForUpdate("2 test case -st 2015 -et 2016", actualIndex, actual);
+			Assert::AreEqual(expectedIndex, actualIndex);
+			Assert::AreEqual(expected, actual);
+
+			expectedIndex = 5;
+			expected = "test case -st 2015 -et 2016";
+			test.seperateInputForUpdate("    5       test case -st 2015 -et 2016", actualIndex, actual);
+			Assert::AreEqual(expectedIndex, actualIndex);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSuccessfulUpdate) {
+		    
+			CommandExecution test;
+			string expected = "The event is updated\r\n";
+			string actual;
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+
+			test.performUpdate(actual, "1 testing");
+			Assert::AreEqual(expected, actual);
+			test.performUpdate(actual, "2 testing");
+			Assert::AreEqual(expected, actual);
+		}
+		
+	};
+	
+
+	TEST_CLASS(UnitTestPerformDisplay) {
+	public:
+		TEST_METHOD(TestEmptyDisplayEmptySchedule) {
+			CommandExecution test;
+			string expected = "Schedule is empty\r\n";
+			string actual;
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+			//after add and delete
+			string dummy;
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performDelete(dummy, "1");
+			test.performDelete(dummy, "2");
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+			//after mark 
+			test.performAdd(dummy, "test case 1");
+			test.performAdd(dummy, "test case 2");
+			test.performMark(dummy, "3");
+			test.performMark(dummy, "4");
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestSortDisplay){
+			remove("EasiScheduler.txt");
+			string dummy;
+			CommandExecution test;
+			EasiStorage task;
+			string expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/1300[OD] Event: test case 2\r\nUnit No.0001 2015/01/03/0200 - 2015/01/10/1000[OD] Event: test case 1\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
+			string actual; 
+
+			test.performAdd(dummy, "test case 1 -st 2015 Jan 3 0200am -et 2015 Jan 10 1000am");
+			test.performAdd(dummy, "test case 2 -et 2014 December 8 0100pm");
+			test.performAdd(dummy, "test case 3");
+            test.executeCommand(test.DISPLAY, actual,""); 
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestDisplayResult) {
+			remove("EasiScheduler.txt");
+			CommandExecution test;
+			CurrentTime currentT;
+			ostringstream out;
+			int StartYear = currentT.getYear();
+			int StartMonth = currentT.getMonth();
+			int StartDay = currentT.getDay();
+			int EndYear = currentT.getYear();
+			int EndMonth = currentT.getMonth();
+			int EndDay = currentT.getDay();
+
+			out << "Displaying:\r\nUnit No.0001 " << StartYear << "/0" << StartMonth << '/' << StartDay << "/0100 - " << EndYear << "/0" << EndMonth << '/' << EndDay << "/0200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
+			string actual;
+			string expected = out.str();
+			string dummy;
+			//display should automatically fill up current year, month and day
+			test.performAdd(dummy, "test case 1 -st 0100am -et 0200am");
+			//display should automatically fiull up time as "0000"(default value) and showed this is overdue (year == 2014) 
+			test.performAdd(dummy, "test case 2 -et 2014 December 8");
+			//display will not fill up date and time for floating task
+			test.performAdd(dummy, "test case 3");
+
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+			
+			//after delete or mark
+			test.performMark(dummy, "1");
+			test.performDelete(dummy, "3");
+			expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\n";
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
 	 */
 
 //Purpose: to sort all the tasks according to ending time
@@ -88,15 +424,17 @@ bool EasiStorage::isValidIndex(int index){
 	}
 	return false;
 }
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.cpp
 	 */
+
+#include "Logger.h"
 
 const string DEFAULT_LOGGING_FILE = "userInputLogger.txt";
 
@@ -129,14 +467,14 @@ void Logger::logInput(string userInput) {
 	_log << userInput << endl;
 	_log << endl;
 }
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.h
 	 */
 
 #include <iostream>
@@ -159,14 +497,14 @@ public:
 	void logInput(string);
 	void logClose();
 };
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Logger.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Logger.h
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
 	 */
 
 #include <string>
@@ -190,6 +528,17 @@ const string INDICATOR_START_INPUT = "-st";
 const string INDICATOR_END_INPUT = "-et";
 const string INDICAOTR_AM = "am";
 const string INDICAOTR_PM = "pm";
+const int DEFAULT_TIME = 1200;
+const int FEB = 2;
+const int APR = 4;
+const int JUN = 6;
+const int SEP = 9;
+const int NOV = 11;
+const int DAY29 = 29;
+const int DAY30 = 30;
+const int DAY31 = 31;
+
+
 
 const string SmartAdder::_STD_MONTH[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
     "may","may","may","june","jun","june","july","jul","jul","august","aug","augu","september","sep","sept","october","oct","octo","november","nov","nove", "december","dec","dece"};
@@ -603,14 +952,14 @@ bool SmartAdder::isInputEqualsStandardMonth(string tempTime, int i){
 	}
 }
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.h
 	 */
 
 class SmartAdder{
@@ -670,7 +1019,7 @@ public:
 	bool isJunThirtyFirst(int day, int month);
 	bool isSepThirtyFirst(int day, int month);
 	bool isNovThirtyFirst(int day, int month);
-	bool isFebTwentyNinth(int day, int month, int year);
+	bool isInvalidFebTwentyNinth(int day, int month, int year);
 	bool checkEachPossibility(const string[], string);
 	bool getIsValidInput();
 	bool isEndTimeLaterThanStartTime();
@@ -693,271 +1042,14 @@ public:
 	bool isInputEqualsStandardMonth(string tempTime, int i);
 	bool isAnythingMissing(int time, int day, int month, int year);
 	bool isTheUnitMissing(int timeUnit);
+	bool isNormalLeapYear(int year);
+	bool isSpecialLeapYear(int year);
 	
 	string getDescription();
 };
 
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.h
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
-	 */
-
-	TEST_CLASS(UnitTestPerformDelete) {
-	public:
-		
-		TEST_METHOD(TestDeleteInvalidIndex) {
-			remove("Easicalendar.txt"); 
-			CommandExecution test;
-			string dummy;
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-			
-			//This is a boundary case for the 'value < 1' partition 
-			string expected = "Invalid index\r\n";
-			string actual;
-			test.performDelete(actual, "0");
-			Assert::AreEqual(expected, actual);
-
-			//This is a boundary case for the 'value > size' partition 
-			test.performDelete(actual, "3");
-			Assert::AreEqual(expected, actual);
-			test.performDelete(actual, "4");
-			Assert::AreEqual(expected, actual);
-			
-			//after one successful deletion
-			test.performDelete(actual, "1");
-			Assert::AreNotEqual(expected, actual);
-			test.performDelete(actual, "1");
-			Assert::AreEqual(expected, actual);
-
-			//other cases
-			test.performDelete(actual, "a");
-			Assert::AreEqual(expected, actual);
-			test.performDelete(actual, "a1");
-			Assert::AreEqual(expected, actual);
-			test.performDelete(actual, "@@");
-			Assert::AreEqual(expected, actual);
-			test.performDelete(actual, "1a");
-			Assert::AreEqual(expected, actual);
-	
-		}
-
-		TEST_METHOD(TestSuccessfulDeletion) {
-			CommandExecution test;
-			string dummy;
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-
-			string expected = "Successfully deleted\r\n";
-			string actual;
-			test.performDelete(actual, "1");
-			Assert::AreEqual(expected, actual);
-			test.performDelete(actual, "2");
-			Assert::AreEqual(expected, actual);
-		} 
-	};
-
-	TEST_CLASS(UnitTestPerformUpdate)
-	{
-	public:
-		
-		TEST_METHOD(TestInvalidUpdateIndex) {
-			remove("EasiScheduler.txt");
-			CommandExecution test;
-			string expected = "Invalid index\r\n";
-			string actual;
-			
-			//This is a boundary case for the 'value < 1' partition 
-			test.performUpdate(actual, "0 testing");
-			Assert::AreEqual(expected, actual);
-
-			//This is a boundary case for the 'value > size' partition 
-			string dummy;
-			test.performAdd(dummy, "test case 1");
-			test.performUpdate(actual, "    2     testing");
-			Assert::AreEqual(expected, actual);
-
-			//other cases for input is invalid
-			test.performUpdate(actual, "a testing");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "a1 testing");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "@@ testing");
-			Assert::AreEqual(expected, actual);
-
-			//cases when unit no is deleted
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-			test.performAdd(dummy, "test case 3");
-			test.performDelete(dummy, "1");
-			test.performDelete(dummy, "3");
-			test.performUpdate(actual, "1 testing");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "3 testing");
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestInvalidUpdateInput) {
-			CommandExecution test;
-			string expected = "Invalid UPDATE Input\r\n";
-			string actual;
-			string dummy;
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-			test.performAdd(dummy, "test case 3");
-
-			test.performUpdate(actual, "1 test case -st -st -st");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "2 test case -st 1100am -et 1100pm -st 1100am ");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "3 test case -st 1100am -et 1100pm -st 1100am ");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "1 test case -et 1100am -et 1100pm -st 1100am ");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "2 test case -st1100am -et1100pm");
-			Assert::AreEqual(expected, actual);
-
-			//invalid date cases
-			test.performUpdate(actual, "1 test case -et February 30");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "2 test case -et April 0");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "3 test case -et April 31");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "1 test case -et March 32");
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestEmptyUpdateInput) {
-			CommandExecution test;
-			string expected = "Don't be lazy, please type something\r\n";
-			string dummy;
-			string actual;
-			test.performAdd(dummy, "test case");
-			test.performUpdate(actual, "1      ");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "1");
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestSeperateInputForUpdate) {
-			CommandExecution test;
-			int expectedIndex = 2;
-			string expected = "test case -st 2015 -et 2016";
-			int actualIndex;
-			string actual;
-			test.seperateInputForUpdate("2 test case -st 2015 -et 2016", actualIndex, actual);
-			Assert::AreEqual(expectedIndex, actualIndex);
-			Assert::AreEqual(expected, actual);
-
-			expectedIndex = 5;
-			expected = "test case -st 2015 -et 2016";
-			test.seperateInputForUpdate("    5       test case -st 2015 -et 2016", actualIndex, actual);
-			Assert::AreEqual(expectedIndex, actualIndex);
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestSuccessfulUpdate) {
-		    
-			CommandExecution test;
-			string expected = "The event is updated\r\n";
-			string actual;
-			string dummy;
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-
-			test.performUpdate(actual, "1 testing");
-			Assert::AreEqual(expected, actual);
-			test.performUpdate(actual, "2 testing");
-			Assert::AreEqual(expected, actual);
-		}
-		
-	};
-	
-
-	TEST_CLASS(UnitTestPerformDisplay)
-	{
-	public:
-		TEST_METHOD(TestEmptyDisplayEmptySchedule) {
-			CommandExecution test;
-			string expected = "Schedule is empty\r\n";
-			string actual;
-			test.performDisplay(actual);
-			Assert::AreEqual(expected, actual);
-
-			//after add and delete
-			string dummy;
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-			test.performDelete(dummy, "1");
-			test.performDelete(dummy, "2");
-			test.performDisplay(actual);
-			Assert::AreEqual(expected, actual);
-
-			//after mark 
-			test.performAdd(dummy, "test case 1");
-			test.performAdd(dummy, "test case 2");
-			test.performMark(dummy, "3");
-			test.performMark(dummy, "4");
-			test.performDisplay(actual);
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestSortDisplay){
-			remove("EasiScheduler.txt");
-			string dummy;
-			CommandExecution test;
-			EasiStorage task;
-			string expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/1300[OD] Event: test case 2\r\nUnit No.0001 2015/01/03/0200 - 2015/01/10/1000[OD] Event: test case 1\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
-			string actual; 
-
-			test.performAdd(dummy, "test case 1 -st 2015 Jan 3 0200am -et 2015 Jan 10 1000am");
-			test.performAdd(dummy, "test case 2 -et 2014 December 8 0100pm");
-			test.performAdd(dummy, "test case 3");
-            test.executeCommand(test.DISPLAY, actual,""); 
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestDisplayResult) {
-			remove("EasiScheduler.txt");
-			CommandExecution test;
-			CurrentTime currentT;
-			ostringstream out;
-			int StartYear = currentT.getYear();
-			int StartMonth = currentT.getMonth();
-			int StartDay = currentT.getDay();
-			int EndYear = currentT.getYear();
-			int EndMonth = currentT.getMonth();
-			int EndDay = currentT.getDay();
-
-			out << "Displaying:\r\nUnit No.0001 " << StartYear << "/0" << StartMonth << '/' << StartDay << "/0100 - " << EndYear << "/0" << EndMonth << '/' << EndDay << "/0200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
-			string actual;
-			string expected = out.str();
-			string dummy;
-			//display should automatically fill up current year, month and day
-			test.performAdd(dummy, "test case 1 -st 0100am -et 0200am");
-			//display should automatically fiull up time as "0000"(default value) and showed this is overdue (year == 2014) 
-			test.performAdd(dummy, "test case 2 -et 2014 December 8");
-			//display will not fill up date and time for floating task
-			test.performAdd(dummy, "test case 3");
-
-			test.performDisplay(actual);
-			Assert::AreEqual(expected, actual);
-			
-			//after delete or mark
-			test.performMark(dummy, "1");
-			test.performDelete(dummy, "3");
-			expected = "Displaying:\r\nUnit No.0002 ****/**/**/**** - 2014/12/08/0000[OD] Event: test case 2\r\n";
-			test.performDisplay(actual);
-			Assert::AreEqual(expected, actual);
-
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.h
 
 
 

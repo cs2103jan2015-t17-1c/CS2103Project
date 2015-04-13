@@ -7,6 +7,7 @@ CurrentTime::CurrentTime(){
 	time_t now_time = time(0);
 	timeinfo = localtime(&now_time);
 	
+	//set current year, month and date from the computer when CurrentTime is constructed
 	setYear(timeinfo);
 	setMonth(timeinfo);
 	setDate(timeinfo);
@@ -27,6 +28,8 @@ void CurrentTime::setDate(struct tm *timeinfo){
 	_day = timeinfo->tm_mday;
 }
 
+
+//get CURRENT year, month and date from the computer
 int CurrentTime::getYear(){
 	return _year;
 }

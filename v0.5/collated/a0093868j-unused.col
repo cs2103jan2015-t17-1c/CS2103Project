@@ -1,0 +1,70 @@
+//@author: a0093868j-unused
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\MainTesting.cpp
+	 */
+
+//Used code is to build exe file without UI for internal testing
+#include <iostream>
+#include <string>
+#include "CommandExecution.h"
+#include "SmartAdder.h"
+#include "EasiStorage.h"
+#include "Task.h"
+#include "CurrentTime.h"
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    string input;
+    getline(cin,input);
+    CommandExecution v01;
+    
+	string stopCommand;
+
+	//To allow many rounds of testings
+    cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+    getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+	getline(cin,input);
+	cout<<v01.readCommand(input);
+
+
+
+
+    
+    return 0;
+}
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\MainTesting.cpp
+
+
+
+
+

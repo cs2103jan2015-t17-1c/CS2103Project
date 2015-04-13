@@ -7,6 +7,19 @@
 
 const int MAX_INPUT_LENGTH = 1000;
 const char* MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER = "Exceed Maximun Length of Input!";
+const string EXIT_COMMAND = "exit";
+const string ADD_COMMAND = "add";
+const string DELETE_COMMAND = "delete";
+const string UPDATE_COMMAND = "update";
+const string TRACK_COMMAND = "track";
+const string SEARCH_COMMAND = "search";
+const string UNDO_COMMAND = "undo";
+const string REDO_COMMAND = "redo";
+const string MARK_COMMAND = "mark";
+const string UNMARK_COMMAND = "unmark";
+const string DISPLAY_COMMAND = "display";
+const string LOCATION_COMMAND = "location";
+
 
 CommandChecker::CommandChecker(void) {
 }
@@ -37,55 +50,55 @@ string CommandChecker::getContent(string userInput, size_t end) {
 }
 
 bool CommandChecker::isExitCommand(string command) {
-	return command == "exit";
+	return command == EXIT_COMMAND;
 }
 
 bool CommandChecker::isAddCommand(string command) {
-	return command == "add";
+	return command == ADD_COMMAND;
 }
 
 bool CommandChecker::isDeleteCommand(string command) {
-	return command == "delete";
+	return command == DELETE_COMMAND;
 }
 
 bool CommandChecker::isDisplayCommand(string command) {
-	return command == "display";
+	return command == DISPLAY_COMMAND;
 }
 
 bool CommandChecker::isUpdateCommand(string command) {
-	return command == "update";
+	return command == UPDATE_COMMAND;
 }
 
 bool CommandChecker::isMarkCommand(string command) {
-	return command == "mark";
+	return command == MARK_COMMAND;
 }
 
 bool CommandChecker::isUnmarkCommand(string command) {
-	return command == "unmark";
+	return command == UNMARK_COMMAND;
 }
 
 bool CommandChecker::isUndoCommand(string command) {
-	return command == "undo";
+	return command == UNDO_COMMAND;
 }
 
 bool CommandChecker::isRedoCommand(string command) {
-	return command == "redo";
+	return command == REDO_COMMAND;
 }
 
 bool CommandChecker::isSearchCommand(string command) {
-	return command == "search";
+	return command == SEARCH_COMMAND;
 }
 
 bool CommandChecker::isTrackCommand(string command) {
-	return command == "track";
+	return command == TRACK_COMMAND;
 }
 
 bool CommandChecker::isLocationCommand(string command) {
-	return command == "location";
+	return command == LOCATION_COMMAND;
 }
 
 bool CommandChecker::isSingleWordCommand(string command) {
-	return command == "display" || command == "undo" || command == "redo"|| command == "track";
+	return (command == DISPLAY_COMMAND || command == UNDO_COMMAND|| command == REDO_COMMAND|| command == TRACK_COMMAND);
 }
 
 //Purpose: To check whether the string only contains one or more words.

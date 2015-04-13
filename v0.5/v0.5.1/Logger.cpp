@@ -1,6 +1,6 @@
+//@author A09119454A
 #include "Logger.h"
 
-//@author A09119454A
 const string DEFAULT_LOGGING_FILE = "userInputLogger.txt";
 
 Logger::Logger(void){

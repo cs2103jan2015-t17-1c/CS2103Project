@@ -3,7 +3,342 @@
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandExecution.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+	 */
+
+		private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+					 System::String^ cmd_systemString = inputBox->Text;
+					 std::string input = msclr::interop::marshal_as<std::string>(cmd_systemString);
+					 std::string output = executor->readCommand(input);
+					 String^ MyString = gcnew String(output.c_str());
+					 outputWindow->Text = MyString;
+					 inputBox->Text = "";
+		}
+
+		private: System::Void inputBox_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {	
+					inputBox->ForeColor = System::Drawing::Color::White;
+					String^ MyRecentTask;
+					for (int i = 1;i <= 5; i++){
+					  MyRecentTask += gcnew String(executor->readRecentTask(i).c_str());
+					}
+					notificationPanel->Text = MyRecentTask;
+			
+					if(e->KeyCode == Keys::Enter){
+						if(inputBox->Text == ""){
+						 outputWindow->ForeColor = System::Drawing::Color::Maroon;
+
+						 outputWindow->Text = MESSAGE_THANKS_FOR_USING_EASISCHEDULER;
+
+						 } else {
+						 button1_Click(sender, e);
+						 }
+					}
+				 
+					if (e->KeyCode == Keys::Down) {				
+						int position = 0;				
+						outputWindow->SelectionStart = outputWindow->TextLength;				
+						outputWindow->ScrollToCaret();			
+					} 
+					 
+					if (e->KeyCode == Keys::Up){
+						int position = 0;			
+						outputWindow->SelectionStart = 0;			
+						outputWindow->ScrollToCaret();
+					}
+
+		}
+
+		private: System::Void inputBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+					 outputWindow->ForeColor = System::Drawing::Color::MidnightBlue;
+
+					 System::String^ cmd_systemString = inputBox->Text;
+					 std::string input = msclr::interop::marshal_as<std::string>(cmd_systemString);
+					 transform(input.begin(), input.end(), input.begin(), ::tolower);
+			 
+					 if(input.substr(0, 1) == " "){
+						 outputWindow->ForeColor = System::Drawing::Color::Maroon;
+
+						 outputWindow->Text = REMINDER_MESSAGE_TO_ELIMINATE_EXTRA_SPACE
+					 }
+			 
+					 if (input.substr(0, 4) =="help"){  
+						 outputWindow->ForeColor = System::Drawing::Color::Maroon;
+
+						 outputWindow->Text = MESSAGE_FOR_HELP_GUIDE;		 
+						 inputBox->Text = "";
+					 }
+			 
+					if (input.substr(0, 3) == "add"){
+						 outputWindow->ForeColor = System::Drawing::Color::Maroon;
+						 outputWindow->Text =MESSAGE_FOR_ADD_GUIDE;
+					}
+
+					if (input.substr(0, 6) == "update"){
+						 outputWindow->ForeColor = System::Drawing::Color::Maroon;
+						 outputWindow->Text = MESSAGE_FOR_UPDATE_GUIDE;
+					}
+
+					if (input.substr(0, 4) == "redo" || input.substr(0, 4) == "undo" || input.substr(0, 5) == "track" || input.substr(0, 7) == "display"){
+						 outputWindow->ForeColor = System::Drawing::Color::Maroon;
+						 outputWindow->Text = MESSAGE_FOR_REDO_UNDO_TRACK_DISPLAY_GUIDE;
+					
+					}
+
+					if (input.substr(0, 4) == "mark" || input.substr(0, 4) == "unmark" || input.substr(0, 6) == "delete"){
+						outputWindow->ForeColor = System::Drawing::Color::Maroon;
+						outputWindow->Text = MESSAGE_FOR_MARK_UNMARK_DELETE_GUIDE;
+					}
+			
+					if (input.substr(0, 6) == "search"){
+						outputWindow->ForeColor = System::Drawing::Color::Maroon;
+						outputWindow->Text = MESSAGE_FOR_SEARCH_GUIDE;	
+					}
+
+					if (input.substr(0, 8) == "location"){
+						outputWindow->ForeColor = System::Drawing::Color::Maroon;
+						outputWindow->Text = MESSAGE_FOR_LOCATION_GUIDE;
+					}
+
+		}
+
+		private: System::Void outputWindow_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		}
+
+	};
+
+};
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UI\EasiSchedulerGUI.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+#include "CommandExecution.cpp"
+#include "SmartAdder.cpp"
+#include "CommandChecker.cpp"
+#include "EasiStorage.cpp"
+#include "Task.cpp"
+#include "CurrentTime.cpp"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace UnitTestLogic {	
+
+	TEST_CLASS(UnitTestReadCommand) {
+	public:
+		TEST_METHOD(TestGetCommand) {
+			remove("EasiScheduler.txt");
+			CommandExecution test;
+			size_t endExpected;
+			size_t endActual;
+			string expected;
+			string actual;
+
+			expected = "add";
+			endExpected = 3;
+			actual = test.getCommand("add something", endActual);
+			Assert::AreEqual(expected, actual);
+			Assert::AreEqual(endExpected, endActual);
+		}	
+
+		TEST_METHOD(TestIsExit) {
+			CommandExecution test;
+			Assert::AreEqual(true, test.isExit("exit"));
+			Assert::AreNotEqual(true, test.isExit("notExit"));
+		}
+
+		TEST_METHOD(TestIsSingleWordCommand) {
+			CommandExecution test;
+			Assert::AreEqual(true, test.isSingleWordCommand("display"));
+			Assert::AreEqual(true, test.isSingleWordCommand("track"));
+			Assert::AreEqual(true, test.isSingleWordCommand("undo"));
+			Assert::AreEqual(true, test.isSingleWordCommand("redo"));
+			Assert::AreNotEqual(true, test.isExit("add"));
+		}
+
+		TEST_METHOD(TestIsInvalidFormat) {
+			CommandExecution test;
+			size_t end = string::npos;
+			//test end == npos which is valid format condition 
+			Assert::AreEqual(false, test.isInvalidFormat("display", end));
+			//test end != npos, but find_first_not_of(" ") == npos which is valid format condition 
+			Assert::AreEqual(false, test.isInvalidFormat("display    ", 7));
+			//test satisfy both  invalid condtions
+			Assert::AreEqual(true, test.isInvalidFormat("display 1", 7));
+		}
+
+
+		TEST_METHOD(TestDetermineCommandType) {
+			CommandExecution test;
+			bool actual = false;
+			//test enum
+			if(test.determineCommandType("add") == test.ADD) {
+				actual = true;
+			}
+			Assert::AreEqual(true, actual);
+
+			actual = false;
+			if(test.determineCommandType("haha") == test.INVALID) {
+				actual = true;
+			}
+			Assert::AreEqual(true, actual);
+		}
+
+		TEST_METHOD(TestRetrieveContent) {
+			CommandExecution test;
+			string dummy;
+			string expected = "test case 1 -st 1000am -et 0300pm";
+			string actual = test.retrieveContent("add test case 1 -st 1000am -et 0300pm", 3);
+		
+			Assert::AreEqual(expected, actual);
+
+			expected = "   ";
+			actual = test.retrieveContent("add    ", 3);
+			Assert::AreEqual(expected, actual);
+
+
+			expected = "12";
+			
+			actual = test.retrieveContent("delete 12", 6);
+			Assert::AreEqual(expected, actual);
+		} 
+
+
+		TEST_METHOD(TestIsEmptyContent) {
+			CommandExecution test;
+			Assert::AreEqual(true, test.isEmptyContent("    "));
+			Assert::AreNotEqual(true, test.isEmptyContent("   a "));
+		}
+
+
+		TEST_METHOD(TestWrongCommandFormat) {
+			CommandExecution test;
+			string expected = "Wrong command format, plesae refer to user guide\r\n";
+			string actual = test.readCommand("add");
+			Assert::AreEqual(expected, actual);
+
+			actual = test.readCommand("display 1");
+			Assert::AreEqual(expected, actual);
+
+			actual = test.readCommand("plus hello");
+			Assert::AreEqual(expected, actual);
+			
+		}
+
+		TEST_METHOD(TestEmptyContentMessage) {
+			CommandExecution test;
+			string expected = "Don't be lazy, please type something\r\n";
+			string actual = test.readCommand("add ");
+			Assert::AreEqual(expected, actual);
+
+			actual = test.readCommand("delete    ");
+			Assert::AreEqual(expected, actual);
+		}
+
+		
+	};
+	
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+		TEST_METHOD(TestValidMarkAndUnmark) {
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expectedMark = "Event marked done\r\n";
+			string expectedUnmark = "Event unmarked done\r\n";
+
+			test.performAdd(dummy, "test case");
+			test.performMark(actual, "1");
+			Assert::AreEqual(expectedMark, actual);
+			
+			test.performUnmark(actual, "1");
+			Assert::AreEqual(expectedUnmark, actual);
+		}
+
+		TEST_METHOD(TestMarkAndUnmarkFunctionality) {
+			
+			CommandExecution test;
+			string dummy;
+			string actual;
+			string expected = "Schedule is empty\r\n";
+
+			test.performAdd(dummy, "test case");
+			test.performDisplay(actual);
+
+			//since added a task, schedule is displaying the task 'test case'
+			Assert::AreNotEqual(expected, actual);
+
+			//mark and the marked event will go to track list, so there is nothing to display
+			test.performMark(dummy, "1");
+			test.performDisplay(actual);
+			Assert::AreEqual(expected, actual);
+			
+			//unmark and the event will come back showing in display mode
+			test.performUnmark(dummy, "1");
+			test.performDisplay(actual);
+			Assert::AreNotEqual(expected, actual);
+		
+		}
+	};
+
+
+	TEST_CLASS(UnitTestPerformTrack) {
+	public:
+		
+		TEST_METHOD(TestTrackingFunctionality) {
+			CommandExecution test;
+			string expected = "Tracking:\r\n";
+			string dummy;
+			string actual;
+			test.performAdd(dummy, "test case 1 -st 2015 April 16 0800am -et 2015 April 17 1000pm");
+			test.performAdd(dummy, "test case 2 -et 2016 December 8 0100pm");
+			test.performAdd(dummy, "test case 3");
+
+			//initially no tasks in tracking list
+			test.performTrack(actual);
+			Assert::AreEqual(expected, actual);
+
+			//mark events
+			expected = "Tracking:\r\nUnit No.0001 2015/04/16/0800 - 2015/04/17/2200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2016/12/08/1300     Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
+			test.performMark(dummy, "1");
+			test.performMark(dummy, "2");
+			test.performMark(dummy, "3");
+			test.performTrack(actual);
+			Assert::AreEqual(expected, actual);
+
+			//unmark events
+			test.performUnmark(dummy, "1");
+			test.performUnmark(dummy, "2");
+			test.performUnmark(dummy, "3");
+			expected = "Tracking:\r\n";
+			test.performTrack(actual);
+			Assert::AreEqual(expected, actual);
+		}
+	};
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandExecution.cpp
 	 */
 
 #include "CommandExecution.h"
@@ -546,14 +881,14 @@ string CommandExecution::readRecentTask(int index){
 
 
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandExecution.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandExecution.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandExecution.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandExecution.h
 	 */
 
 #include "CommandChecker.h"
@@ -644,14 +979,14 @@ public:
 	
 };
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandExecution.h
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandExecution.h
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Task.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Task.cpp
 	 */
 
 #include "Task.h"
@@ -811,14 +1146,14 @@ int Task::getOverdue(){
  void Task::setOverdue(int overdue){
      _overdue = overdue;
  }
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Task.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Task.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Task.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Task.h
 	 */
 
 class Task{
@@ -880,232 +1215,7 @@ public:
 
 
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\Task.h
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
-	 */
-
-#include "stdafx.h"
-#include "CppUnitTest.h"
-#include "CommandExecution.cpp"
-#include "SmartAdder.cpp"
-#include "CommandChecker.cpp"
-#include "EasiStorage.cpp"
-#include "Task.cpp"
-#include "CurrentTime.cpp"
-
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
-namespace UnitTestLogic {	
-
-	TEST_CLASS(UnitTestReadCommand)
-	{
-	public:
-		TEST_METHOD(TestGetCommand) {
-			remove("EasiScheduler.txt");
-			CommandExecution test;
-			size_t endExpected;
-			size_t endActual;
-			string expected;
-			string actual;
-
-			expected = "add";
-			endExpected = 3;
-			actual = test.getCommand("add something", endActual);
-			Assert::AreEqual(expected, actual);
-			Assert::AreEqual(endExpected, endActual);
-		}	
-
-		TEST_METHOD(TestIsExit) {
-			CommandExecution test;
-			Assert::AreEqual(true, test.isExit("exit"));
-			Assert::AreNotEqual(true, test.isExit("notExit"));
-		}
-
-		TEST_METHOD(TestIsSingleWordCommand) {
-			CommandExecution test;
-			Assert::AreEqual(true, test.isSingleWordCommand("display"));
-			Assert::AreEqual(true, test.isSingleWordCommand("track"));
-			Assert::AreEqual(true, test.isSingleWordCommand("undo"));
-			Assert::AreEqual(true, test.isSingleWordCommand("redo"));
-			Assert::AreNotEqual(true, test.isExit("add"));
-		}
-
-		TEST_METHOD(TestIsInvalidFormat) {
-			CommandExecution test;
-			size_t end = string::npos;
-			//test end == npos which is valid format condition 
-			Assert::AreEqual(false, test.isInvalidFormat("display", end));
-			//test end != npos, but find_first_not_of(" ") == npos which is valid format condition 
-			Assert::AreEqual(false, test.isInvalidFormat("display    ", 7));
-			//test satisfy both  invalid condtions
-			Assert::AreEqual(true, test.isInvalidFormat("display 1", 7));
-		}
-
-
-		TEST_METHOD(TestDetermineCommandType) {
-			CommandExecution test;
-			bool actual = false;
-			//test enum
-			if(test.determineCommandType("add") == test.ADD) {
-				actual = true;
-			}
-			Assert::AreEqual(true, actual);
-
-			actual = false;
-			if(test.determineCommandType("haha") == test.INVALID) {
-				actual = true;
-			}
-			Assert::AreEqual(true, actual);
-		}
-
-		TEST_METHOD(TestRetrieveContent) {
-			CommandExecution test;
-			string dummy;
-			string expected = "test case 1 -st 1000am -et 0300pm";
-			string actual = test.retrieveContent("add test case 1 -st 1000am -et 0300pm", 3);
-		
-			Assert::AreEqual(expected, actual);
-
-			expected = "   ";
-			actual = test.retrieveContent("add    ", 3);
-			Assert::AreEqual(expected, actual);
-
-
-			expected = "12";
-			
-			actual = test.retrieveContent("delete 12", 6);
-			Assert::AreEqual(expected, actual);
-		} 
-
-
-		TEST_METHOD(TestIsEmptyContent) {
-			CommandExecution test;
-			Assert::AreEqual(true, test.isEmptyContent("    "));
-			Assert::AreNotEqual(true, test.isEmptyContent("   a "));
-		}
-
-
-		TEST_METHOD(TestWrongCommandFormat) {
-			CommandExecution test;
-			string expected = "Wrong command format, plesae refer to user guide\r\n";
-			string actual = test.readCommand("add");
-			Assert::AreEqual(expected, actual);
-
-			actual = test.readCommand("display 1");
-			Assert::AreEqual(expected, actual);
-
-			actual = test.readCommand("plus hello");
-			Assert::AreEqual(expected, actual);
-			
-		}
-
-		TEST_METHOD(TestEmptyContentMessage) {
-			CommandExecution test;
-			string expected = "Don't be lazy, please type something\r\n";
-			string actual = test.readCommand("add ");
-			Assert::AreEqual(expected, actual);
-
-			actual = test.readCommand("delete    ");
-			Assert::AreEqual(expected, actual);
-		}
-
-		
-	};
-	
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
-	 */
-
-		TEST_METHOD(TestValidMarkAndUnmark) {
-			CommandExecution test;
-			string dummy;
-			string actual;
-			string expectedMark = "Event marked done\r\n";
-			string expectedUnmark = "Event unmarked done\r\n";
-
-			test.performAdd(dummy, "test case");
-			test.performMark(actual, "1");
-			Assert::AreEqual(expectedMark, actual);
-			
-			test.performUnmark(actual, "1");
-			Assert::AreEqual(expectedUnmark, actual);
-		}
-
-		TEST_METHOD(TestMarkAndUnmarkFunctionality) {
-			
-			CommandExecution test;
-			string dummy;
-			string actual;
-			string expected = "Schedule is empty\r\n";
-
-			test.performAdd(dummy, "test case");
-			test.performDisplay(actual);
-
-			//since added a task, schedule is displaying the task 'test case'
-			Assert::AreNotEqual(expected, actual);
-
-			//mark and the marked event will go to track list, so there is nothing to display
-			test.performMark(dummy, "1");
-			test.performDisplay(actual);
-			Assert::AreEqual(expected, actual);
-			
-			//unmark and the event will come back showing in display mode
-			test.performUnmark(dummy, "1");
-			test.performDisplay(actual);
-			Assert::AreNotEqual(expected, actual);
-		
-		}
-	};
-
-
-	TEST_CLASS(UnitTestPerformTrack)
-	{
-	public:
-		
-		TEST_METHOD(TestTrackingFunctionality) {
-			CommandExecution test;
-			string expected = "Tracking:\r\n";
-			string dummy;
-			string actual;
-			test.performAdd(dummy, "test case 1 -st 2015 April 16 0800am -et 2015 April 17 1000pm");
-			test.performAdd(dummy, "test case 2 -et 2016 December 8 0100pm");
-			test.performAdd(dummy, "test case 3");
-
-			//initially no tasks in tracking list
-			test.performTrack(actual);
-			Assert::AreEqual(expected, actual);
-
-			//mark events
-			expected = "Tracking:\r\nUnit No.0001 2015/04/16/0800 - 2015/04/17/2200     Event: test case 1\r\nUnit No.0002 ****/**/**/**** - 2016/12/08/1300     Event: test case 2\r\nUnit No.0003 ****/**/**/**** - ****/**/**/****     Event: test case 3\r\n";
-			test.performMark(dummy, "1");
-			test.performMark(dummy, "2");
-			test.performMark(dummy, "3");
-			test.performTrack(actual);
-			Assert::AreEqual(expected, actual);
-
-			//unmark events
-			test.performUnmark(dummy, "1");
-			test.performUnmark(dummy, "2");
-			test.performUnmark(dummy, "3");
-			expected = "Tracking:\r\n";
-			test.performTrack(actual);
-			Assert::AreEqual(expected, actual);
-		}
-	};
-
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\Task.h
 
 
 

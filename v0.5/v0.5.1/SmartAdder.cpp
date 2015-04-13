@@ -20,6 +20,17 @@ const string INDICATOR_START_INPUT = "-st";
 const string INDICATOR_END_INPUT = "-et";
 const string INDICAOTR_AM = "am";
 const string INDICAOTR_PM = "pm";
+const int DEFAULT_TIME = 1200;
+const int FEB = 2;
+const int APR = 4;
+const int JUN = 6;
+const int SEP = 9;
+const int NOV = 11;
+const int DAY29 = 29;
+const int DAY30 = 30;
+const int DAY31 = 31;
+
+
 
 const string SmartAdder::_STD_MONTH[36]={"january","jan","janu","february","feb","febr","march","mar","marc","april","apr","apri",
     "may","may","may","june","jun","june","july","jul","jul","august","aug","augu","september","sep","sept","october","oct","octo","november","nov","nove", "december","dec","dece"};
@@ -482,13 +493,13 @@ void SmartAdder::checkFeasibleDate(int day, int month, int year){
 	 if(isNovThirtyFirst(day, month)){
 		 setIsValidInput(false);
 	 }
-	 if(isFebTwentyNinth(day, month, year)) {
+	 if(isInvalidFebTwentyNinth(day, month, year)) {
 		 setIsValidInput(false);
 	 }
 }
 
 bool SmartAdder::isFebThirtieth(int day, int month){
-	if(month == 2 && day == 30) {
+	if(month == FEB && day == DAY30) {
 		return true;
 	} else {
 		return false;
@@ -496,7 +507,7 @@ bool SmartAdder::isFebThirtieth(int day, int month){
 }
 
 bool SmartAdder::isFebThirtyFirst(int day, int month){
-	if(month == 2 && day == 31) {
+	if(month == FEB && day == DAY31) {
 		return true;
 	} else {
 		return false;
@@ -504,7 +515,7 @@ bool SmartAdder::isFebThirtyFirst(int day, int month){
 }
 
 bool SmartAdder::isAprThirtyFirst(int day, int month){
-	if(month == 4 && day == 31) {
+	if(month == APR && day == DAY31) {
 		return true;
 	} else {
 		return false;
@@ -512,7 +523,7 @@ bool SmartAdder::isAprThirtyFirst(int day, int month){
 }
 
 bool SmartAdder::isJunThirtyFirst(int day, int month){
-	if(month = 6 && day == 31){
+	if(month = JUN && day == DAY31){
 		return true;
 	} else {
 		return false;
@@ -520,7 +531,7 @@ bool SmartAdder::isJunThirtyFirst(int day, int month){
 }
 	
 bool SmartAdder::isSepThirtyFirst(int day, int month){
-	if(month == 9 && day == 31){
+	if(month == SEP && day == DAY31){
 		return true;
 	} else {
 		return false;
@@ -528,29 +539,33 @@ bool SmartAdder::isSepThirtyFirst(int day, int month){
 }
 
 bool SmartAdder::isNovThirtyFirst(int day,int month){
-	if(month == 11 && day == 31){
+	if(month == NOV && day == DAY31){
 		return true;
 	} else {
 		return false;
 	}
 }
 
-bool SmartAdder::isFebTwentyNinth(int day, int month, int year){
-	if (month == 2 && day == 29 && ((year % 100 == 0 && year % 400 != 0) || (year% 100 != 0 && year % 4 != 0))){
-		return true;
+bool SmartAdder::isInvalidFebTwentyNinth(int day, int month, int year){
+	if (month == FEB && day == DAY29){
+		if ( isNormalLeapYear(year) || isSpecialLeapYear(year)){
+			return false;
+		} else {
+			return true;
+		}
 	} else {
 		return false;
 	}
 }
 
-
+//Append current time to the missing start time and end time information
 void SmartAdder::appendMissingStartInfo(){
 
 	 CurrentTime timeInfo;
 	 if(isAnythingMissing(getStartTime(), getStartDay(), getStartMonth(), getStartYear())){	
 	 } else {
 		if (isTheUnitMissing(getStartTime())){
-			setStartTime(1200);
+			setStartTime(DEFAULT_TIME);
 		}
 		if (isTheUnitMissing(getStartDay())){
 			setStartDay(timeInfo.getDay());
@@ -572,7 +587,7 @@ void SmartAdder::appendMissingEndInfo(){
 	if (isAnythingMissing(getEndTime(), getEndDay(), getEndMonth(), getEndYear())){	
 	} else {
 		if (isTheUnitMissing(getEndTime())){
-			setEndTime(1200);
+			setEndTime(DEFAULT_TIME);
 		}		
 		if (isTheUnitMissing(getEndDay())){
 			setEndDay(timeInfo.getDay());
@@ -604,4 +619,14 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 	}
 
 	return false;
+}
+
+
+bool SmartAdder::isNormalLeapYear(int year){
+	return (year % 100 != 0 && year % 4 == 0);
+}
+
+//special leap year refers to the year that is a multiple of 100
+bool SmartAdder::isSpecialLeapYear(int year){
+	return (year % 100 == 0 && year % 400 ==0);
 }

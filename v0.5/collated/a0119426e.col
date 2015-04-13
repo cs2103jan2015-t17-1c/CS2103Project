@@ -3,7 +3,113 @@
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+	 */
+
+
+		TEST_METHOD(TestIsScheduleTask) {
+			CommandExecution test;
+			//-1 means no year entered by user
+			Assert::AreEqual(true, test.isScheduleTask(2015, 2015));
+			Assert::AreNotEqual(true, test.isScheduleTask(2015, -1));
+			Assert::AreNotEqual(true, test.isScheduleTask(-1, 2015));
+			Assert::AreNotEqual(true, test.isScheduleTask(-1, -1));
+		}
+
+		TEST_METHOD(TestIsDeadlineTask) {
+			CommandExecution test;
+			//-1 means no year entered by user
+			Assert::AreEqual(true, test.isDeadlineTask(-1, 2015));
+			Assert::AreNotEqual(true, test.isDeadlineTask(2015, -1));
+			Assert::AreNotEqual(true, test.isDeadlineTask(-1, -1));
+			Assert::AreNotEqual(true, test.isDeadlineTask(2015, 2015));
+		}
+
+		TEST_METHOD(TestGetAddResult) {
+			CommandExecution test;
+			//Schedule tasks
+			string expected = "Successfully added (Schedule Task) 'Schedule test case' to the schedule\r\n";
+			string actual = test.getAddResult(2015, 2016, "Schedule test case");
+			Assert::AreEqual(expected, actual);
+			
+			//deadline tasks
+			expected = "Successfully added (Deadline Task) 'deadline test case' to the schedule\r\n";
+			actual = test.getAddResult(2015, -1, "deadline test case");
+
+			//floating tasks
+			expected = "Successfully added (Floating Task) 'floating test case' to the schedule\r\n";
+			actual = test.getAddResult(-1, -1, "floating test case");
+		}
+
+		TEST_METHOD(TestTaskAdded) {
+			CommandExecution test;
+			string expected = "Successfully added (Schedule Task) 'test case' to the schedule\r\n";;
+			string actual;
+
+			//Schedule tasks
+			test.performAdd(actual, "test case -st 2015 April 16 1100am -et 2015 April 17 0400pm");
+			Assert::AreEqual(expected, actual);
+			
+			test.performAdd(actual, "test case -st 2015 April 16 1100am -et 2015 April 17 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -st April 16 1100am -et 2015 April 17 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -st 16 1100am -et 2015 April 17 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -st 1100am -et 2015 April 14 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -st 1100am -et April 14 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -st 1230am -et 1230pm");
+			Assert::AreEqual(expected, actual);
+
+			//Deadline tasks
+			expected = "Successfully added (Deadline Task) 'test case' to the schedule\r\n";
+
+			test.performAdd(actual, "test case -et 2015 April 14 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et April 14 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et 14 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			test.performAdd(actual, "test case -et 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			//floating tasks
+			expected = "Successfully added (Floating Task) 'test case' to the schedule\r\n";
+			test.performAdd(actual, "test case");
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(TestAddEmptyEvent) {
+			CommandExecution test;
+			string expected = "Successfully added (Schedule Task) 'empty event' to the schedule\r\n";
+			string actual;
+			test.performAdd(actual, "-st 1100am -et 0400pm");
+			Assert::AreEqual(expected, actual);
+
+			expected = "Successfully added (Deadline Task) 'empty event' to the schedule\r\n";;
+			test.performAdd(actual, "-et 0400pm");
+			Assert::AreEqual(expected, actual);
+		}
+
+	};
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
 	 */
 
 #include <iostream>
@@ -560,14 +666,14 @@ bool EasiStorage::isSortNeeded(int firstEndTime, int secondEndTime) {
 	}
 }
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.h
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.h
 	 */
 
 #include <string>
@@ -654,113 +760,7 @@ public:
 
 
 
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\EasiStorage.h
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
-	 */
-
-
-		TEST_METHOD(TestIsScheduleTask) {
-			CommandExecution test;
-			//-1 means no year entered by user
-			Assert::AreEqual(true, test.isScheduleTask(2015, 2015));
-			Assert::AreNotEqual(true, test.isScheduleTask(2015, -1));
-			Assert::AreNotEqual(true, test.isScheduleTask(-1, 2015));
-			Assert::AreNotEqual(true, test.isScheduleTask(-1, -1));
-		}
-
-		TEST_METHOD(TestIsDeadlineTask) {
-			CommandExecution test;
-			//-1 means no year entered by user
-			Assert::AreEqual(true, test.isDeadlineTask(-1, 2015));
-			Assert::AreNotEqual(true, test.isDeadlineTask(2015, -1));
-			Assert::AreNotEqual(true, test.isDeadlineTask(-1, -1));
-			Assert::AreNotEqual(true, test.isDeadlineTask(2015, 2015));
-		}
-
-		TEST_METHOD(TestGetAddResult) {
-			CommandExecution test;
-			//Schedule tasks
-			string expected = "Successfully added (Schedule Task) 'Schedule test case' to the schedule\r\n";
-			string actual = test.getAddResult(2015, 2016, "Schedule test case");
-			Assert::AreEqual(expected, actual);
-			
-			//deadline tasks
-			expected = "Successfully added (Deadline Task) 'deadline test case' to the schedule\r\n";
-			actual = test.getAddResult(2015, -1, "deadline test case");
-
-			//floating tasks
-			expected = "Successfully added (Floating Task) 'floating test case' to the schedule\r\n";
-			actual = test.getAddResult(-1, -1, "floating test case");
-		}
-
-		TEST_METHOD(TestTaskAdded) {
-			CommandExecution test;
-			string expected = "Successfully added (Schedule Task) 'test case' to the schedule\r\n";;
-			string actual;
-
-			//Schedule tasks
-			test.performAdd(actual, "test case -st 2015 April 16 1100am -et 2015 April 17 0400pm");
-			Assert::AreEqual(expected, actual);
-			
-			test.performAdd(actual, "test case -st 2015 April 16 1100am -et 2015 April 17 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -st April 16 1100am -et 2015 April 17 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -st 16 1100am -et 2015 April 17 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -st 1100am -et 2015 April 14 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -st 1100am -et April 14 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -st 1230am -et 1230pm");
-			Assert::AreEqual(expected, actual);
-
-			//Deadline tasks
-			expected = "Successfully added (Deadline Task) 'test case' to the schedule\r\n";
-
-			test.performAdd(actual, "test case -et 2015 April 14 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -et April 14 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -et 14 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			test.performAdd(actual, "test case -et 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			//floating tasks
-			expected = "Successfully added (Floating Task) 'test case' to the schedule\r\n";
-			test.performAdd(actual, "test case");
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(TestAddEmptyEvent) {
-			CommandExecution test;
-			string expected = "Successfully added (Schedule Task) 'empty event' to the schedule\r\n";
-			string actual;
-			test.performAdd(actual, "-st 1100am -et 0400pm");
-			Assert::AreEqual(expected, actual);
-
-			expected = "Successfully added (Deadline Task) 'empty event' to the schedule\r\n";;
-			test.performAdd(actual, "-et 0400pm");
-			Assert::AreEqual(expected, actual);
-		}
-
-	};
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\EasiStorage.h
 
 
 

@@ -3,539 +3,7 @@
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.cpp
-	 */
-
-#include "CommandChecker.h"
-#include <ctype.h>
-#include <algorithm>
-#include <string>
-#include <exception>
-
-const int MAX_INPUT_LENGTH = 1000;
-const char* MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER = "Exceed Maximun Length of Input!";
-
-CommandChecker::CommandChecker(void) {
-}
-
-
-CommandChecker::~CommandChecker(void) {
-}
-
-//Purpose: To cut the first word of the string as the command
-string CommandChecker::getCommand(string userInput, size_t & end) {
-	end = userInput.find_first_of(" ");
-	string command = userInput.substr(0, end);
-	command = interpretCommand(command);
-	return command;
-}
-
-//Purpose: To transform all the string to lower case
-//Prerequiest: The characters are all alphabetic 
-string CommandChecker::interpretCommand(string command) {
-
-    std::transform(command.begin(), command.end(), command.begin(), ::tolower);
-	return command;
-}
-
-//Purpose: To get the remaining content except the first word
-string CommandChecker::getContent(string userInput, size_t end) {
-	return userInput.substr(end + 1, userInput.size() - end);
-}
-
-bool CommandChecker::isExitCommand(string command) {
-	return command == "exit";
-}
-
-bool CommandChecker::isAddCommand(string command) {
-	return command == "add";
-}
-
-bool CommandChecker::isDeleteCommand(string command) {
-	return command == "delete";
-}
-
-bool CommandChecker::isDisplayCommand(string command) {
-	return command == "display";
-}
-
-bool CommandChecker::isUpdateCommand(string command) {
-	return command == "update";
-}
-
-bool CommandChecker::isMarkCommand(string command) {
-	return command == "mark";
-}
-
-bool CommandChecker::isUnmarkCommand(string command) {
-	return command == "unmark";
-}
-
-bool CommandChecker::isUndoCommand(string command) {
-	return command == "undo";
-}
-
-bool CommandChecker::isRedoCommand(string command) {
-	return command == "redo";
-}
-
-bool CommandChecker::isSearchCommand(string command) {
-	return command == "search";
-}
-
-bool CommandChecker::isTrackCommand(string command) {
-	return command == "track";
-}
-
-bool CommandChecker::isLocationCommand(string command) {
-	return command == "location";
-}
-
-bool CommandChecker::isSingleWordCommand(string command) {
-	return command == "display" || command == "undo" || command == "redo"|| command == "track";
-}
-
-//Purpose: To check whether the string only contains one or more words.
-//If containing one word, return true;
-//If containing more than one word, return false;
-bool CommandChecker::isInvalidCommandFormat(string userInput, size_t end) {
-	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool CommandChecker::isEmptyContent(string content) {
-	size_t end = content.find_first_not_of(" ");
-	if(end == string::npos) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-//Purpose: To cut the string into two part, one is the first integer,
-//the other one is the remaining string.
-void CommandChecker::seperateContent(string userInput, int& index, string& updatedContent) {
-	istringstream in(userInput);
-	size_t start;
-	string dummy;
-	in >> index;
-	in >> dummy;
-	start = userInput.find(dummy);
-	if(dummy == "") {
-		updatedContent = " ";
-	} else {
-		updatedContent = userInput.substr(start, userInput.size() - start);
-	}
-}
-
-
-void CommandChecker::verifyLengthOfUserInput(string userInput) {
-	if(userInput.size() > MAX_INPUT_LENGTH) {
-		throw new exception(MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER);
-	}
-}
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.cpp
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.h
-	 */
-
-#pragma once
-
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <assert.h>
-#include <fstream>
-#include <exception>
-#include <ctype.h>
-
-using namespace std;
-
-
-
-
-class CommandChecker{
-
-public:
-	CommandChecker(void);
-	~CommandChecker(void);
-
-	string getCommand(string, size_t &);
-	string interpretCommand(string);
-	string getContent(string, size_t);
-	
-	bool isExitCommand(string);
-	bool isAddCommand(string);
-	bool isDeleteCommand(string);
-	bool isDisplayCommand(string);
-	bool isUpdateCommand(string);
-	bool isMarkCommand(string);
-	bool isUnmarkCommand(string);
-	bool isUndoCommand(string);
-	bool isRedoCommand(string);
-	bool isSearchCommand(string);
-	bool isTrackCommand(string);
-	bool isLocationCommand(string);
-	bool isSingleWordCommand(string);
-	bool isInvalidCommandFormat(string, size_t);
-	bool isEmptyContent(string);
-
-	void seperateContent(string, int &, string &);
-	void verifyLengthOfUserInput(string);
-};
-
-
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CommandChecker.h
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.cpp
-	 */
-
-#include "CurrentTime.h"
-
-
-CurrentTime::CurrentTime(){
-	struct tm *timeinfo;
-	time_t now_time = time(0);
-	timeinfo = localtime(&now_time);
-	
-	setYear(timeinfo);
-	setMonth(timeinfo);
-	setDate(timeinfo);
-
-}
-
-
-void CurrentTime::setYear(struct tm *timeinfo){
-	_year = 1900 + timeinfo->tm_year;
-
-}
-
-void CurrentTime::setMonth(struct tm *timeinfo){
-	_month = 1 + timeinfo->tm_mon;
-}
-
-void CurrentTime::setDate(struct tm *timeinfo){
-	_day = timeinfo->tm_mday;
-}
-
-int CurrentTime::getYear(){
-	return _year;
-}
-
-int CurrentTime::getMonth(){
-	return _month;
-}
-
-int CurrentTime::getDay(){
-	return _day;
-}
-
-
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.cpp
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.h
-	 */
-
-#include <iostream>
-#include <ctime>
-
-using namespace std;
-
-class CurrentTime{
-
-private:
-	int _year;
-	int _month;
-	int _day;
-
-public:
-	CurrentTime();
-	//setter methods
-	void setYear(struct tm *timeinfo);
-	void setMonth(struct tm *timeinfo);
-	void setDate(struct tm *timeinfo);
-
-	//getter methods
-	int getYear();
-	int getMonth();
-	int getDay();
-
-};
-
-
-
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\CurrentTime.h
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\MainTesting.cpp
-	 */
-
-#include <iostream>
-#include <string>
-#include "CommandExecution.h"
-#include "SmartAdder.h"
-#include "EasiStorage.h"
-#include "Task.h"
-#include "CurrentTime.h"
-using namespace std;
-
-int main(int argc, const char * argv[]) {
-    string input;
-    getline(cin,input);
-    CommandExecution v01;
-    
-	string stopCommand;
-
-
-    cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-    getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-	getline(cin,input);
-	cout<<v01.readCommand(input);
-
-
-
-
-    
-    return 0;
-}
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\MainTesting.cpp
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
-	 */
-
-//Purpose: To fill the time component with current time if no user input is found
-//If no time is found, it is set to be 0000am
-void SmartAdder::appendMissingInfo() {
-	appendMissingStartInfo();
-	checkFeasibleDate(getStartDay(), getStartMonth(), getStartYear());
-	appendMissingEndInfo();
-	checkFeasibleDate(getEndDay(), getEndMonth(), getEndYear());
-}
-
-//Purpose: To detect which time component the user did not give
-bool SmartAdder::isAnythingMissing(int time, int day, int month, int year){
-	if (time == _indicatorEmptyInput && day == _indicatorEmptyInput && month == _indicatorEmptyInput && year == _indicatorEmptyInput ) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool SmartAdder::isTheUnitMissing(int valueOfTimeUnit){
-	if (valueOfTimeUnit == _indicatorEmptyInput) {
-		return true;
-	} else {
-		assert(valueOfTimeUnit != -1);
-		return false;
-	}
-}
-
-//Purpose: To check whether the day of month is legal or not
-//For example, the largest day of Febuary in 2015 should not be larger than 28
-void SmartAdder::checkFeasibleDate(int day, int month, int year){
-	 if(isFebThirtieth(day, month)) {
-		setIsValidInput(false);
-	 }
-	 if(isFebThirtyFirst(day, month)) {
-		setIsValidInput(false);
-	 }
-	 if(isAprThirtyFirst(day, month)) {
-		 setIsValidInput(false);
-	 }
-	 if(isJunThirtyFirst(day, month)) {
-		 setIsValidInput(false);
-	 }
-	 if(isSepThirtyFirst(day, month)){
-		 setIsValidInput(false);
-	 }
-	 if(isNovThirtyFirst(day, month)){
-		 setIsValidInput(false);
-	 }
-	 if(isFebTwentyNinth(day, month, year)) {
-		 setIsValidInput(false);
-	 }
-}
-
-bool SmartAdder::isFebThirtieth(int day, int month){
-	if(month == 2 && day == 30) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool SmartAdder::isFebThirtyFirst(int day, int month){
-	if(month == 2 && day == 31) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool SmartAdder::isAprThirtyFirst(int day, int month){
-	if(month == 4 && day == 31) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool SmartAdder::isJunThirtyFirst(int day, int month){
-	if(month = 6 && day == 31){
-		return true;
-	} else {
-		return false;
-	}
-}
-	
-bool SmartAdder::isSepThirtyFirst(int day, int month){
-	if(month == 9 && day == 31){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool SmartAdder::isNovThirtyFirst(int day,int month){
-	if(month == 11 && day == 31){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-bool SmartAdder::isFebTwentyNinth(int day, int month, int year){
-	if (month == 2 && day == 29 && ((year % 100 == 0 && year % 400 != 0) || (year% 100 != 0 && year % 4 != 0))){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
-void SmartAdder::appendMissingStartInfo(){
-
-	 CurrentTime timeInfo;
-	 if(isAnythingMissing(getStartTime(), getStartDay(), getStartMonth(), getStartYear())){	
-	 } else {
-		if (isTheUnitMissing(getStartTime())){
-			setStartTime(1200);
-		}
-		if (isTheUnitMissing(getStartDay())){
-			setStartDay(timeInfo.getDay());
-		}
-		if (isTheUnitMissing(getStartMonth())){
-			setStartMonth(timeInfo.getMonth());
-		}
-		if (isTheUnitMissing(getStartYear())){
-			setStartYear(timeInfo.getYear());
-		}
-	}
-}
-
-
-void SmartAdder::appendMissingEndInfo(){
-	
-	CurrentTime timeInfo;
-	
-	if (isAnythingMissing(getEndTime(), getEndDay(), getEndMonth(), getEndYear())){	
-	} else {
-		if (isTheUnitMissing(getEndTime())){
-			setEndTime(1200);
-		}		
-		if (isTheUnitMissing(getEndDay())){
-			setEndDay(timeInfo.getDay());
-		}
-		if (isTheUnitMissing(getEndMonth())){
-			setEndMonth(timeInfo.getMonth());
-		}
-		if (isTheUnitMissing(getEndYear())){
-			setEndYear(timeInfo.getYear());
-		}
-	}	 
-}
-
-bool SmartAdder::isEndTimeLaterThanStartTime(){
-	if ( _wholeEvent.endYear > _wholeEvent.startYear ){
-		return true;
-	}
-
-	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth > _wholeEvent.startMonth ){
-		return true;
-	}
-
-	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth == _wholeEvent.startMonth && _wholeEvent.endDay > _wholeEvent.startDay ){
-		return true;
-	}
-
-	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth == _wholeEvent.startMonth && _wholeEvent.endDay == _wholeEvent.startDay && _wholeEvent.endTime >= _wholeEvent.startTime ){
-		return true;
-	}
-
-	return false;
-}
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\v0.5.1\SmartAdder.cpp
-
-
-
-
-
-	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
 	 */
 
 	TEST_CLASS(UnitTestPerformAdd) {
@@ -678,14 +146,14 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 			test.performAdd(actual, "test case -st 1234567 -et 1200am");
 			Assert::AreEqual(expected, actual);
 		}
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
 	 */
 
 			//after update the overdue task to future task
@@ -714,8 +182,7 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 	};
 
 
-	TEST_CLASS(UnitTestPerformSearch)
-	{
+	TEST_CLASS(UnitTestPerformSearch) {
 	public:
 		
 		TEST_METHOD(TestSearchNoMatch) {
@@ -779,8 +246,7 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 
 	};
 
-	TEST_CLASS(UnitTestPerformUndoRedo)
-	{
+	TEST_CLASS(UnitTestPerformUndoRedo) {
 	public:
 		TEST_METHOD(TestUndoAndRedoFunctionality) {
 			CommandExecution test;
@@ -851,8 +317,7 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 		}
 	};
 
-	TEST_CLASS(UnitTestPerformMarkUnmark)
-	{
+	TEST_CLASS(UnitTestPerformMarkUnmark) {
 	public:
 		TEST_METHOD(TestInvalidMark) {
 			CommandExecution test;
@@ -905,18 +370,18 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 			Assert::AreEqual(expected, actual);
 			
 		}
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
 
 
 
 
 
 	/**
-	 * origin: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	 * origin: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
 	 */
 
-	TEST_CLASS(UnitTestPerformLocation)
-	{
+	TEST_CLASS(UnitTestPerformLocation){
 	public:
 		
 		TEST_METHOD(TestLocationResult) {
@@ -928,7 +393,504 @@ bool SmartAdder::isEndTimeLaterThanStartTime(){
 		}
 	};
 }
-	// End of segment: C:\Users\Wang_Jiexuan\Desktop\EasiScheduler2103\v0.5 before submission\UnitAndIntegrationTest\Testing.cpp
+	// End of segment: C:\IMPORTANT\NUS\CS Module\v0.5\UnitAndIntegrationTest\Testing.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.cpp
+	 */
+
+#include "CommandChecker.h"
+#include <ctype.h>
+#include <algorithm>
+#include <string>
+#include <exception>
+
+const int MAX_INPUT_LENGTH = 1000;
+const char* MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER = "Exceed Maximun Length of Input!";
+const string EXIT_COMMAND = "exit";
+const string ADD_COMMAND = "add";
+const string DELETE_COMMAND = "delete";
+const string UPDATE_COMMAND = "update";
+const string TRACK_COMMAND = "track";
+const string SEARCH_COMMAND = "search";
+const string UNDO_COMMAND = "undo";
+const string REDO_COMMAND = "redo";
+const string MARK_COMMAND = "mark";
+const string UNMARK_COMMAND = "unmark";
+const string DISPLAY_COMMAND = "display";
+const string LOCATION_COMMAND = "location";
+
+
+CommandChecker::CommandChecker(void) {
+}
+
+
+CommandChecker::~CommandChecker(void) {
+}
+
+//Purpose: To cut the first word of the string as the command
+string CommandChecker::getCommand(string userInput, size_t & end) {
+	end = userInput.find_first_of(" ");
+	string command = userInput.substr(0, end);
+	command = interpretCommand(command);
+	return command;
+}
+
+//Purpose: To transform all the string to lower case
+//Prerequiest: The characters are all alphabetic 
+string CommandChecker::interpretCommand(string command) {
+
+    std::transform(command.begin(), command.end(), command.begin(), ::tolower);
+	return command;
+}
+
+//Purpose: To get the remaining content except the first word
+string CommandChecker::getContent(string userInput, size_t end) {
+	return userInput.substr(end + 1, userInput.size() - end);
+}
+
+bool CommandChecker::isExitCommand(string command) {
+	return command == EXIT_COMMAND;
+}
+
+bool CommandChecker::isAddCommand(string command) {
+	return command == ADD_COMMAND;
+}
+
+bool CommandChecker::isDeleteCommand(string command) {
+	return command == DELETE_COMMAND;
+}
+
+bool CommandChecker::isDisplayCommand(string command) {
+	return command == DISPLAY_COMMAND;
+}
+
+bool CommandChecker::isUpdateCommand(string command) {
+	return command == UPDATE_COMMAND;
+}
+
+bool CommandChecker::isMarkCommand(string command) {
+	return command == MARK_COMMAND;
+}
+
+bool CommandChecker::isUnmarkCommand(string command) {
+	return command == UNMARK_COMMAND;
+}
+
+bool CommandChecker::isUndoCommand(string command) {
+	return command == UNDO_COMMAND;
+}
+
+bool CommandChecker::isRedoCommand(string command) {
+	return command == REDO_COMMAND;
+}
+
+bool CommandChecker::isSearchCommand(string command) {
+	return command == SEARCH_COMMAND;
+}
+
+bool CommandChecker::isTrackCommand(string command) {
+	return command == TRACK_COMMAND;
+}
+
+bool CommandChecker::isLocationCommand(string command) {
+	return command == LOCATION_COMMAND;
+}
+
+bool CommandChecker::isSingleWordCommand(string command) {
+	return (command == DISPLAY_COMMAND || command == UNDO_COMMAND|| command == REDO_COMMAND|| command == TRACK_COMMAND);
+}
+
+//Purpose: To check whether the string only contains one or more words.
+//If containing one word, return true;
+//If containing more than one word, return false;
+bool CommandChecker::isInvalidCommandFormat(string userInput, size_t end) {
+	if(end != string::npos && userInput.find_first_not_of(" ", end) != string:: npos) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool CommandChecker::isEmptyContent(string content) {
+	size_t end = content.find_first_not_of(" ");
+	if(end == string::npos) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+//Purpose: To cut the string into two part, one is the first integer,
+//the other one is the remaining string.
+void CommandChecker::seperateContent(string userInput, int& index, string& updatedContent) {
+	istringstream in(userInput);
+	size_t start;
+	string dummy;
+	in >> index;
+	in >> dummy;
+	start = userInput.find(dummy);
+	if(dummy == "") {
+		updatedContent = " ";
+	} else {
+		updatedContent = userInput.substr(start, userInput.size() - start);
+	}
+}
+
+
+void CommandChecker::verifyLengthOfUserInput(string userInput) {
+	if(userInput.size() > MAX_INPUT_LENGTH) {
+		throw new exception(MESSAGE_EXCEPTION_MAXIMUN_INPUT_CHARACTER);
+	}
+}
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.h
+	 */
+
+#pragma once
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <assert.h>
+#include <fstream>
+#include <exception>
+#include <ctype.h>
+
+using namespace std;
+
+
+
+
+class CommandChecker{
+
+public:
+	CommandChecker(void);
+	~CommandChecker(void);
+
+	string getCommand(string, size_t &);
+	string interpretCommand(string);
+	string getContent(string, size_t);
+	
+	bool isExitCommand(string);
+	bool isAddCommand(string);
+	bool isDeleteCommand(string);
+	bool isDisplayCommand(string);
+	bool isUpdateCommand(string);
+	bool isMarkCommand(string);
+	bool isUnmarkCommand(string);
+	bool isUndoCommand(string);
+	bool isRedoCommand(string);
+	bool isSearchCommand(string);
+	bool isTrackCommand(string);
+	bool isLocationCommand(string);
+	bool isSingleWordCommand(string);
+	bool isInvalidCommandFormat(string, size_t);
+	bool isEmptyContent(string);
+
+	void seperateContent(string, int &, string &);
+	void verifyLengthOfUserInput(string);
+};
+
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CommandChecker.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.cpp
+	 */
+
+#include "CurrentTime.h"
+
+
+CurrentTime::CurrentTime(){
+	struct tm *timeinfo;
+	time_t now_time = time(0);
+	timeinfo = localtime(&now_time);
+	
+	//set current year, month and date from the computer when CurrentTime is constructed
+	setYear(timeinfo);
+	setMonth(timeinfo);
+	setDate(timeinfo);
+
+}
+
+
+void CurrentTime::setYear(struct tm *timeinfo){
+	_year = 1900 + timeinfo->tm_year;
+
+}
+
+void CurrentTime::setMonth(struct tm *timeinfo){
+	_month = 1 + timeinfo->tm_mon;
+}
+
+void CurrentTime::setDate(struct tm *timeinfo){
+	_day = timeinfo->tm_mday;
+}
+
+
+//get CURRENT year, month and date from the computer
+int CurrentTime::getYear(){
+	return _year;
+}
+
+int CurrentTime::getMonth(){
+	return _month;
+}
+
+int CurrentTime::getDay(){
+	return _day;
+}
+
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.h
+	 */
+
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+class CurrentTime{
+
+private:
+	int _year;
+	int _month;
+	int _day;
+
+public:
+	CurrentTime();
+	//setter methods
+	void setYear(struct tm *timeinfo);
+	void setMonth(struct tm *timeinfo);
+	void setDate(struct tm *timeinfo);
+
+	//getter methods
+	int getYear();
+	int getMonth();
+	int getDay();
+
+};
+
+
+
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\CurrentTime.h
+
+
+
+
+
+	/**
+	 * origin: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
+	 */
+
+//Purpose: To fill the time component with current time if no user input is found
+//If no time is found, it is set to be 0000am
+void SmartAdder::appendMissingInfo() {
+	appendMissingStartInfo();
+	checkFeasibleDate(getStartDay(), getStartMonth(), getStartYear());
+	appendMissingEndInfo();
+	checkFeasibleDate(getEndDay(), getEndMonth(), getEndYear());
+}
+
+//Purpose: To detect which time component the user did not give
+bool SmartAdder::isAnythingMissing(int time, int day, int month, int year){
+	if (time == _indicatorEmptyInput && day == _indicatorEmptyInput && month == _indicatorEmptyInput && year == _indicatorEmptyInput ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isTheUnitMissing(int valueOfTimeUnit){
+	if (valueOfTimeUnit == _indicatorEmptyInput) {
+		return true;
+	} else {
+		assert(valueOfTimeUnit != -1);
+		return false;
+	}
+}
+
+//Purpose: To check whether the day of month is legal or not
+//For example, the largest day of Febuary in 2015 should not be larger than 28
+void SmartAdder::checkFeasibleDate(int day, int month, int year){
+	 if(isFebThirtieth(day, month)) {
+		setIsValidInput(false);
+	 }
+	 if(isFebThirtyFirst(day, month)) {
+		setIsValidInput(false);
+	 }
+	 if(isAprThirtyFirst(day, month)) {
+		 setIsValidInput(false);
+	 }
+	 if(isJunThirtyFirst(day, month)) {
+		 setIsValidInput(false);
+	 }
+	 if(isSepThirtyFirst(day, month)){
+		 setIsValidInput(false);
+	 }
+	 if(isNovThirtyFirst(day, month)){
+		 setIsValidInput(false);
+	 }
+	 if(isInvalidFebTwentyNinth(day, month, year)) {
+		 setIsValidInput(false);
+	 }
+}
+
+bool SmartAdder::isFebThirtieth(int day, int month){
+	if(month == FEB && day == DAY30) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isFebThirtyFirst(int day, int month){
+	if(month == FEB && day == DAY31) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isAprThirtyFirst(int day, int month){
+	if(month == APR && day == DAY31) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isJunThirtyFirst(int day, int month){
+	if(month = JUN && day == DAY31){
+		return true;
+	} else {
+		return false;
+	}
+}
+	
+bool SmartAdder::isSepThirtyFirst(int day, int month){
+	if(month == SEP && day == DAY31){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isNovThirtyFirst(int day,int month){
+	if(month == NOV && day == DAY31){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SmartAdder::isInvalidFebTwentyNinth(int day, int month, int year){
+	if (month == FEB && day == DAY29){
+		if ( isNormalLeapYear(year) || isSpecialLeapYear(year)){
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+}
+
+//Append current time to the missing start time and end time information
+void SmartAdder::appendMissingStartInfo(){
+
+	 CurrentTime timeInfo;
+	 if(isAnythingMissing(getStartTime(), getStartDay(), getStartMonth(), getStartYear())){	
+	 } else {
+		if (isTheUnitMissing(getStartTime())){
+			setStartTime(DEFAULT_TIME);
+		}
+		if (isTheUnitMissing(getStartDay())){
+			setStartDay(timeInfo.getDay());
+		}
+		if (isTheUnitMissing(getStartMonth())){
+			setStartMonth(timeInfo.getMonth());
+		}
+		if (isTheUnitMissing(getStartYear())){
+			setStartYear(timeInfo.getYear());
+		}
+	}
+}
+
+
+void SmartAdder::appendMissingEndInfo(){
+	
+	CurrentTime timeInfo;
+	
+	if (isAnythingMissing(getEndTime(), getEndDay(), getEndMonth(), getEndYear())){	
+	} else {
+		if (isTheUnitMissing(getEndTime())){
+			setEndTime(DEFAULT_TIME);
+		}		
+		if (isTheUnitMissing(getEndDay())){
+			setEndDay(timeInfo.getDay());
+		}
+		if (isTheUnitMissing(getEndMonth())){
+			setEndMonth(timeInfo.getMonth());
+		}
+		if (isTheUnitMissing(getEndYear())){
+			setEndYear(timeInfo.getYear());
+		}
+	}	 
+}
+
+bool SmartAdder::isEndTimeLaterThanStartTime(){
+	if ( _wholeEvent.endYear > _wholeEvent.startYear ){
+		return true;
+	}
+
+	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth > _wholeEvent.startMonth ){
+		return true;
+	}
+
+	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth == _wholeEvent.startMonth && _wholeEvent.endDay > _wholeEvent.startDay ){
+		return true;
+	}
+
+	if ( _wholeEvent.endYear == _wholeEvent.startYear && _wholeEvent.endMonth == _wholeEvent.startMonth && _wholeEvent.endDay == _wholeEvent.startDay && _wholeEvent.endTime >= _wholeEvent.startTime ){
+		return true;
+	}
+
+	return false;
+}
+
+
+bool SmartAdder::isNormalLeapYear(int year){
+	return (year % 100 != 0 && year % 4 == 0);
+}
+
+//special leap year refers to the year that is a multiple of 100
+bool SmartAdder::isSpecialLeapYear(int year){
+	return (year % 100 == 0 && year % 400 ==0);
+}
+	// End of segment: C:\IMPORTANT\NUS\CS Module\V0.5\v0.5.1\SmartAdder.cpp
 
 
 
